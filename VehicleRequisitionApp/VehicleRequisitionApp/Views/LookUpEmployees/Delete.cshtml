@@ -1,0 +1,161 @@
+﻿@model VehicleRequisitionApp.Models.LookUpEmployee
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>LookUpEmployee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LookUpDivision.DivShortName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LookUpDivision.DivShortName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LookUpEmployeeType.EmpType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LookUpEmployeeType.EmpType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SortingSerialNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SortingSerialNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpInitial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpInitial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpFullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpFullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpDesignation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpDesignation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpMobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpMobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpRoomNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpRoomNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpPresentAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpPresentAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpNid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpNid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpPaasportNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpPaasportNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpBloodGroup)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpBloodGroup)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpHighestDegree)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpHighestDegree)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpHighestDegreeMajorSubject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpHighestDegreeMajorSubject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpCareerSummary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpCareerSummary)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

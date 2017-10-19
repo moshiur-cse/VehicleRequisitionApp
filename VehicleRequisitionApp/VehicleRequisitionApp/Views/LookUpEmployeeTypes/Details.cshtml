@@ -1,0 +1,35 @@
+﻿@model VehicleRequisitionApp.Models.LookUpEmployeeType
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LookUpEmployeeType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SortingSerialNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SortingSerialNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmpType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmpTypeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

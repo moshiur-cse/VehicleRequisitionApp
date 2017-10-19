@@ -1,0 +1,35 @@
+﻿@model VehicleRequisitionApp.Models.LookUpDivision
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LookUpDivision</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DivShortName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DivShortName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DivFullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DivFullName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DivisionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

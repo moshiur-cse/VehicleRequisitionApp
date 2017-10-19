@@ -1,0 +1,43 @@
+﻿@model VehicleRequisitionApp.Models.LookupProjectLeader
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LookupProjectLeader</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LookUpEmployee.EmpInitial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LookupProject.ProjectCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SortingSerialNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SortingSerialNo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProjectLeaderId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

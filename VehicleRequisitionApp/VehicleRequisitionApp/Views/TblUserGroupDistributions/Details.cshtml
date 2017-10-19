@@ -1,0 +1,43 @@
+﻿@model VehicleRequisitionApp.Models.TblUserGroupDistribution
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TblUserGroupDistribution</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LookupUserGroup.UserGroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LookupUserGroup.UserGroupName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TblUser.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TblUser.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SortingSerialNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SortingSerialNo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserGroupDistributionId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<VehicleRequisitionApp.Models.TblRequisitionDetail>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestSubmissionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequiredFromDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequiredToDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Place)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reason)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActuallyUsedFromDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActuallyUsedToDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AssignedVehicleId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpInitial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestSubmissionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequiredFromDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequiredToDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Place)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActuallyUsedFromDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActuallyUsedToDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AssignedDriverEmpId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AssignedVehicleId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RequisitionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RequisitionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RequisitionId })
+        </td>
+    </tr>
+}
+
+</table>

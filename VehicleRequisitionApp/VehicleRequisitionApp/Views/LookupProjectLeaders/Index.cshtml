@@ -1,0 +1,46 @@
+﻿@model IEnumerable<VehicleRequisitionApp.Models.LookupProjectLeader>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SortingSerialNo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpInitial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SortingSerialNo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ProjectLeaderId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ProjectLeaderId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ProjectLeaderId })
+        </td>
+    </tr>
+}
+
+</table>

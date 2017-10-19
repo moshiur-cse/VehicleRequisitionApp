@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Vehicles Requisition System</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style type="text/css">
+        .footer_part {
+            margin-top: 10px;
+            text-align: center;
+            background: #ffe4e1;
+            padding: 10px;
+            width: 100%;
+            float: left;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                <img src="~/Images/VR-logo.png" style="height: 70px; padding: 5px" />
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (Session["UserId"] != null)
+                    {
+                        <li>
+                            @Html.ActionLink("Dashboard", "Dashboard", "User")
+                        </li>
+
+                        if(Session["UserName"].ToString() == "RMO")
+                         {
+                             <li class="dropdown" style="padding: 10px">
+                                 <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" style="background-color: #37A84A">
+                                     Admin Panel
+                                     <span class="caret"></span>
+                                 </button>
+                                 <ul class="dropdown-menu">
+                                     <li>@Html.ActionLink("Division", "Index", "LookUpDivisions")</li>
+
+                                     <li>@Html.ActionLink("Assing Employee Type", "Index", "LookUpEmployeeTypes")</li>
+
+                                     <li>@Html.ActionLink("Employee", "Index", "LookUpEmployees")</li>
+
+                                     <li>@Html.ActionLink("Management Type", "Index", "LookUpManagementTypes")</li>
+
+                                     <li>@Html.ActionLink("Assing Management", "Index", "TblManagementDetails")</li>
+
+                                     <li>@Html.ActionLink("Assing Director", "Index", "TblDirectors")</li>
+
+                                     <li>@Html.ActionLink("Create Projects", "Index", "LookupProjects")</li>
+
+                                     <li>@Html.ActionLink("Assign Project Leader", "Index", "LookupProjectLeaders")</li>
+
+                                     <li>@Html.ActionLink("User Groups", "Index", "LookupUserGroups")</li>
+
+                                     <li>@Html.ActionLink("User Group Distributions", "Index", "TblUserGroupDistributions")</li>
+
+                                     <li>@Html.ActionLink("Requisition Categories", "Index", "LookupRequisitionCategories")</li>
+
+                                     <li>@Html.ActionLink("Vehicles Details", "Index", "LookupVehicles")</li>
+
+                                     <li>@Html.ActionLink("Requisition", "Index", "TblRequisitionDetails")</li>
+
+                                     <li>@Html.ActionLink("Request Approval Details", "Index", "TblRequestApprovalDetails")</li>
+                                 </ul>
+                             </li>
+                         }
+                    }
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <h2 style="text-align: center; color: #000080; font-size: 40px; font-family: serif;">Vehicles Requisition System</h2>
+
+    <div class="container body-content">
+        <hr />
+        @RenderBody()
+        <hr />
+        <footer class="footer_part">
+            <p>Copyright @DateTime.Now.Year - All Rights Reserved By CEGIS</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
