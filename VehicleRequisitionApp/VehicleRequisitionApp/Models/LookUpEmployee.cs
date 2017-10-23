@@ -12,7 +12,10 @@ namespace VehicleRequisitionApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EmpId { get; set; }
-        public int SortingSerialNo { get; set; }
+        public int? SortingSerialNo { get; set; }
+        [Display(Name = "Pin No")]
+        public string EmpPinNo { get; set; }
+
         public int EmpTypeId { get; set; }
         [ForeignKey("EmpTypeId")]
         public virtual LookUpEmployeeType LookUpEmployeeType { get; set; }       

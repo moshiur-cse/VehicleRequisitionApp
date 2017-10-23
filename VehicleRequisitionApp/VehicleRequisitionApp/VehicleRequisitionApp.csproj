@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201710230345224_Version3.Designer.cs">
       <DependentUpon>201710230345224_Version3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710230530467_Version4.cs" />
+    <Compile Include="Migrations\201710230530467_Version4.Designer.cs">
+      <DependentUpon>201710230530467_Version4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangePassWord.cs" />
@@ -1143,11 +1147,6 @@
     <Content Include="Views\LookUpDivisions\Details.cshtml" />
     <Content Include="Views\LookUpDivisions\Edit.cshtml" />
     <Content Include="Views\LookUpDivisions\Index.cshtml" />
-    <Content Include="Views\LookUpEmployees\Create.cshtml" />
-    <Content Include="Views\LookUpEmployees\Delete.cshtml" />
-    <Content Include="Views\LookUpEmployees\Details.cshtml" />
-    <Content Include="Views\LookUpEmployees\Edit.cshtml" />
-    <Content Include="Views\LookUpEmployees\Index.cshtml" />
     <Content Include="Views\LookUpEmployeeTypes\Create.cshtml" />
     <Content Include="Views\LookUpEmployeeTypes\Delete.cshtml" />
     <Content Include="Views\LookUpEmployeeTypes\Details.cshtml" />
@@ -1212,6 +1211,11 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\User\ChangePassWord.cshtml" />
+    <Content Include="Views\LookUpEmployees\Create.cshtml" />
+    <Content Include="Views\LookUpEmployees\Delete.cshtml" />
+    <Content Include="Views\LookUpEmployees\Details.cshtml" />
+    <Content Include="Views\LookUpEmployees\Edit.cshtml" />
+    <Content Include="Views\LookUpEmployees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1230,6 +1234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710230345224_Version3.resx">
       <DependentUpon>201710230345224_Version3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710230530467_Version4.resx">
+      <DependentUpon>201710230530467_Version4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

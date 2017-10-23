@@ -4,8 +4,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using VehicleRequisitionApp.Models;
@@ -51,27 +49,11 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmpId,SortingSerialNo,EmpTypeId,EmpInitial,EmpFullName,EmpDivisionId,EmpDesignation,EmpLevel,EmpEmail,EmpMobile,EmpRoomNo,EmpPresentAddress,EmpNid,EmpPaasportNo,EmpBloodGroup,EmpHighestDegree,EmpHighestDegreeMajorSubject,EmpCareerSummary")] LookUpEmployee lookUpEmployee)
+        public ActionResult Create([Bind(Include = "EmpId,SortingSerialNo,EmpPinNo,EmpTypeId,EmpInitial,EmpFullName,EmpDivisionId,EmpDesignation,EmpLevel,EmpEmail,EmpMobile,EmpRoomNo,EmpPresentAddress,EmpNid,EmpPaasportNo,EmpBloodGroup,EmpHighestDegree,EmpHighestDegreeMajorSubject,EmpCareerSummary")] LookUpEmployee lookUpEmployee)
         {
-            StringBuilder hash = new StringBuilder();
-            MD5CryptoServiceProvider md5Provider = new MD5CryptoServiceProvider();
-            byte[] bytes = md5Provider.ComputeHash(new UTF8Encoding().GetBytes(lookUpEmployee.EmpInitial));
-
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                hash.Append(bytes[i].ToString("x2"));
-            }
-            string hashPass = hash.ToString();
-            TblUser aUser=new TblUser();
-
             if (ModelState.IsValid)
             {
                 db.LookUpEmployees.Add(lookUpEmployee);
-                db.SaveChanges();
-
-                aUser.EmpId = lookUpEmployee.EmpId;
-                aUser.Password = hashPass;
-                db.TblUsers.Add(aUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -103,7 +85,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmpId,SortingSerialNo,EmpTypeId,EmpInitial,EmpFullName,EmpDivisionId,EmpDesignation,EmpLevel,EmpEmail,EmpMobile,EmpRoomNo,EmpPresentAddress,EmpNid,EmpPaasportNo,EmpBloodGroup,EmpHighestDegree,EmpHighestDegreeMajorSubject,EmpCareerSummary")] LookUpEmployee lookUpEmployee)
+        public ActionResult Edit([Bind(Include = "EmpId,SortingSerialNo,EmpPinNo,EmpTypeId,EmpInitial,EmpFullName,EmpDivisionId,EmpDesignation,EmpLevel,EmpEmail,EmpMobile,EmpRoomNo,EmpPresentAddress,EmpNid,EmpPaasportNo,EmpBloodGroup,EmpHighestDegree,EmpHighestDegreeMajorSubject,EmpCareerSummary")] LookUpEmployee lookUpEmployee)
         {
             if (ModelState.IsValid)
             {
