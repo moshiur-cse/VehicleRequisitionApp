@@ -1,21 +1,35 @@
 ﻿@model VehicleRequisitionApp.Models.TblRequisitionDetail
 
+
+
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Styles {
+    @*<link href="~/BootstrapDatePicker/bootstrap.minDate.css" rel="stylesheet" />*@
+    @*<link href="~/BootstrapDatePicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="~/Content/jquery.datetimepicker.min.css" rel="stylesheet" />
+
+    @*<script src="~/Scripts/jquery.datetimepicker.full.js"></script>*@
+}
+
 <h2>Create</h2>
-
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
         <h4>TblRequisitionDetail</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.RequisitionCategoryId, "RequisitionCategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -41,17 +55,19 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RequestSubmissionDate, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            
+            @Html.LabelFor(model => model.RequestSubmissionDate, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RequestSubmissionDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RequestSubmissionDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.RequestSubmissionDate, new {htmlAttributes = new {@class = "form-control",id="Date1" } })
+                @Html.ValidationMessageFor(model => model.RequestSubmissionDate, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.RequiredFromDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RequiredFromDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.RequiredFromDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime1" } })
                 @Html.ValidationMessageFor(model => model.RequiredFromDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -59,7 +75,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RequiredToDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RequiredToDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.RequiredToDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime2" } })
                 @Html.ValidationMessageFor(model => model.RequiredToDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -78,21 +94,20 @@
                 @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
             </div>
-        </div>
-
+        </div>               
         <div class="form-group">
             @Html.LabelFor(model => model.ActuallyUsedFromDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control",id= "DateTime3" } })
+                @*@Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ActuallyUsedToDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime4" } })
+                @*@Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
@@ -100,7 +115,7 @@
             @Html.LabelFor(model => model.AssignedDriverEmpId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AssignedDriverEmpId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AssignedDriverEmpId, "", new { @class = "text-danger" })
+                @*@Html.ValidationMessageFor(model => model.AssignedDriverEmpId, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
@@ -108,7 +123,7 @@
             @Html.LabelFor(model => model.AssignedVehicleId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AssignedVehicleId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AssignedVehicleId, "", new { @class = "text-danger" })
+                @*@Html.ValidationMessageFor(model => model.AssignedVehicleId, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
@@ -125,5 +140,33 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/combodate.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+
+    <script type="text/javascript">
+        $('#DateTime1').datetimepicker({
+            
+            todayHighlight: true
+        });
+
+        $('#DateTime2').datetimepicker({
+
+        });
+
+        $('#DateTime3').datetimepicker({
+
+        });
+        $('#DateTime4').datetimepicker({
+
+            todayHighlight: true
+
+        });
+        $('#Date1').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd/mm/yyyy'
+        });      
+    </script>
 }

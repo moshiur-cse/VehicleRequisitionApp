@@ -12,30 +12,39 @@ namespace VehicleRequisitionApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RequisitionId { get; set; }
-
+        [Display(Name = "Requisition Category")]
         public int RequisitionCategoryId { get; set; }
 
         [ForeignKey("RequisitionCategoryId")]
         public virtual LookupRequisitionCategory LookupRequisitionCategorys { get; set; }
-
+        [Display(Name = "Initial")]
         public int EmpId { get; set; }
         [ForeignKey("EmpId")]
         public virtual LookUpEmployee LookUpEmployee { get; set; }
+
+        [Display(Name = "Project Code")]
         public int ProjectId { get; set; }
         [ForeignKey("ProjectId")]
         public virtual LookupProject LookupProject { get; set; }
 
+        [Display(Name = "Submission Date")]
         public DateTime RequestSubmissionDate { get; set; }
+
+        [Display(Name = "From")]
         public DateTime RequiredFromDate { get; set; }
+        [Display(Name = "To")]
         public DateTime RequiredToDate { get; set; }
 
         public string Place { get; set; }
         public string Reason { get; set; }
-        public DateTime ActuallyUsedFromDate { get; set; }
-        public DateTime ActuallyUsedToDate { get; set; }
-
-        public int AssignedDriverEmpId { get; set; }
-        public int AssignedVehicleId { get; set; }
+        [Display(Name = "From")]
+        public DateTime? ActuallyUsedFromDate { get; set; }
+        [Display(Name = "To")]
+        public DateTime? ActuallyUsedToDate { get; set; }
+        [Display(Name = "Assigned Driver")]
+        public int? AssignedDriverEmpId { get; set; }
+        [Display(Name = "Assigned Vehicle")]
+        public int? AssignedVehicleId { get; set; }
         
         
     }

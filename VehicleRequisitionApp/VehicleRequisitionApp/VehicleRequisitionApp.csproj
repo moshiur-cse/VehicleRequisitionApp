@@ -235,6 +235,14 @@
     <Compile Include="Migrations\201710190304018_Version1.Designer.cs">
       <DependentUpon>201710190304018_Version1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710230335577_Version2.cs" />
+    <Compile Include="Migrations\201710230335577_Version2.Designer.cs">
+      <DependentUpon>201710230335577_Version2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710230345224_Version3.cs" />
+    <Compile Include="Migrations\201710230345224_Version3.Designer.cs">
+      <DependentUpon>201710230345224_Version3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangePassWord.cs" />
@@ -260,10 +268,25 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="BootstrapDatePicker\bootstrap-datetimepicker.css" />
+    <Content Include="BootstrapDatePicker\bootstrap-datetimepicker.js" />
+    <Content Include="BootstrapDatePicker\bootstrap-datetimepicker.min.css" />
+    <Content Include="BootstrapDatePicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="BootstrapDatePicker\bootstrap-theme.minDate.css" />
+    <Content Include="BootstrapDatePicker\bootstrap-themeDate.css" />
+    <Content Include="BootstrapDatePicker\bootstrap.minDate.css" />
+    <Content Include="BootstrapDatePicker\bootstrap.minDate.js" />
+    <Content Include="BootstrapDatePicker\bootstrapDate.css" />
+    <Content Include="BootstrapDatePicker\bootstrapDate.js" />
+    <Content Include="BootstrapDatePicker\jquery-1.8.3.minDate.js" />
+    <Content Include="Content\bootstrap-datepicker.css" />
+    <Content Include="Content\bootstrap-datepicker.min.css" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery.datetimepicker.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -311,6 +334,9 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\combodate.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -1068,6 +1094,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.datetimepicker.full.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1197,6 +1224,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710190304018_Version1.resx">
       <DependentUpon>201710190304018_Version1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710230335577_Version2.resx">
+      <DependentUpon>201710230335577_Version2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710230345224_Version3.resx">
+      <DependentUpon>201710230345224_Version3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -52,6 +52,8 @@ namespace VehicleRequisitionApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
         {
+            
+
             if (ModelState.IsValid)
             {
                 db.TblRequisitionDetails.Add(tblRequisitionDetail);

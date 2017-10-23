@@ -4,7 +4,15 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+    @*<link href="~/BootstrapDatePicker/bootstrap.minDate.css" rel="stylesheet" />*@
+    @*<link href="~/BootstrapDatePicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.datetimepicker.min.css" rel="stylesheet" />
 
+    @*<script src="~/Scripts/jquery.datetimepicker.full.js"></script>*@
+}
 <h2>Create</h2>
 
 
@@ -51,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ProjectStartingDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ProjectStartingDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ProjectStartingDate, new { htmlAttributes = new { @class = "form-control",id= "Date1" } })
                 @Html.ValidationMessageFor(model => model.ProjectStartingDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -59,7 +67,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ProjectEndingDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ProjectEndingDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ProjectEndingDate, new { htmlAttributes = new { @class = "form-control", id = "Date2" } })
                 @Html.ValidationMessageFor(model => model.ProjectEndingDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -77,5 +85,23 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/combodate.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+
+    <script type="text/javascript">
+        $('#Date1').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd/mm/yyyy'
+
+        });
+        $('#Date2').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd/mm/yyyy'
+
+        });
+    </script>
 }
