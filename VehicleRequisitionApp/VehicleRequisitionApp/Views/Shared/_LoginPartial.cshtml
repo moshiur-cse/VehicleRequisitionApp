@@ -2,7 +2,7 @@
 
 @if (Session["UserName"] != null)
 {
-    using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Users", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
@@ -15,9 +15,12 @@
                     </button>
                     <ul class="dropdown-menu">
                         @*<li>@Html.ActionLink("Change Password", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})</li>*@
-                        <li>@Html.ActionLink("Change Password", "ChangePassWord", "User", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                        <li style="color: #37A84A"><a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a></li>
 
+                        <li>@Html.ActionLink("Update Profile", "Edit", "LookUpEmployees", new {id = Session["EmpId"]}, null)</li>
+                        <li>@Html.ActionLink("Update Profile Picture", "Create", "LookUpFileUploads", new { id = Session["EmpId"] }, null)</li>
+
+                        <li>@Html.ActionLink("Change Password", "ChangePassWord", "Users", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                        <li style="color: #37A84A"><a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a></li>
                     </ul>
                 </div>
             <li />
@@ -32,7 +35,7 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         @*<li>@Html.ActionLink("Register", "Register", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
-        <li>@Html.ActionLink("Log in", "LogIn", "User", routeValues: null, htmlAttributes: new {id = "loginLink"})</li>
+        <li>@Html.ActionLink("Log in", "LogIn", "Users", routeValues: null, htmlAttributes: new {id = "loginLink"})</li>
     </ul>
 }
 

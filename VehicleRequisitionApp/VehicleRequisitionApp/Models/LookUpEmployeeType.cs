@@ -13,6 +13,7 @@ namespace VehicleRequisitionApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EmpTypeId { get; set; }
         public int SortingSerialNo { get; set; }
+        [Display(Name = "Employee Type")]
         public string EmpType { get; set; }
         public virtual List<LookUpEmployee> LookUpEmployees { get; set; }
     }

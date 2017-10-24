@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -9,7 +10,7 @@ using VehicleRequisitionApp.Models;
 
 namespace VehicleRequisitionApp.Controllers
 {
-    public class UserController: Controller
+    public class UsersController: Controller
     {
         private MyDbContext db = new MyDbContext();
         public ActionResult LogIn()
@@ -22,7 +23,7 @@ namespace VehicleRequisitionApp.Controllers
         public ActionResult LogIn(TblUser user)
         {
             string initial="", name="";
-            int userId=0;
+            int userId=0, userGroupId=0;
             
             string hashPass = PassWordHash(user.Password);
            
@@ -37,6 +38,7 @@ namespace VehicleRequisitionApp.Controllers
                                     aUserId=u.U.UserId
                                 }).ToList();
 
+
             foreach (var item in userDetails)
             {
                 initial = item.Initial;
@@ -44,13 +46,16 @@ namespace VehicleRequisitionApp.Controllers
                 userId = item.aUserId;
 
             }
-            
+
+            userGroupId = db.TblUserGroupDistributions.Where(i => i.UserId == userId).Select(i => i.UserGroupsId).SingleOrDefault();
+
             if (isUser.Count()>0)
             {
                 Session["UserName"] = initial;
                 Session["FullName"] = name;
                 Session["UserId"] = userId;
                 Session["EmpId"] = user.EmpId;
+                Session["UserGroupId"] = userGroupId;
             }            
             else
             {
@@ -59,7 +64,7 @@ namespace VehicleRequisitionApp.Controllers
                 return View();
             }
          
-            return RedirectToAction("Dashboard", "User");
+            return RedirectToAction("Dashboard", "Users",new {id=Session["EmpId"]});
         }      
         public ActionResult Register()
         {
@@ -91,7 +96,7 @@ namespace VehicleRequisitionApp.Controllers
                     db.SaveChanges();
                 
                 TempData["Registration"] = "Registration Successfully";
-                return RedirectToAction("LogIn","User");
+                return RedirectToAction("LogIn","Users");
             }
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
             return View();
@@ -99,12 +104,31 @@ namespace VehicleRequisitionApp.Controllers
         public ActionResult LogOff()
         {
             Session.RemoveAll();
-            return RedirectToAction("LogIn", "User");
+            return RedirectToAction("LogIn", "Users");
         }
 
-        public ActionResult Dashboard()
-        {           
-            return View();
+        public ActionResult Dashboard(int? id)
+        {
+
+
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LookUpEmployee lookUpEmployee = db.LookUpEmployees.Find(id);
+            if (lookUpEmployee == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.Image = db.LookUpFileUploads.Where(i => i.EmpId == id).Select(i => i.FileName).SingleOrDefault();
+
+
+            return View(lookUpEmployee);
+            //return View();
         }
         public ActionResult ChangePassWord()
         {

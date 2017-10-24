@@ -48,7 +48,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DirectorId,SortingSerialNo,EmpId")] TblDirector tblDirector)
+        public ActionResult Create([Bind(Include = "DirectorId,EmpId")] TblDirector tblDirector)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DirectorId,SortingSerialNo,EmpId")] TblDirector tblDirector)
+        public ActionResult Edit([Bind(Include = "DirectorId,EmpId")] TblDirector tblDirector)
         {
             if (ModelState.IsValid)
             {

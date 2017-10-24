@@ -15,10 +15,24 @@ namespace VehicleRequisitionApp.Controllers
         private MyDbContext db = new MyDbContext();
 
         // GET: TblRequisitionDetails
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var tblRequisitionDetails = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys);
-            return View(tblRequisitionDetails.ToList());
+            var findRequest = db.TblRequisitionDetails.Where(i => i.EmpId == id).ToList();
+
+            if (findRequest.Count>0)
+            {
+                var tblRequisitionDetail = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys).Where(i=>i.EmpId==id).ToList();
+                return View(tblRequisitionDetail);
+
+            }
+            if (id!= null)
+            {
+                var tblRequisitionDetail = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys).Where(i => i.EmpId == id).ToList();
+                return View(tblRequisitionDetail);
+            }
+                
+            var tblRequisitionDetails = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys).ToList();
+            return View(tblRequisitionDetails);                                   
         }
 
         // GET: TblRequisitionDetails/Details/5
@@ -37,9 +51,11 @@ namespace VehicleRequisitionApp.Controllers
         }
 
         // GET: TblRequisitionDetails/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
+            id = Convert.ToInt32(Session["EmpId"]);
+
+            ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i=>i.EmpId==id), "EmpId", "EmpInitial");
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode");
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory");
             return View();
@@ -58,15 +74,19 @@ namespace VehicleRequisitionApp.Controllers
             {
                 db.TblRequisitionDetails.Add(tblRequisitionDetail);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                if (Session["UserName"].ToString() == "RMO")
+                {
+                    return RedirectToAction("Index");
+                }
+                return RedirectToAction("Index","TblRequisitionDetails",new {id=Session["EmpId"]});
             }
 
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial", tblRequisitionDetail.EmpId);
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode", tblRequisitionDetail.ProjectId);
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
+
             return View(tblRequisitionDetail);
         }
-
         // GET: TblRequisitionDetails/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -103,7 +123,6 @@ namespace VehicleRequisitionApp.Controllers
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
             return View(tblRequisitionDetail);
         }
-
         // GET: TblRequisitionDetails/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -118,7 +137,6 @@ namespace VehicleRequisitionApp.Controllers
             }
             return View(tblRequisitionDetail);
         }
-
         // POST: TblRequisitionDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -129,7 +147,6 @@ namespace VehicleRequisitionApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -43,8 +43,17 @@ namespace VehicleRequisitionApp.Controllers
 
             //ViewBag.UserId = new SelectList(db.TblUsers, "UserId", "UserId");
 
-            var userDetails =db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, uir => uir.EmpId, (u, uir) => new {u, uir}).ToList();
-            ViewBag.UserId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
+            
+
+            var userDetails = db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, e => e.EmpId, (u, e) => new { U = u, E = e }).
+                                Select(i => new
+                                {
+                                    initial =i.E.EmpInitial ,
+                                    userId = i.U.UserId
+                                }).ToList();
+
+
+            ViewBag.UserId = new SelectList(userDetails, "userId", "initial");
 
 
 
@@ -66,7 +75,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserGroupDistributionId,SortingSerialNo,UserGroupsId,UserId")] TblUserGroupDistribution tblUserGroupDistribution)
+        public ActionResult Create([Bind(Include = "UserGroupDistributionId,UserGroupsId,UserId")] TblUserGroupDistribution tblUserGroupDistribution)
         {
             if (ModelState.IsValid)
             {
@@ -77,6 +86,8 @@ namespace VehicleRequisitionApp.Controllers
 
             ViewBag.UserGroupsId = new SelectList(db.LookupUserGroups, "UserGroupsId", "UserGroupName", tblUserGroupDistribution.UserGroupsId);
             ViewBag.UserId = new SelectList(db.TblUsers, "UserId", "Password", tblUserGroupDistribution.UserId);
+
+
             return View(tblUserGroupDistribution);
         }
 
@@ -93,7 +104,16 @@ namespace VehicleRequisitionApp.Controllers
                 return HttpNotFound();
             }
             ViewBag.UserGroupsId = new SelectList(db.LookupUserGroups, "UserGroupsId", "UserGroupName", tblUserGroupDistribution.UserGroupsId);
-            ViewBag.UserId = new SelectList(db.TblUsers, "UserId", "Password", tblUserGroupDistribution.UserId);
+            // ViewBag.UserId = new SelectList(db.TblUsers, "UserId", "Password", tblUserGroupDistribution.UserId);
+            var userDetails = db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, e => e.EmpId, (u, e) => new { U = u, E = e }).
+                                 Select(i => new
+                                 {
+                                     initial = i.E.EmpInitial,
+                                     userId = i.U.UserId
+                                 }).ToList();
+
+
+            ViewBag.UserId = new SelectList(userDetails, "userId", "initial");
             return View(tblUserGroupDistribution);
         }
 
@@ -102,7 +122,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserGroupDistributionId,SortingSerialNo,UserGroupsId,UserId")] TblUserGroupDistribution tblUserGroupDistribution)
+        public ActionResult Edit([Bind(Include = "UserGroupDistributionId,UserGroupsId,UserId")] TblUserGroupDistribution tblUserGroupDistribution)
         {
             if (ModelState.IsValid)
             {
@@ -111,7 +131,16 @@ namespace VehicleRequisitionApp.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.UserGroupsId = new SelectList(db.LookupUserGroups, "UserGroupsId", "UserGroupName", tblUserGroupDistribution.UserGroupsId);
-            ViewBag.UserId = new SelectList(db.TblUsers, "UserId", "Password", tblUserGroupDistribution.UserId);
+            //ViewBag.UserId = new SelectList(db.TblUsers, "UserId", "Password", tblUserGroupDistribution.UserId);
+            var userDetails = db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, e => e.EmpId, (u, e) => new { U = u, E = e }).
+                                Select(i => new
+                                {
+                                    initial = i.E.EmpInitial,
+                                    userId = i.U.UserId
+                                }).ToList();
+
+
+            ViewBag.UserId = new SelectList(userDetails, "userId", "initial");
             return View(tblUserGroupDistribution);
         }
 

@@ -12,7 +12,6 @@ namespace VehicleRequisitionApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserGroupsId { get; set; }
-        public int SortingSerialNo { get; set; }
         public string UserGroupName { get; set; }
         public virtual List<TblUserGroupDistribution> TblUserGroupDistributions { get; set; }
     }

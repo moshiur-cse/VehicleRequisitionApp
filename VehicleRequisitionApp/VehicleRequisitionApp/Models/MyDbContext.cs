@@ -27,6 +27,8 @@ namespace VehicleRequisitionApp.Models
         public DbSet<TblUserGroupDistribution> TblUserGroupDistributions { get; set; }
         public DbSet<LookupRequisitionCategory> LookupRequisitionCategorys { get; set; }
 
+        public DbSet<LookUpFileUpload> LookUpFileUploads { get; set; }
+
 
 
 

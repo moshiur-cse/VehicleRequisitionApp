@@ -46,7 +46,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserGroupsId,SortingSerialNo,UserGroupName")] LookupUserGroup lookupUserGroup)
+        public ActionResult Create([Bind(Include = "UserGroupsId,UserGroupName")] LookupUserGroup lookupUserGroup)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserGroupsId,SortingSerialNo,UserGroupName")] LookupUserGroup lookupUserGroup)
+        public ActionResult Edit([Bind(Include = "UserGroupsId,UserGroupName")] LookupUserGroup lookupUserGroup)
         {
             if (ModelState.IsValid)
             {

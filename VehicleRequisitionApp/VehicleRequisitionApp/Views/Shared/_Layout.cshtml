@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.ServiceModel.Channels
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -36,10 +37,12 @@
                     @if (Session["UserId"] != null)
                     {
                         <li>
-                            @Html.ActionLink("Dashboard", "Dashboard", "User")
+                            @Html.ActionLink("Dashboard", "Dashboard",  "Users", new { id = Session["EmpId"] }, new { @class = "black" })
+
+                            @*<a href="/User/Dashboard/1">Dashboard</a>*@
                         </li>
 
-                        if(Session["UserName"].ToString() == "RMO")
+                        if(Convert.ToInt32(Session["UserGroupId"]) == 7)
                          {
                              <li class="dropdown" style="padding: 10px">
                                  <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" style="background-color: #37A84A">
@@ -76,7 +79,9 @@
                                      <li>@Html.ActionLink("Request Approval Details", "Index", "TblRequestApprovalDetails")</li>
                                  </ul>
                              </li>
-                         }
+                        }
+                        <li>@Html.ActionLink("Add Request", "Create", "TblRequisitionDetails")</li>
+                        <li>@Html.ActionLink("Request Status", "Index", "TblRequisitionDetails",new {id=Session["EmpId"]},null)</li>
                     }
 
                 </ul>

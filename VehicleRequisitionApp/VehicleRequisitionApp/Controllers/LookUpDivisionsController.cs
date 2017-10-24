@@ -38,6 +38,8 @@ namespace VehicleRequisitionApp.Controllers
         // GET: LookUpDivisions/Create
         public ActionResult Create()
         {
+            ViewBag.HtmlStr = "";
+
             return View();
         }
 

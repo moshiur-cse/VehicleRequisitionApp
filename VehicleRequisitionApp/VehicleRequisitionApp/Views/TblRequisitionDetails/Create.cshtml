@@ -98,7 +98,7 @@
                         @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="display: none">
                     @Html.LabelFor(model => model.ActuallyUsedFromDate, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime3" } })
@@ -106,7 +106,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="display: none">
                     @Html.LabelFor(model => model.ActuallyUsedToDate, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime4" } })
@@ -114,7 +114,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="display: none">
                     @Html.LabelFor(model => model.AssignedDriverEmpId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.AssignedDriverEmpId, new { htmlAttributes = new { @class = "form-control" } })
@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="display: none">
                     @Html.LabelFor(model => model.AssignedVehicleId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.AssignedVehicleId, new { htmlAttributes = new { @class = "form-control" } })

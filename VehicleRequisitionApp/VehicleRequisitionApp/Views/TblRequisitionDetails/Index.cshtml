@@ -89,11 +89,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.AssignedVehicleId)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RequisitionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RequisitionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RequisitionId })
-        </td>
+        @if (Session["UserName"].ToString() == "RMO")
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.RequisitionId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.RequisitionId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.RequisitionId})
+            </td>
+        }
     </tr>
 }
 

@@ -12,7 +12,6 @@ namespace VehicleRequisitionApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RequisitionCategoryId { get; set; }
-        public int SortingSerialNo { get; set; }
         public string RequisitionCategory { get; set; }
 
         public virtual List<TblRequisitionDetail> TblRequisitionDetails { get; set; }

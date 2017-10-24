@@ -215,6 +215,7 @@
     <Compile Include="Controllers\LookUpDivisionsController.cs" />
     <Compile Include="Controllers\LookUpEmployeesController.cs" />
     <Compile Include="Controllers\LookUpEmployeeTypesController.cs" />
+    <Compile Include="Controllers\LookUpFileUploadsController.cs" />
     <Compile Include="Controllers\LookUpManagementTypesController.cs" />
     <Compile Include="Controllers\LookupProjectLeadersController.cs" />
     <Compile Include="Controllers\LookupProjectsController.cs" />
@@ -227,7 +228,7 @@
     <Compile Include="Controllers\TblRequestApprovalDetailsController.cs" />
     <Compile Include="Controllers\TblRequisitionDetailsController.cs" />
     <Compile Include="Controllers\TblUserGroupDistributionsController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -247,6 +248,14 @@
     <Compile Include="Migrations\201710230530467_Version4.Designer.cs">
       <DependentUpon>201710230530467_Version4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710230706454_Version5.cs" />
+    <Compile Include="Migrations\201710230706454_Version5.Designer.cs">
+      <DependentUpon>201710230706454_Version5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710240706387_Version6.cs" />
+    <Compile Include="Migrations\201710240706387_Version6.Designer.cs">
+      <DependentUpon>201710240706387_Version6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangePassWord.cs" />
@@ -258,6 +267,7 @@
     <Compile Include="Models\LookupProject.cs" />
     <Compile Include="Models\LookupProjectLeader.cs" />
     <Compile Include="Models\LookupRequisitionCategory.cs" />
+    <Compile Include="Models\LookUpFileUpload.cs" />
     <Compile Include="Models\LookupUserGroup.cs" />
     <Compile Include="Models\LookupVehicles.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -1107,6 +1117,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="UploadedFiles\Photo_orginal.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1207,15 +1218,20 @@
     <Content Include="Views\TblUserGroupDistributions\Details.cshtml" />
     <Content Include="Views\TblUserGroupDistributions\Edit.cshtml" />
     <Content Include="Views\TblUserGroupDistributions\Index.cshtml" />
-    <Content Include="Views\User\LogIn.cshtml" />
-    <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\User\Dashboard.cshtml" />
-    <Content Include="Views\User\ChangePassWord.cshtml" />
+    <Content Include="Views\Users\LogIn.cshtml" />
+    <Content Include="Views\Users\Register.cshtml" />
+    <Content Include="Views\Users\Dashboard.cshtml" />
+    <Content Include="Views\Users\ChangePassWord.cshtml" />
     <Content Include="Views\LookUpEmployees\Create.cshtml" />
     <Content Include="Views\LookUpEmployees\Delete.cshtml" />
     <Content Include="Views\LookUpEmployees\Details.cshtml" />
     <Content Include="Views\LookUpEmployees\Edit.cshtml" />
     <Content Include="Views\LookUpEmployees\Index.cshtml" />
+    <Content Include="Views\LookUpFileUploads\Create.cshtml" />
+    <Content Include="Views\LookUpFileUploads\Delete.cshtml" />
+    <Content Include="Views\LookUpFileUploads\Details.cshtml" />
+    <Content Include="Views\LookUpFileUploads\Edit.cshtml" />
+    <Content Include="Views\LookUpFileUploads\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1237,6 +1253,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710230530467_Version4.resx">
       <DependentUpon>201710230530467_Version4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710230706454_Version5.resx">
+      <DependentUpon>201710230706454_Version5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240706387_Version6.resx">
+      <DependentUpon>201710240706387_Version6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

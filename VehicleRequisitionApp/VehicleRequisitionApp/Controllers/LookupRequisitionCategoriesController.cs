@@ -46,7 +46,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RequisitionCategoryId,SortingSerialNo,RequisitionCategory")] LookupRequisitionCategory lookupRequisitionCategory)
+        public ActionResult Create([Bind(Include = "RequisitionCategoryId,RequisitionCategory")] LookupRequisitionCategory lookupRequisitionCategory)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RequisitionCategoryId,SortingSerialNo,RequisitionCategory")] LookupRequisitionCategory lookupRequisitionCategory)
+        public ActionResult Edit([Bind(Include = "RequisitionCategoryId,RequisitionCategory")] LookupRequisitionCategory lookupRequisitionCategory)
         {
             if (ModelState.IsValid)
             {

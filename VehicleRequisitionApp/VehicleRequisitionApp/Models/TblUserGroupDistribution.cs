@@ -12,9 +12,8 @@ namespace VehicleRequisitionApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserGroupDistributionId { get; set; }
-
-        public int SortingSerialNo { get; set; }
         public int UserGroupsId { get; set; }
+
         [ForeignKey("UserGroupsId")]
         public virtual LookupUserGroup LookupUserGroup { get; set; }
 
