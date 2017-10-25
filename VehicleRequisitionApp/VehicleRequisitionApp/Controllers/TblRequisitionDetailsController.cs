@@ -17,20 +17,38 @@ namespace VehicleRequisitionApp.Controllers
         // GET: TblRequisitionDetails
         public ActionResult Index(int? id)
         {
-            var findRequest = db.TblRequisitionDetails.Where(i => i.EmpId == id).ToList();
-
-            if (findRequest.Count>0)
+            if (Session["UserId"] == null)
             {
-                var tblRequisitionDetail = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys).Where(i=>i.EmpId==id).ToList();
-                return View(tblRequisitionDetail);
+                return RedirectToAction("LogIn", "Users");
+            }
 
-            }
-            if (id!= null)
+            if (Convert.ToInt32(Session["UserGroupId"])== 1)
             {
-                var tblRequisitionDetail = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys).Where(i => i.EmpId == id).ToList();
-                return View(tblRequisitionDetail);
+                var findRequest = db.TblRequisitionDetails.Where(i => i.EmpId == id).ToList();
+                if (findRequest.Count > 0)
+                {
+                    var tblRequisitionDetail =
+                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                            .Include(t => t.LookupProject)
+                            .Include(t => t.LookupRequisitionCategorys)
+                            .Where(i => i.EmpId == id)
+                            .ToList();
+                    return View(tblRequisitionDetail);
+
+                }
+
+                if (id != null)
+                {
+                    var tblRequisitionDetail =
+                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                            .Include(t => t.LookupProject)
+                            .Include(t => t.LookupRequisitionCategorys)
+                            .Where(i => i.EmpId == id)
+                            .ToList();
+                    return View(tblRequisitionDetail);
+                }
             }
-                
+
             var tblRequisitionDetails = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys).ToList();
             return View(tblRequisitionDetails);                                   
         }
@@ -38,6 +56,10 @@ namespace VehicleRequisitionApp.Controllers
         // GET: TblRequisitionDetails/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -53,6 +75,10 @@ namespace VehicleRequisitionApp.Controllers
         // GET: TblRequisitionDetails/Create
         public ActionResult Create(int? id)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             id = Convert.ToInt32(Session["EmpId"]);
 
             ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i=>i.EmpId==id), "EmpId", "EmpInitial");
@@ -68,7 +94,11 @@ namespace VehicleRequisitionApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
         {
-            
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
+
 
             if (ModelState.IsValid)
             {
@@ -90,6 +120,10 @@ namespace VehicleRequisitionApp.Controllers
         // GET: TblRequisitionDetails/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -112,6 +146,10 @@ namespace VehicleRequisitionApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(tblRequisitionDetail).State = EntityState.Modified;
@@ -126,6 +164,10 @@ namespace VehicleRequisitionApp.Controllers
         // GET: TblRequisitionDetails/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -142,6 +184,10 @@ namespace VehicleRequisitionApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             TblRequisitionDetail tblRequisitionDetail = db.TblRequisitionDetails.Find(id);
             db.TblRequisitionDetails.Remove(tblRequisitionDetail);
             db.SaveChanges();

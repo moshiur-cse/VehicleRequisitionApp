@@ -19,6 +19,10 @@ namespace VehicleRequisitionApp.Controllers
         // GET: LookUpEmployees
         public ActionResult Index()
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             var lookUpEmployees = db.LookUpEmployees.Include(l => l.LookUpDivision).Include(l => l.LookUpEmployeeType);
             return View(lookUpEmployees.ToList());
         }
@@ -26,6 +30,10 @@ namespace VehicleRequisitionApp.Controllers
         // GET: LookUpEmployees/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -41,6 +49,10 @@ namespace VehicleRequisitionApp.Controllers
         // GET: LookUpEmployees/Create
         public ActionResult Create()
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             ViewBag.EmpDivisionId = new SelectList(db.LookUpDivisions, "DivisionId", "DivFullName");
             ViewBag.EmpTypeId = new SelectList(db.LookUpEmployeeTypes, "EmpTypeId", "EmpType");
             return View();
@@ -53,6 +65,10 @@ namespace VehicleRequisitionApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EmpId,SortingSerialNo,EmpPinNo,EmpTypeId,EmpInitial,EmpFullName,EmpDivisionId,EmpDesignation,EmpLevel,EmpEmail,EmpMobile,EmpRoomNo,EmpPresentAddress,EmpNid,EmpPaasportNo,EmpBloodGroup,EmpHighestDegree,EmpHighestDegreeMajorSubject,EmpCareerSummary")] LookUpEmployee lookUpEmployee)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             TblUser aUser=new TblUser();
             TblUserGroupDistribution aGroupUser=new TblUserGroupDistribution();
             LookUpFileUpload aFile=new LookUpFileUpload();
@@ -88,6 +104,10 @@ namespace VehicleRequisitionApp.Controllers
         // GET: LookUpEmployees/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -109,6 +129,10 @@ namespace VehicleRequisitionApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EmpId,SortingSerialNo,EmpPinNo,EmpTypeId,EmpInitial,EmpFullName,EmpDivisionId,EmpDesignation,EmpLevel,EmpEmail,EmpMobile,EmpRoomNo,EmpPresentAddress,EmpNid,EmpPaasportNo,EmpBloodGroup,EmpHighestDegree,EmpHighestDegreeMajorSubject,EmpCareerSummary")] LookUpEmployee lookUpEmployee)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(lookUpEmployee).State = EntityState.Modified;
@@ -123,6 +147,10 @@ namespace VehicleRequisitionApp.Controllers
         // GET: LookUpEmployees/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -140,6 +168,10 @@ namespace VehicleRequisitionApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             LookUpEmployee lookUpEmployee = db.LookUpEmployees.Find(id);
             db.LookUpEmployees.Remove(lookUpEmployee);
             db.SaveChanges();

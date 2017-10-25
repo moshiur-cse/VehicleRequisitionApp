@@ -4,6 +4,37 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section styles{
+    <style>
+        #image {
+            float: left;
+            border: 3px solid #ccc;
+            width: 160px;
+            height: 180px;
+            overflow: hidden;
+            background-size: 100% 100%;
+            background-color: #fff;
+            background-repeat: no-repeat;
+        }
+
+            #image strong {
+                position: relative;
+                right: 0px;
+                bottom: -142px;
+                float: right;
+                border: 1px solid #ddd;
+                padding: 5px 8px;
+                color: #2383d7;
+                background-color: rgba(250, 250, 250, 0.85);
+                transition: bottom .5s ease-out;
+            }
+
+            #image:hover strong {
+                bottom: 0px;
+            }
+    </style>
+
+}
 
 <h2>@ViewBag.Message</h2>
 
@@ -12,37 +43,52 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>LookUpFileUpload</h4>
+        <h4>Picture Upload</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-
         <div class="form-group">
-            @Html.LabelFor(model => model.FileName, "Uplaod file", htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.FileName, "Change Profile Picture", htmlAttributes: new { @class = "control-label col-md-2" })
+
             <div class="col-md-10">
-                @Html.TextBox("file", "", new {type = "file"})
+                <label>
+                    <div id="image">
+                        <strong>Browse</strong>
+                    </div>
+                    @*<input style="display: none" accept="image/*" id="inputImage" type="file" class="upload_files" data-filename-placement="image upload" access="image/*"/>*@
+                    @Html.TextBox("file", "", new { type = "file", accept = "image/*", id = "inputImage", style = "display: none" })
+                </label>
             </div>
+
+            <label style="color: red">* Resulation Must Be 180*160 and Maximum Size 100 KB</label>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FileName, "Uplaod file", htmlAttributes: new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.FileName, "Uplaod file", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <img src="~/UploadedFiles/@Model.FileName" height="180" width="160" />
+                </div>
+            </div>*@
+
+        <div class="form-group" style="display: none">
+            @Html.LabelFor(model => model.EmpId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <img src="~/UploadedFiles/@Model.FileName" height="180" width="160"/>
+                @Html.EditorFor(model => model.EmpId, new { htmlAttributes = new { @class = "form-control", @Value = Model.EmpId } })
+                @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group" style="display: none">
-            @Html.LabelFor(model => model.EmpId, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.FileId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EmpId, new {htmlAttributes = new {@class = "form-control", @Value = Model.EmpId}})
-                @Html.ValidationMessageFor(model => model.EmpId, "", new {@class = "text-danger"})
+                <input type="text" value=@Model.FileId name="id" />
+                @*@Html.EditorFor(model => model.FileId, new {htmlAttributes = new {@class = "form-control", @Value = Model.FileId}})
+                    @Html.ValidationMessageFor(model => model.EmpId, "", new {@class = "text-danger"})*@
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Upload" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -53,7 +99,32 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-        
+        var urls = "/UploadedFiles/";
+
+        $(document).ready(function () {
+
+            var inputImage = "@Model.FileName";
+
+            var imgUrl = urls + "no_img.png";
+
+            var imgText = " Upload";
+
+            if (inputImage != '') {
+                imgUrl = urls + inputImage;
+                imgText = "Change ";
+            }
+
+            $("#image").css("background-image", "url('" + imgUrl + "')");
+            $("#image strong").html(imgText);
+
+
+            $("#inputImage").on("change", function (evt) {
+                var imgTempPath = URL.createObjectURL(evt.target.files[0]);
+                $("#image").css("background-image", "url('" + imgTempPath + "')");
+                $("#image strong").html("Change");
+            });
+        });
+
     </script>
-    
+
 }

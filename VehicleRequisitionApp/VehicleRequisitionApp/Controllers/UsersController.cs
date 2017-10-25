@@ -68,6 +68,10 @@ namespace VehicleRequisitionApp.Controllers
         }      
         public ActionResult Register()
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
             return View();
         }
@@ -76,6 +80,10 @@ namespace VehicleRequisitionApp.Controllers
         [AllowAnonymous]
         public ActionResult Register(TblUser user)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             TblUser aTblUser = new TblUser();
 
             StringBuilder hash = new StringBuilder();
@@ -110,7 +118,6 @@ namespace VehicleRequisitionApp.Controllers
         public ActionResult Dashboard(int? id)
         {
 
-
             if (Session["UserId"] == null)
             {
                 return RedirectToAction("LogIn", "Users");
@@ -132,12 +139,20 @@ namespace VehicleRequisitionApp.Controllers
         }
         public ActionResult ChangePassWord()
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             TempData["Error"] = "";
             return View();
         }
         [HttpPost]
         public ActionResult ChangePassWord(ChangePassWord user)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
             string oldPass=PassWordHash(user.OldPassword);
 
             var isUser = db.TblUsers.Where(u => u.UserId == user.UserId && u.Password == oldPass);

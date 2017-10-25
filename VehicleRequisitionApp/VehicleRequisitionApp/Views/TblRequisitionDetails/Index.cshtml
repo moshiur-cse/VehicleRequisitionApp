@@ -36,68 +36,87 @@
         <th>
             @Html.DisplayNameFor(model => model.Reason)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActuallyUsedFromDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActuallyUsedToDate)
-        </th>
+        @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.ActuallyUsedFromDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActuallyUsedToDate)
+            </th>
+        }
         <th>
             @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AssignedVehicleId)
         </th>
+        @if (Convert.ToInt32(Session["UserGroupId"])!= 1)
+        {
+            <th>
+                Status
+            </th>
+        }
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpInitial)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequestSubmissionDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequiredFromDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequiredToDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Place)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Reason)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActuallyUsedFromDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActuallyUsedToDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AssignedDriverEmpId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AssignedVehicleId)
-        </td>
-        @if (Session["UserName"].ToString() == "RMO")
-        {
+    @foreach (var item in Model)
+    {
+        <tr>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.RequisitionId}) |
-                @Html.ActionLink("Details", "Details", new {id = item.RequisitionId}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.RequisitionId})
+                @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpInitial)
             </td>
-        }
-    </tr>
-}
+            <td>
+                @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestSubmissionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequiredFromDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequiredToDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActuallyUsedFromDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActuallyUsedToDate)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.AssignedDriverEmpId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssignedVehicleId)
+            </td>
+            @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+            {
+                <td>
+                    <button class="btn-success">Approve</button>
+                </td>
+            }
+            @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+            {
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })
+                </td>
+            }
+        </tr>
+    }
 
 </table>

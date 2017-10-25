@@ -82,21 +82,36 @@ namespace VehicleRequisitionApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "FileId,FileName,EmpId")] LookUpFileUpload lookUpFileUpload)
-        public ActionResult Create(HttpPostedFileBase file,[Bind(Include = "FileId,FileName,EmpId")] LookUpFileUpload lookUpFileUpload)
-        {           
-                try
+        public ActionResult Create(HttpPostedFileBase file,[Bind(Include = "FileId,FileName,EmpId")] LookUpFileUpload lookUpFileUpload,int? id)
+        {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "Users");
+            }
+
+            LookUpFileUpload fileUp = db.LookUpFileUploads.Find(id);            
+            db.LookUpFileUploads.Remove(fileUp);
+            db.SaveChanges();
+            string fullPath = Request.MapPath("~/UploadedFiles/" + fileUp.FileName);
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+
+            try
                 {
                     if (file.ContentLength > 0)
                     {
-                        string fileName = Path.GetFileName(file.FileName);
-                        string path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName);
+                        string fileNames = Path.GetFileName(file.FileName);
+                        string path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileNames);
                         file.SaveAs(path);
-                        lookUpFileUpload.FileName = fileName;
+                        lookUpFileUpload.FileName = fileNames;
                     }
+
                     ViewBag.Message = "File Uploaded Successfully!!";                    
                     db.LookUpFileUploads.Add(lookUpFileUpload);
                     db.SaveChanges();
-                    return View();
+                    return RedirectToAction("Dashboard","Users",new {id=Convert.ToInt32(Session["EmpId"])});
                 }
                 catch
                 {
