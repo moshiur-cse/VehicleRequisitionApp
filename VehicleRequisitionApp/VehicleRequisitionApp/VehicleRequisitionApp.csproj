@@ -228,7 +228,7 @@
     <Compile Include="Controllers\TblRequestApprovalDetailsController.cs" />
     <Compile Include="Controllers\TblRequisitionDetailsController.cs" />
     <Compile Include="Controllers\TblUserGroupDistributionsController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\TblUsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -256,6 +256,14 @@
     <Compile Include="Migrations\201710240706387_Version6.Designer.cs">
       <DependentUpon>201710240706387_Version6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710250857157_Version7.cs" />
+    <Compile Include="Migrations\201710250857157_Version7.Designer.cs">
+      <DependentUpon>201710250857157_Version7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710250953127_Version8.cs" />
+    <Compile Include="Migrations\201710250953127_Version8.Designer.cs">
+      <DependentUpon>201710250953127_Version8.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangePassWord.cs" />
@@ -270,6 +278,7 @@
     <Compile Include="Models\LookUpFileUpload.cs" />
     <Compile Include="Models\LookupUserGroup.cs" />
     <Compile Include="Models\LookupVehicles.cs" />
+    <Compile Include="Models\LoopUpRedirectPage.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MyDbContext.cs" />
     <Compile Include="Models\TblDirector.cs" />
@@ -1218,10 +1227,10 @@
     <Content Include="Views\TblUserGroupDistributions\Details.cshtml" />
     <Content Include="Views\TblUserGroupDistributions\Edit.cshtml" />
     <Content Include="Views\TblUserGroupDistributions\Index.cshtml" />
-    <Content Include="Views\Users\LogIn.cshtml" />
-    <Content Include="Views\Users\Register.cshtml" />
-    <Content Include="Views\Users\Dashboard.cshtml" />
-    <Content Include="Views\Users\ChangePassWord.cshtml" />
+    <Content Include="Views\TblUsers\LogIn.cshtml" />
+    <Content Include="Views\TblUsers\Register.cshtml" />
+    <Content Include="Views\TblUsers\Dashboard.cshtml" />
+    <Content Include="Views\TblUsers\ChangePassWord.cshtml" />
     <Content Include="Views\LookUpEmployees\Create.cshtml" />
     <Content Include="Views\LookUpEmployees\Delete.cshtml" />
     <Content Include="Views\LookUpEmployees\Details.cshtml" />
@@ -1259,6 +1268,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710240706387_Version6.resx">
       <DependentUpon>201710240706387_Version6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710250857157_Version7.resx">
+      <DependentUpon>201710250857157_Version7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710250953127_Version8.resx">
+      <DependentUpon>201710250953127_Version8.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -10,9 +10,7 @@ namespace VehicleRequisitionApp.Models
     public class LookUpDivision
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
-        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
         public int DivisionId { get; set; }
         [Display(Name = "Division Short Name")]
         public string DivShortName { get; set; }

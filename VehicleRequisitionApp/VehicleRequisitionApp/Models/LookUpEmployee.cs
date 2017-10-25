@@ -13,7 +13,11 @@ namespace VehicleRequisitionApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EmpId { get; set; }
         public int? SortingSerialNo { get; set; }
+
+
         [Display(Name = "Pin No")]
+        [Index("PinNo", IsUnique = true)]
+        [StringLength(50, MinimumLength = 3)]
         public string EmpPinNo { get; set; }
         [Display(Name = "Employee Type")]
         public int EmpTypeId { get; set; }

@@ -1,45 +1,41 @@
-﻿@using VehicleRequisitionApp.Models
-@using Microsoft.AspNet.Identity
-@model VehicleRequisitionApp.Models.TblUser
+﻿@model VehicleRequisitionApp.Models.TblUser
 @{
-    ViewBag.Title = "LogIn";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Register";
 }
 
 <div class="row">
-    
+    <label style="Color:Green">@TempData["Registration"]</label>
     <div class="col-lg-12">
         <div id="loginbox" style="margin-top: 0;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            <label style="Color:Red">@TempData["Registration"]</label>
             <div class="panel panel-info">
 
                 <div class="panel-heading">
-                    <div class="panel-title">Sign In</div>
+                    <div class="panel-title">Registration</div>
                     <div style="float: right; font-size: 80%; position: relative; top: -10px">
-                        <a href="#">Forgot password?</a>
+                        @Html.ActionLink("Sign In Now!", "LogIn", "TblUsers")
                     </div>
                 </div>
                 <div style="padding-top: 20px" class="panel-body">
                     <div style="display: none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
-                    @using (Html.BeginForm("LogIn", "Users", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+                    @using (Html.BeginForm("Register", "TblUsers", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.LookUpEmployee.EmpInitial, "Initial", htmlAttributes: new {@class = "control-label col-md-2"})
+                            @Html.LabelFor(model => model.LookUpEmployee.EmpInitial, "Initial", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("EmpId", null, htmlAttributes: new {@class = "form-control"})
-                                @Html.ValidationMessageFor(model => model.LookUpEmployee.EmpInitial, "", new {@class = "text-danger"})
+                                @Html.DropDownList("EmpId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.LookUpEmployee.EmpInitial, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new {@class = "control-label col-md-2"})
+                            @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
-                                @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -47,7 +43,7 @@
                             <div class="col-lg-12">
                                 <div class="col-lg-6">
                                     @*<a href="#">Not a member yet? Register Now !</a>*@
-                                    @*@Html.ActionLink("Not a member yet? Register Now !", "Register", "User*@
+                                    @*@Html.ActionLink("Not a member yet? Register Now !", "Register", "User")*@
                                 </div>
                                 <div class="col-md-6">
                                     <button type="submit" class="btn btn-default pull-right">Log in</button>
@@ -66,4 +62,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
 

@@ -10,7 +10,7 @@ using VehicleRequisitionApp.Models;
 
 namespace VehicleRequisitionApp.Controllers
 {
-    public class UsersController: Controller
+    public class TblUsersController: Controller
     {
         private MyDbContext db = new MyDbContext();
         public ActionResult LogIn()
@@ -24,7 +24,11 @@ namespace VehicleRequisitionApp.Controllers
         {
             string initial="", name="";
             int userId=0, userGroupId=0;
-            
+
+            var controller="";
+            var action="";
+
+
             string hashPass = PassWordHash(user.Password);
            
             var isUser = db.TblUsers.Where(u => u.EmpId == user.EmpId && u.Password == hashPass);
@@ -63,14 +67,17 @@ namespace VehicleRequisitionApp.Controllers
                 ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
                 return View();
             }
-         
-            return RedirectToAction("Dashboard", "Users",new {id=Session["EmpId"]});
+
+            controller=db.LoopUpRedirectPages.Where(i=>i.UserGroupsId== userGroupId).Select(i=>i.ControllerName).SingleOrDefault();
+            action = db.LoopUpRedirectPages.Where(i => i.UserGroupsId == userGroupId).Select(i => i.ActionName).SingleOrDefault();
+
+            return RedirectToAction(action, controller, new {id=Session["EmpId"]});
         }      
         public ActionResult Register()
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
             return View();
@@ -82,7 +89,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             TblUser aTblUser = new TblUser();
 
@@ -104,7 +111,7 @@ namespace VehicleRequisitionApp.Controllers
                     db.SaveChanges();
                 
                 TempData["Registration"] = "Registration Successfully";
-                return RedirectToAction("LogIn","Users");
+                return RedirectToAction("LogIn","TblUsers");
             }
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
             return View();
@@ -112,7 +119,7 @@ namespace VehicleRequisitionApp.Controllers
         public ActionResult LogOff()
         {
             Session.RemoveAll();
-            return RedirectToAction("LogIn", "Users");
+            return RedirectToAction("LogIn", "TblUsers");
         }
 
         public ActionResult Dashboard(int? id)
@@ -120,7 +127,7 @@ namespace VehicleRequisitionApp.Controllers
 
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             if (id == null)
             {
@@ -141,7 +148,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             TempData["Error"] = "";
             return View();
@@ -151,7 +158,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             string oldPass=PassWordHash(user.OldPassword);
 

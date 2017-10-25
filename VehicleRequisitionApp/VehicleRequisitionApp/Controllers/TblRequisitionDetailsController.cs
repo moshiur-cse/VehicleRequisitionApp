@@ -19,7 +19,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
 
             if (Convert.ToInt32(Session["UserGroupId"])== 1)
@@ -58,7 +58,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             if (id == null)
             {
@@ -77,7 +77,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             id = Convert.ToInt32(Session["EmpId"]);
 
@@ -96,7 +96,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
 
 
@@ -122,7 +122,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             if (id == null)
             {
@@ -148,7 +148,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             if (ModelState.IsValid)
             {
@@ -166,7 +166,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             if (id == null)
             {
@@ -186,7 +186,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
             TblRequisitionDetail tblRequisitionDetail = db.TblRequisitionDetails.Find(id);
             db.TblRequisitionDetails.Remove(tblRequisitionDetail);

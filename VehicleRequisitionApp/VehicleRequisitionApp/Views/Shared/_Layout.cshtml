@@ -37,7 +37,7 @@
                     @if (Session["UserId"] != null)
                     {
                         <li>
-                            @Html.ActionLink("Dashboard", "Dashboard",  "Users", new { id = Session["EmpId"] }, new { @class = "black" })
+                            @Html.ActionLink("Dashboard", "Dashboard",  "TblUsers", new { id = Session["EmpId"] }, new { @class = "black" })
 
                             @*<a href="/User/Dashboard/1">Dashboard</a>*@
                         </li>

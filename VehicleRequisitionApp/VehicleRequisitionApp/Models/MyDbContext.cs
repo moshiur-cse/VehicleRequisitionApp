@@ -28,9 +28,8 @@ namespace VehicleRequisitionApp.Models
         public DbSet<LookupRequisitionCategory> LookupRequisitionCategorys { get; set; }
 
         public DbSet<LookUpFileUpload> LookUpFileUploads { get; set; }
+        public DbSet<LoopUpRedirectPage> LoopUpRedirectPages { get; set; }
 
-
-
-
+        
     }
 }

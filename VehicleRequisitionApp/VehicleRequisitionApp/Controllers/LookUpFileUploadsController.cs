@@ -86,7 +86,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (Session["UserId"] == null)
             {
-                return RedirectToAction("LogIn", "Users");
+                return RedirectToAction("LogIn", "TblUsers");
             }
 
             LookUpFileUpload fileUp = db.LookUpFileUploads.Find(id);            
@@ -111,7 +111,7 @@ namespace VehicleRequisitionApp.Controllers
                     ViewBag.Message = "File Uploaded Successfully!!";                    
                     db.LookUpFileUploads.Add(lookUpFileUpload);
                     db.SaveChanges();
-                    return RedirectToAction("Dashboard","Users",new {id=Convert.ToInt32(Session["EmpId"])});
+                    return RedirectToAction("Dashboard","TblUsers",new {id=Convert.ToInt32(Session["EmpId"])});
                 }
                 catch
                 {
