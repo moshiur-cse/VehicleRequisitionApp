@@ -1,4 +1,5 @@
-﻿@model IEnumerable<VehicleRequisitionApp.Models.TblRequisitionDetail>
+﻿@using VehicleRequisitionApp.Models
+@model IEnumerable<VehicleRequisitionApp.Models.TblRequisitionDetail>
 
 @{
     ViewBag.Title = "Index";
@@ -13,7 +14,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
+            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
@@ -64,7 +68,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpInitial)
+                @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
@@ -97,10 +104,11 @@
                 </td>
             }
             <td>
-                @Html.DisplayFor(modelItem => item.AssignedDriverEmpId)
+                @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
+
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AssignedVehicleId)
+                @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
             </td>
             @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
             {

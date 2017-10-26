@@ -1,4 +1,5 @@
-﻿@model VehicleRequisitionApp.Models.TblRequisitionDetail
+﻿@using VehicleRequisitionApp.Models
+@model VehicleRequisitionApp.Models.TblRequisitionDetail
 
 @{
     ViewBag.Title = "Edit";
@@ -75,10 +76,25 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Reason, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Reason, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Reason, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Reason, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UsedFromKM, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UsedFromKM, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.ValidationMessageFor(model => model.UsedFromKM, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UsedToKM, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UsedToKM, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UsedToKM, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -101,16 +117,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AssignedDriverEmpId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AssignedDriverEmpId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AssignedDriverEmpId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.AssignedDriverEmpId, new SelectList(ViewBag.DriverId, "DriverId", "DriverName"),"--Select--", htmlAttributes: new { @class = "form-control" })
+                @*<section>
+                    <option value="">Select a Driver</option>
+                    @foreach (LookUpEmployee item in ViewBag.DriverId)
+                    {
+                        <option value=@item.EmpId>@item.EmpFullName</option>
+                    }
+                </section>*@
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.AssignedVehicleId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AssignedVehicleId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AssignedVehicleId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.AssignedVehicleId, new SelectList(ViewBag.VehicleId, "VehiclesId", "VehicleNo"), "--Select--",htmlAttributes: new { @class = "form-control" })
+               
             </div>
         </div>
 

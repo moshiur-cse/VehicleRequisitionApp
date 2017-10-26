@@ -15,6 +15,7 @@ namespace VehicleRequisitionApp.Models
         public int SortingSerialNo { get; set; }
         public string VehicleNo { get; set; }
         public string LicenseNo { get; set; }
-        public string VehicleModel { get; set; }        
+        public string VehicleModel { get; set; }
+        public virtual List<TblRequisitionDetail> TblRequisitionDetails { get; set; }
     }
 }

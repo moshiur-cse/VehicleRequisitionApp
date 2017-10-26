@@ -37,15 +37,27 @@ namespace VehicleRequisitionApp.Models
 
         public string Place { get; set; }
         public string Reason { get; set; }
+
+        public double? UsedFromKM { get; set; }
+        public double? UsedToKM { get; set; }
         [Display(Name = "From")]
         public DateTime? ActuallyUsedFromDate { get; set; }
         [Display(Name = "To")]
         public DateTime? ActuallyUsedToDate { get; set; }
-        [Display(Name = "Assigned Driver")]
+
+
+        [Display(Name = "Assigned Driver")] 
         public int? AssignedDriverEmpId { get; set; }
+
+        [ForeignKey("AssignedDriverEmpId")]
+        public virtual LookUpEmployee LookUpDriverEmployee { get; set; }
+
         [Display(Name = "Assigned Vehicle")]
         public int? AssignedVehicleId { get; set; }
-        
-        
+        [ForeignKey("AssignedVehicleId")]
+        public virtual LookupVehicles LookupVehicles { get; set; }
+
+
+
     }
 }

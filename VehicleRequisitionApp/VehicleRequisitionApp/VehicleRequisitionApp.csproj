@@ -224,6 +224,7 @@
     <Compile Include="Controllers\LookupVehiclesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TblDirectorsController.cs" />
+    <Compile Include="Controllers\TblDriversController.cs" />
     <Compile Include="Controllers\TblManagementDetailsController.cs" />
     <Compile Include="Controllers\TblRequestApprovalDetailsController.cs" />
     <Compile Include="Controllers\TblRequisitionDetailsController.cs" />
@@ -264,6 +265,18 @@
     <Compile Include="Migrations\201710250953127_Version8.Designer.cs">
       <DependentUpon>201710250953127_Version8.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710260520254_Version9.cs" />
+    <Compile Include="Migrations\201710260520254_Version9.Designer.cs">
+      <DependentUpon>201710260520254_Version9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710260652418_Version10.cs" />
+    <Compile Include="Migrations\201710260652418_Version10.Designer.cs">
+      <DependentUpon>201710260652418_Version10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710260908281_Versoin11.cs" />
+    <Compile Include="Migrations\201710260908281_Versoin11.Designer.cs">
+      <DependentUpon>201710260908281_Versoin11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangePassWord.cs" />
@@ -282,6 +295,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MyDbContext.cs" />
     <Compile Include="Models\TblDirector.cs" />
+    <Compile Include="Models\TblDriver.cs" />
     <Compile Include="Models\TblManagementDetail.cs" />
     <Compile Include="Models\TblRequestApprovalDetail.cs" />
     <Compile Include="Models\TblRequisitionDetail.cs" />
@@ -1241,6 +1255,11 @@
     <Content Include="Views\LookUpFileUploads\Details.cshtml" />
     <Content Include="Views\LookUpFileUploads\Edit.cshtml" />
     <Content Include="Views\LookUpFileUploads\Index.cshtml" />
+    <Content Include="Views\TblDrivers\Create.cshtml" />
+    <Content Include="Views\TblDrivers\Delete.cshtml" />
+    <Content Include="Views\TblDrivers\Details.cshtml" />
+    <Content Include="Views\TblDrivers\Edit.cshtml" />
+    <Content Include="Views\TblDrivers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1274,6 +1293,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710250953127_Version8.resx">
       <DependentUpon>201710250953127_Version8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710260520254_Version9.resx">
+      <DependentUpon>201710260520254_Version9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710260652418_Version10.resx">
+      <DependentUpon>201710260652418_Version10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710260908281_Versoin11.resx">
+      <DependentUpon>201710260908281_Versoin11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

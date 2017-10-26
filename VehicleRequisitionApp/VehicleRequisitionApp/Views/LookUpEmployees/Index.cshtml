@@ -13,14 +13,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LookUpDivision.DivShortName)
+            @*@Html.DisplayNameFor(model => model.SortingSerialNo)*@
+            <label>SL NO</label>
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.LookUpDivision.DivFullName)
+        </th>
+        @*<th>
             @Html.DisplayNameFor(model => model.LookUpEmployeeType.EmpType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SortingSerialNo)
-        </th>
+        </th>*@
+
         <th>
             @Html.DisplayNameFor(model => model.EmpPinNo)
         </th>
@@ -36,50 +38,51 @@
         <th>
             @Html.DisplayNameFor(model => model.EmpLevel)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.EmpEmail)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.EmpMobile)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EmpRoomNo)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpPresentAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpNid)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpPaasportNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpBloodGroup)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpHighestDegree)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpHighestDegreeMajorSubject)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpCareerSummary)
-        </th>
-        <th></th>
+        @*<th>
+        @Html.DisplayNameFor(model => model.EmpPresentAddress)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.EmpNid)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.EmpPaasportNo)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.EmpBloodGroup)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.EmpHighestDegree)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.EmpHighestDegreeMajorSubject)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.EmpCareerSummary)
+    </th>*@
+        <th>Action</th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.LookUpDivision.DivShortName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LookUpEmployeeType.EmpType)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.SortingSerialNo)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LookUpDivision.DivFullName)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.LookUpEmployeeType.EmpType)
+        </td>*@
+
         <td>
             @Html.DisplayFor(modelItem => item.EmpPinNo)
         </td>
@@ -95,40 +98,40 @@
         <td>
             @Html.DisplayFor(modelItem => item.EmpLevel)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.EmpEmail)
-        </td>
+        </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.EmpMobile)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EmpRoomNo)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.EmpPresentAddress)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EmpNid)
-        </td>
+        @Html.DisplayFor(modelItem => item.EmpNid)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmpPaasportNo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmpBloodGroup)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmpHighestDegree)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmpHighestDegreeMajorSubject)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmpCareerSummary)
+    </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.EmpPaasportNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpBloodGroup)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpHighestDegree)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpHighestDegreeMajorSubject)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpCareerSummary)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EmpId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EmpId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EmpId })
+            @Html.ActionLink("Edit", "Edit", new {id = item.EmpId}) |
+            @Html.ActionLink("Details", "Details", new {id = item.EmpId}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.EmpId})
         </td>
     </tr>
 }

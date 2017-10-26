@@ -7,14 +7,15 @@ using System.Web;
 
 namespace VehicleRequisitionApp.Models
 {
-    public class TblDirector
+    public class TblDriver
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int DirectorId { get; set; }
+        public int DriverId { get; set; }
 
         public int EmpId { get; set; }
         [ForeignKey("EmpId")]
         public virtual LookUpEmployee LookUpEmployee { get; set; }
+        //public virtual TblRequisitionDetail TblRequisitionDetail { get; set; }
     }
 }

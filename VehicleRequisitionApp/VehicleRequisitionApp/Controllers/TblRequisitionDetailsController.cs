@@ -36,7 +36,6 @@ namespace VehicleRequisitionApp.Controllers
                     return View(tblRequisitionDetail);
 
                 }
-
                 if (id != null)
                 {
                     var tblRequisitionDetail =
@@ -81,7 +80,8 @@ namespace VehicleRequisitionApp.Controllers
             }
             id = Convert.ToInt32(Session["EmpId"]);
 
-            ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i=>i.EmpId==id), "EmpId", "EmpInitial");
+            ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i=>i.EmpId==id), "EmpId", "EmpFullName");
+            ViewBag.EmpDesignation = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == id), "EmpId", "EmpDesignation");
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode");
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory");
             return View();
@@ -92,7 +92,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
+        public ActionResult Create([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,UsedFromKM,UsedToKM,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
         {
             if (Session["UserId"] == null)
             {
@@ -111,7 +111,8 @@ namespace VehicleRequisitionApp.Controllers
                 return RedirectToAction("Index","TblRequisitionDetails",new {id=Session["EmpId"]});
             }
 
-            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial", tblRequisitionDetail.EmpId);
+            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
+            ViewBag.EmpDesignation = new SelectList(db.LookUpEmployees, "EmpId", "EmpDesignation", tblRequisitionDetail.EmpId);
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode", tblRequisitionDetail.ProjectId);
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
 
@@ -133,7 +134,19 @@ namespace VehicleRequisitionApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial", tblRequisitionDetail.EmpId);
+
+            ViewBag.DriverId = db.LookUpEmployees.Where(u => u.EmpDesignation == "Driver").
+                                Select(i => new
+                                {
+                                    DriverName = i.EmpFullName,
+                                    DriverId = i.EmpId
+                                }).ToList();
+
+            //ViewBag.DriverId = new SelectList(db.tbl, "DriverId", "DriverName");
+            ViewBag.VehicleId = db.LookupVehicles.ToList();
+
+
+            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode", tblRequisitionDetail.ProjectId);
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
             return View(tblRequisitionDetail);
@@ -144,7 +157,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
+        public ActionResult Edit([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,UsedFromKM,UsedToKM,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
         {
             if (Session["UserId"] == null)
             {
@@ -156,7 +169,7 @@ namespace VehicleRequisitionApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial", tblRequisitionDetail.EmpId);
+            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode", tblRequisitionDetail.ProjectId);
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
             return View(tblRequisitionDetail);

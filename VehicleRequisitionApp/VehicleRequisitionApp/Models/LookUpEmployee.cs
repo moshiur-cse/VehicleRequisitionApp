@@ -79,6 +79,9 @@ namespace VehicleRequisitionApp.Models
         public string EmpCareerSummary { get; set; }
 
         public virtual List<TblDirector> TblDirectors { get; set; }
+        public virtual List<TblDriver> TblDrivers { get; set; }
+
+        
         public virtual List<TblManagementDetail> TblManagementDetails { get; set; }
         public virtual List<LookupProjectLeader> LookupProjectLeaders { get; set; }
         public virtual List<TblUser> TblUsers { get; set; }

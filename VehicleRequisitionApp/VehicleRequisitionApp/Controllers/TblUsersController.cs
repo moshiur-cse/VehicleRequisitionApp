@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using VehicleRequisitionApp.Models;
 
+//https://github.com/moshiur-cse/VehicleRequisitionApp.git
 namespace VehicleRequisitionApp.Controllers
 {
     public class TblUsersController: Controller
@@ -24,11 +25,8 @@ namespace VehicleRequisitionApp.Controllers
         {
             string initial="", name="";
             int userId=0, userGroupId=0;
-
             var controller="";
             var action="";
-
-
             string hashPass = PassWordHash(user.Password);
            
             var isUser = db.TblUsers.Where(u => u.EmpId == user.EmpId && u.Password == hashPass);
@@ -75,10 +73,10 @@ namespace VehicleRequisitionApp.Controllers
         }      
         public ActionResult Register()
         {
-            if (Session["UserId"] == null)
-            {
-                return RedirectToAction("LogIn", "TblUsers");
-            }
+            //if (Session["UserId"] == null)
+            //{
+            //    return RedirectToAction("LogIn", "TblUsers");
+            //}
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
             return View();
         }
@@ -87,26 +85,18 @@ namespace VehicleRequisitionApp.Controllers
         [AllowAnonymous]
         public ActionResult Register(TblUser user)
         {
-            if (Session["UserId"] == null)
-            {
-                return RedirectToAction("LogIn", "TblUsers");
-            }
+            //if (Session["UserId"] == null)
+            //{
+            //    return RedirectToAction("LogIn", "TblUsers");
+            //}
             TblUser aTblUser = new TblUser();
 
-            StringBuilder hash = new StringBuilder();
-
-            MD5CryptoServiceProvider md5Provider = new MD5CryptoServiceProvider();
-            byte[] bytes = md5Provider.ComputeHash(new UTF8Encoding().GetBytes(user.Password));
-
-            for (int i = 0; i < bytes.Length; i++)
-            {
-               hash.Append(bytes[i].ToString("x2"));
-            }
-
+            string hashPass=PassWordHash(user.Password);
+          
             if (ModelState.IsValid)
             {                
                     aTblUser.EmpId = user.EmpId;
-                    aTblUser.Password = hash.ToString();
+                    aTblUser.Password = hashPass;
                     db.TblUsers.Add(aTblUser);
                     db.SaveChanges();
                 
