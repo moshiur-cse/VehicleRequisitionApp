@@ -34,8 +34,9 @@ namespace VehicleRequisitionApp.Models
         public DateTime RequiredFromDate { get; set; }
         [Display(Name = "To")]
         public DateTime RequiredToDate { get; set; }
-
+        [Required]
         public string Place { get; set; }
+
         public string Reason { get; set; }
 
         public double? UsedFromKM { get; set; }

@@ -130,6 +130,7 @@ namespace VehicleRequisitionApp.Controllers
             }
             ViewBag.Image = db.LookUpFileUploads.Where(i => i.EmpId == id).Select(i => i.FileName).SingleOrDefault();
 
+            ViewBag.CarStatus = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate>DateTime.Now).ToList();
 
             return View(lookUpEmployee);
             //return View();
@@ -143,6 +144,7 @@ namespace VehicleRequisitionApp.Controllers
             TempData["Error"] = "";
             return View();
         }
+
         [HttpPost]
         public ActionResult ChangePassWord(ChangePassWord user)
         {

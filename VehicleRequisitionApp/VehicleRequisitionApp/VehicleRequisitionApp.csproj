@@ -277,6 +277,10 @@
     <Compile Include="Migrations\201710260908281_Versoin11.Designer.cs">
       <DependentUpon>201710260908281_Versoin11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710290547412_Version12.cs" />
+    <Compile Include="Migrations\201710290547412_Version12.Designer.cs">
+      <DependentUpon>201710290547412_Version12.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangePassWord.cs" />
@@ -1302,6 +1306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710260908281_Versoin11.resx">
       <DependentUpon>201710260908281_Versoin11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710290547412_Version12.resx">
+      <DependentUpon>201710290547412_Version12.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

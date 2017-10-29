@@ -193,3 +193,5 @@ C:\Users\RMO\OneDrive\VehicleRequisitionApp\VehicleRequisitionApp\VehicleRequisi
 C:\Users\RMO\OneDrive\VehicleRequisitionApp\VehicleRequisitionApp\VehicleRequisitionApp\obj\Debug\VehicleRequisitionApp.Migrations.Version9.resources
 C:\Users\RMO\OneDrive\VehicleRequisitionApp\VehicleRequisitionApp\VehicleRequisitionApp\obj\Debug\VehicleRequisitionApp.Migrations.Version10.resources
 C:\Users\RMO\OneDrive\VehicleRequisitionApp\VehicleRequisitionApp\VehicleRequisitionApp\obj\Debug\VehicleRequisitionApp.Migrations.Versoin11.resources
+C:\Users\RMO\OneDrive\VehicleRequisitionApp\VehicleRequisitionApp\VehicleRequisitionApp\obj\Debug\VehicleRequisitionApp.Migrations.Version12.resources
+C:\Users\RMO\OneDrive\VehicleRequisitionApp\VehicleRequisitionApp\VehicleRequisitionApp\obj\Debug\VehicleRequisitionApp.csprojResolveAssemblyReference.cache

@@ -6,12 +6,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Requisition List</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+</p>*@
+
+<table id="myTable" class="table table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
@@ -55,12 +56,12 @@
         <th>
             @Html.DisplayNameFor(model => model.AssignedVehicleId)
         </th>
-        @if (Convert.ToInt32(Session["UserGroupId"])!= 1)
-        {
+        @*@if (Convert.ToInt32(Session["UserGroupId"])!= 1)
+        {*@
             <th>
                 Status
             </th>
-        }
+        @*}*@
         <th></th>
     </tr>
 
@@ -96,6 +97,7 @@
             </td>
             @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
             {
+
                 <td>
                     @Html.DisplayFor(modelItem => item.ActuallyUsedFromDate)
                 </td>
@@ -110,10 +112,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
             </td>
-            @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+            @if(@Html.DisplayFor(modelItem => item.LookUpDriverEmployee.EmpFullName).ToString()!="" && @Html.DisplayFor(modelItem => item.LookUpDriverEmployee.EmpFullName) !=null)
             {
                 <td>
                     <button class="btn-success">Approve</button>
+                </td>
+
+            }
+            else
+            {
+                <td>
+                    <button class="btn-danger">Not Approve</button>
                 </td>
             }
             @if (Convert.ToInt32(Session["UserGroupId"]) == 6)

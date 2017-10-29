@@ -14,9 +14,11 @@ namespace VehicleRequisitionApp.Controllers
     {
         private MyDbContext db = new MyDbContext();
 
+
+        
         // GET: TblRequisitionDetails
         public ActionResult Index(int? id)
-        {
+        {           
             if (Session["UserId"] == null)
             {
                 return RedirectToAction("LogIn", "TblUsers");
@@ -31,8 +33,8 @@ namespace VehicleRequisitionApp.Controllers
                         db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                             .Include(t => t.LookupProject)
                             .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.EmpId == id)
-                            .ToList();
+                            .Where(i => i.EmpId == id && i.RequiredToDate>DateTime.Now)//DateTime.Now.AddDays(1) && 
+                              .ToList();
                     return View(tblRequisitionDetail);
 
                 }
@@ -42,7 +44,7 @@ namespace VehicleRequisitionApp.Controllers
                         db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                             .Include(t => t.LookupProject)
                             .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.EmpId == id)
+                            .Where(i => i.EmpId == id && i.RequiredToDate <DateTime.Now.Date) //Date
                             .ToList();
                     return View(tblRequisitionDetail);
                 }
@@ -79,7 +81,7 @@ namespace VehicleRequisitionApp.Controllers
                 return RedirectToAction("LogIn", "TblUsers");
             }
             id = Convert.ToInt32(Session["EmpId"]);
-
+            ViewBag.Error = "";
             ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i=>i.EmpId==id), "EmpId", "EmpFullName");
             ViewBag.EmpDesignation = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == id), "EmpId", "EmpDesignation");
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode");
@@ -94,6 +96,29 @@ namespace VehicleRequisitionApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,UsedFromKM,UsedToKM,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
         {
+            string message = "";
+
+            if (tblRequisitionDetail.RequiredFromDate< DateTime.Now) 
+            {
+                message = "* Request Time Must be greater then Cureent Time";
+                ViewBag.Error = message;
+                ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == tblRequisitionDetail.EmpId), "EmpId", "EmpFullName");
+                ViewBag.EmpDesignation = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == tblRequisitionDetail.EmpId), "EmpId", "EmpDesignation");
+                ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode");
+                ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory");
+                return View();
+            }
+
+            if (tblRequisitionDetail.RequiredToDate<tblRequisitionDetail.RequiredFromDate)
+            {
+                message = "* Required To Time Must be greater then Required From Time";
+                ViewBag.Error = message;
+                ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == tblRequisitionDetail.EmpId), "EmpId", "EmpFullName");
+                ViewBag.EmpDesignation = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == tblRequisitionDetail.EmpId), "EmpId", "EmpDesignation");
+                ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode");
+                ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory");
+                return View();
+            }
             if (Session["UserId"] == null)
             {
                 return RedirectToAction("LogIn", "TblUsers");
