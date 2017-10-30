@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using VehicleRequisitionApp.Models;
 
@@ -15,16 +16,16 @@ namespace VehicleRequisitionApp.Controllers
         private MyDbContext db = new MyDbContext();
 
 
-        
+
         // GET: TblRequisitionDetails
         public ActionResult Index(int? id)
-        {           
+        {
             if (Session["UserId"] == null)
             {
                 return RedirectToAction("LogIn", "TblUsers");
             }
 
-            if (Convert.ToInt32(Session["UserGroupId"])== 1)
+            if (Convert.ToInt32(Session["UserGroupId"]) == 1)
             {
                 var findRequest = db.TblRequisitionDetails.Where(i => i.EmpId == id).ToList();
                 if (findRequest.Count > 0)
@@ -33,7 +34,7 @@ namespace VehicleRequisitionApp.Controllers
                         db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                             .Include(t => t.LookupProject)
                             .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.EmpId == id && i.RequiredToDate>DateTime.Now)//DateTime.Now.AddDays(1) && 
+                            .Where(i => i.EmpId == id && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
                               .ToList();
                     return View(tblRequisitionDetail);
 
@@ -44,14 +45,13 @@ namespace VehicleRequisitionApp.Controllers
                         db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                             .Include(t => t.LookupProject)
                             .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.EmpId == id && i.RequiredToDate <DateTime.Now.Date) //Date
+                            .Where(i => i.EmpId == id && i.RequiredToDate < DateTime.Now.Date) //Date
                             .ToList();
                     return View(tblRequisitionDetail);
                 }
-            }
-
+            }            
             var tblRequisitionDetails = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys).ToList();
-            return View(tblRequisitionDetails);                                   
+            return View(tblRequisitionDetails);
         }
 
         // GET: TblRequisitionDetails/Details/5
@@ -82,7 +82,7 @@ namespace VehicleRequisitionApp.Controllers
             }
             id = Convert.ToInt32(Session["EmpId"]);
             ViewBag.Error = "";
-            ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i=>i.EmpId==id), "EmpId", "EmpFullName");
+            ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == id), "EmpId", "EmpFullName");
             ViewBag.EmpDesignation = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == id), "EmpId", "EmpDesignation");
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode");
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory");
@@ -98,7 +98,7 @@ namespace VehicleRequisitionApp.Controllers
         {
             string message = "";
 
-            if (tblRequisitionDetail.RequiredFromDate< DateTime.Now) 
+            if (tblRequisitionDetail.RequiredFromDate < DateTime.Now)
             {
                 message = "* Request Time Must be greater then Cureent Time";
                 ViewBag.Error = message;
@@ -109,7 +109,7 @@ namespace VehicleRequisitionApp.Controllers
                 return View();
             }
 
-            if (tblRequisitionDetail.RequiredToDate<tblRequisitionDetail.RequiredFromDate)
+            if (tblRequisitionDetail.RequiredToDate < tblRequisitionDetail.RequiredFromDate)
             {
                 message = "* Required To Time Must be greater then Required From Time";
                 ViewBag.Error = message;
@@ -124,16 +124,26 @@ namespace VehicleRequisitionApp.Controllers
                 return RedirectToAction("LogIn", "TblUsers");
             }
 
+            TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
 
             if (ModelState.IsValid)
             {
                 db.TblRequisitionDetails.Add(tblRequisitionDetail);
                 db.SaveChanges();
-                if (Session["UserName"].ToString() == "RMO")
-                {
-                    return RedirectToAction("Index");
-                }
-                return RedirectToAction("Index","TblRequisitionDetails",new {id=Session["EmpId"]});
+
+                aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
+                aApproval.ApprovalAuthorityId = 0;
+                aApproval.ApprovalStatus = 0;
+                aApproval.Comments = "";
+                db.TblRequestApprovalDetails.Add(aApproval);
+                db.SaveChanges();
+
+
+                //if (Session["UserName"].ToString() == "RMO")
+                //{
+                //    return RedirectToAction("Index");
+                //}
+                return RedirectToAction("Index", "TblRequisitionDetails", new { id = Session["EmpId"] });
             }
 
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
@@ -239,5 +249,46 @@ namespace VehicleRequisitionApp.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult DirectorApprove(int? requisitionId)
+        {
+
+
+            var approvalStatus = db.TblRequestApprovalDetails.Where(i => i.RequisitionId == requisitionId).ToList();
+
+            foreach (TblRequestApprovalDetail item in approvalStatus)
+            {
+                item.ApprovalStatus = Convert.ToInt32(Session["UserGroupId"]);
+                item.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+            }
+
+            // Submit the changes to the database.
+            try
+            {
+
+                db.SaveChanges();
+
+                WebMail.SmtpServer = "smtp.gmail.com";
+                WebMail.SmtpPort = 587;
+                WebMail.SmtpUseDefaultCredentials = true;
+                WebMail.EnableSsl = true;
+                WebMail.UserName = "rimu.cse45@gmail.com";
+                WebMail.Password = "rimu1234";
+                WebMail.From = "moshiur.mgmh@gmail.com";
+                WebMail.Send(to: "moshiur.mgmh@gmail.com", subject: "Vehicles Approval Status",
+                             body: "<h1>Approved By: " + Session["FullName"] + "</h1>" +
+                                    "<h1>Approval Time: " + DateTime.Now + "</h1>",
+                             cc: "", bcc: "", isBodyHtml: true);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Provide for exceptions.
+            }
+            ViewBag.ApprovalStatus=db.TblRequestApprovalDetails.Where(i => i.RequisitionId == requisitionId).Select(u=>u.ApprovalStatus).SingleOrDefault();
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ApprovalStatus = 0;
 }
 
 <h2>Requisition List</h2>
@@ -41,15 +42,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Reason)
         </th>
-        @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
-        {
-            <th>
-                @Html.DisplayNameFor(model => model.ActuallyUsedFromDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ActuallyUsedToDate)
-            </th>
-        }
+
         <th>
             @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
         </th>
@@ -95,16 +88,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Reason)
             </td>
-            @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
-            {
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.ActuallyUsedFromDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ActuallyUsedToDate)
-                </td>
-            }
+          
             <td>
                 @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
 
@@ -123,6 +107,14 @@
             {
                 <td>
                     <button class="btn-danger">Not Approve</button>
+                    @if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                    {
+                        if(ViewBag.ApprovalStatus==3)
+                        {
+                            
+                        }
+                        @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId })
+                    }
                 </td>
             }
             @if (Convert.ToInt32(Session["UserGroupId"]) == 6)

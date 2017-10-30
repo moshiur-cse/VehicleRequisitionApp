@@ -57,8 +57,9 @@ namespace VehicleRequisitionApp.Models
         public int? AssignedVehicleId { get; set; }
         [ForeignKey("AssignedVehicleId")]
         public virtual LookupVehicles LookupVehicles { get; set; }
+        //public virtual TblRequestApprovalDetail TblRequestApprovalDetails { get; set; }
 
-
+        
 
     }
 }

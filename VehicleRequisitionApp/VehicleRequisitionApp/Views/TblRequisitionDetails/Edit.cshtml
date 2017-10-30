@@ -20,25 +20,28 @@
         @Html.HiddenFor(model => model.RequisitionId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RequisitionCategoryId, "RequisitionCategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RequisitionCategoryId, "Requisition Category", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("RequisitionCategoryId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("RequisitionCategoryId", null, htmlAttributes: new { @class = "form-control", style = "display:none" })
+                @Html.EditorFor(model => model.LookupRequisitionCategorys.RequisitionCategory, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
                 @Html.ValidationMessageFor(model => model.RequisitionCategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EmpId, "EmpId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EmpId, "Employee Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("EmpId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("EmpId", null, htmlAttributes: new { @class = "form-control" ,style="display:none" })
+                @Html.EditorFor(model => model.LookUpEmployee.EmpFullName, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
                 @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ProjectId, "ProjectId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ProjectId, "Project Code", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", style = "display:none" })
+                @Html.EditorFor(model => model.LookupProject.ProjectCode, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
                 @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -46,7 +49,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RequestSubmissionDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RequestSubmissionDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.RequestSubmissionDate, new { htmlAttributes = new { @class = "form-control",Readonly="true"} })
                 @Html.ValidationMessageFor(model => model.RequestSubmissionDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -83,7 +86,7 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.UsedFromKM, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UsedFromKM, "From KM",htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UsedFromKM, new { htmlAttributes = new { @class = "form-control" } })
                 @*@Html.ValidationMessageFor(model => model.UsedFromKM, "", new { @class = "text-danger" })*@
@@ -91,7 +94,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UsedToKM, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.UsedToKM,"To KM", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UsedToKM, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UsedToKM, "", new { @class = "text-danger" })
@@ -99,7 +102,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ActuallyUsedFromDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ActuallyUsedFromDate, "Actually Used From Date", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new { @class = "text-danger" })
@@ -107,7 +110,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ActuallyUsedToDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ActuallyUsedToDate, "Actually Used To Date", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })
