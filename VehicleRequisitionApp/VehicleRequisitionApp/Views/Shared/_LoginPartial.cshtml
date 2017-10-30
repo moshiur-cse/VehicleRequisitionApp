@@ -16,9 +16,11 @@
                     <ul class="dropdown-menu">
                         @*<li>@Html.ActionLink("Change Password", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})</li>*@
 
-                        <li>@Html.ActionLink("Update Profile", "Edit", "LookUpEmployees", new {id = Session["EmpId"]}, null)</li>
-                        <li>@Html.ActionLink("Update Profile Picture", "Create", "LookUpFileUploads", new { id = Session["EmpId"] }, null)</li>
-
+                        @if (Convert.ToInt32(Session["UserGroupId"]) == 7)
+                        {
+                            <li>@Html.ActionLink("Update Profile", "Edit", "LookUpEmployees", new {id = Session["EmpId"]}, null)</li>
+                            <li>@Html.ActionLink("Update Profile Picture", "Create", "LookUpFileUploads", new {id = Session["EmpId"]}, null)</li>
+                        }
                         <li>@Html.ActionLink("Change Password", "ChangePassWord", "TblUsers", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                         <li style="color: #37A84A"><a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a></li>
                     </ul>

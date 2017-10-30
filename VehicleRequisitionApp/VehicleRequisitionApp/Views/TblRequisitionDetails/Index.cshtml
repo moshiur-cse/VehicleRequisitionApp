@@ -99,21 +99,21 @@
             @if(@Html.DisplayFor(modelItem => item.LookUpDriverEmployee.EmpFullName).ToString()!="" && @Html.DisplayFor(modelItem => item.LookUpDriverEmployee.EmpFullName) !=null)
             {
                 <td>
-                    <button class="btn-success">Approve</button>
+                    <label class="label-success" style="text-align: center">Already Approved</label>
                 </td>
 
             }
             else
             {
                 <td>
-                    <button class="btn-danger">Not Approve</button>
+                    <label class="label-danger" style="text-align: center;padding: 2px">Not Approve Yet</label>
                     @if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                     {
                         if(ViewBag.ApprovalStatus==3)
                         {
                             
                         }
-                        @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId })
+                        @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
                     }
                 </td>
             }
