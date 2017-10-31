@@ -31,5 +31,7 @@ namespace VehicleRequisitionApp.Models
         public DbSet<LoopUpRedirectPage> LoopUpRedirectPages { get; set; }
 
         public System.Data.Entity.DbSet<VehicleRequisitionApp.Models.TblDriver> TblDrivers { get; set; }
+
+        public DbSet<LookUpState> LookUpStates { get; set; }
     }
 }

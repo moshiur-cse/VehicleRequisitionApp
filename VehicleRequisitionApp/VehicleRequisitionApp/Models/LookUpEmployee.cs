@@ -87,7 +87,7 @@ namespace VehicleRequisitionApp.Models
         public virtual List<TblUser> TblUsers { get; set; }
         public virtual List<TblRequisitionDetail> TblRequisitionDetails { get; set; }
 
-        //public virtual List<TblRequestApprovalDetail> TblRequestApprovalDetails { get; set; }
+       public virtual List<TblRequestApprovalDetail> TblRequestApprovalDetails { get; set; }
 
         
 

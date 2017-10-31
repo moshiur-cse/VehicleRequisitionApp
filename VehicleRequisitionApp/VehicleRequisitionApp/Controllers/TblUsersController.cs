@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using VehicleRequisitionApp.Models;
 
 //https://github.com/moshiur-cse/VehicleRequisitionApp.git
+//DBCC CHECKIDENT (TableName, RESEED, 0);
 namespace VehicleRequisitionApp.Controllers
 {
     public class TblUsersController: Controller

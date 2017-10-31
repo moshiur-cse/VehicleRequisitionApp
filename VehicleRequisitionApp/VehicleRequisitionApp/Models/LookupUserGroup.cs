@@ -14,5 +14,8 @@ namespace VehicleRequisitionApp.Models
         public int UserGroupsId { get; set; }
         public string UserGroupName { get; set; }
         public virtual List<TblUserGroupDistribution> TblUserGroupDistributions { get; set; }
+        //public virtual List<TblRequestApprovalDetail> TblRequestApprovalDetails { get; set; }
+
+        
     }
 }

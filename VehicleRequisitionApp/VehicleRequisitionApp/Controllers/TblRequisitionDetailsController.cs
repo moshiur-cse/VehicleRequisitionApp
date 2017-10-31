@@ -15,8 +15,6 @@ namespace VehicleRequisitionApp.Controllers
     {
         private MyDbContext db = new MyDbContext();
 
-
-
         // GET: TblRequisitionDetails
         public ActionResult Index(int? id)
         {
@@ -30,28 +28,84 @@ namespace VehicleRequisitionApp.Controllers
                 var findRequest = db.TblRequisitionDetails.Where(i => i.EmpId == id).ToList();
                 if (findRequest.Count > 0)
                 {
-                    var tblRequisitionDetail =
-                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
-                            .Include(t => t.LookupProject)
-                            .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.EmpId == id && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
-                              .ToList();
-                    return View(tblRequisitionDetail);
+                   
+                    ViewBag.ApproveRequisition = db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                                                 .Include(t => t.LookupProject)
+                                                 .Include(t => t.LookupRequisitionCategorys)
+                                                 .Where(i => i.EmpId == id &&  i.StateId == 6 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                                                 .ToList();
+
+                    ViewBag.NotApproveRequisition = db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                             .Include(t => t.LookupProject)
+                             .Include(t => t.LookupRequisitionCategorys)
+                             .Where(i => i.EmpId == id && i.StateId!= 6 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                             .ToList();
+
+                    return View();
 
                 }
+
                 if (id != null)
                 {
-                    var tblRequisitionDetail =
+                    ViewBag.ApproveRequisition = db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                             .Include(t => t.LookupProject)
+                             .Include(t => t.LookupRequisitionCategorys)
+                             .Where(i => i.EmpId == id)//DateTime.Now.AddDays(1) && 
+                             .ToList();
+                    return View();
+                }
+            }
+            if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+            {
+                ViewBag.ApproveRequisition =
                         db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                             .Include(t => t.LookupProject)
                             .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.EmpId == id && i.RequiredToDate < DateTime.Now.Date) //Date
-                            .ToList();
-                    return View(tblRequisitionDetail);
-                }
-            }            
-            var tblRequisitionDetails = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys).ToList();
-            return View(tblRequisitionDetails);
+                            .Where(i => i.StateId!= 1 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                              .ToList();
+                ViewBag.NotApproveRequisition =
+                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                            .Include(t => t.LookupProject)
+                            .Include(t => t.LookupRequisitionCategorys)
+                            .Where(i => i.StateId == 1 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                              .ToList();
+                return View();
+            }
+            if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+            {
+                ViewBag.ApproveRequisition =
+                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                            .Include(t => t.LookupProject)
+                            .Include(t => t.LookupRequisitionCategorys)
+                            .Where(i => i.StateId!= 2 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                              .ToList();
+                ViewBag.NotApproveRequisition =
+                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                            .Include(t => t.LookupProject)
+                            .Include(t => t.LookupRequisitionCategorys)
+                            .Where(i => i.StateId== 2 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                              .ToList();
+                return View();
+            }
+            if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+            {
+                ViewBag.ApproveRequisition =
+                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                            .Include(t => t.LookupProject)
+                            .Include(t => t.LookupRequisitionCategorys)
+                            .Where(i => i.StateId != 5 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                              .ToList();
+                ViewBag.NotApproveRequisition =
+                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                            .Include(t => t.LookupProject)
+                            .Include(t => t.LookupRequisitionCategorys)
+                            .Where(i => i.StateId == 5 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                              .ToList();
+                return View();
+            }
+
+            ViewBag.ApproveRequisition = db.TblRequisitionDetails.Include(t => t.LookUpEmployee).Include(t => t.LookupProject).Include(t => t.LookupRequisitionCategorys).ToList();
+            return View();
         }
 
         // GET: TblRequisitionDetails/Details/5
@@ -124,19 +178,20 @@ namespace VehicleRequisitionApp.Controllers
                 return RedirectToAction("LogIn", "TblUsers");
             }
 
-            TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
+            //TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
 
             if (ModelState.IsValid)
             {
+                tblRequisitionDetail.StateId = 1;
                 db.TblRequisitionDetails.Add(tblRequisitionDetail);
                 db.SaveChanges();
 
-                aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
-                aApproval.ApprovalAuthorityId = 0;
-                aApproval.ApprovalStatus = 0;
-                aApproval.Comments = "";
-                db.TblRequestApprovalDetails.Add(aApproval);
-                db.SaveChanges();
+                //aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
+                //aApproval.ApprovalAuthorityId = 0;
+                //aApproval.ApprovalStatus = false;
+                //aApproval.Comments = "";
+                //db.TblRequestApprovalDetails.Add(aApproval);
+                //db.SaveChanges();
 
 
                 //if (Session["UserName"].ToString() == "RMO")
@@ -177,10 +232,10 @@ namespace VehicleRequisitionApp.Controllers
                                     DriverId = i.EmpId
                                 }).ToList();
 
+
+
             //ViewBag.DriverId = new SelectList(db.tbl, "DriverId", "DriverName");
             ViewBag.VehicleId = db.LookupVehicles.ToList();
-
-
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode", tblRequisitionDetail.ProjectId);
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
@@ -192,7 +247,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,UsedFromKM,UsedToKM,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
+        public ActionResult Edit([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,UsedFromKM,UsedToKM,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId,StateId")] TblRequisitionDetail tblRequisitionDetail)
         {
             if (Session["UserId"] == null)
             {
@@ -250,22 +305,24 @@ namespace VehicleRequisitionApp.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult DirectorApprove(int? requisitionId)
+        public ActionResult AdminTransportApprove(int requisitionId)
         {
 
+            var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
 
-            var approvalStatus = db.TblRequestApprovalDetails.Where(i => i.RequisitionId == requisitionId).ToList();
+            TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
+            aApproval.RequisitionId = requisitionId;
+            aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+            aApproval.ApprovalStatus = true;
+            db.TblRequestApprovalDetails.Add(aApproval);
+            db.SaveChanges();
 
-            foreach (TblRequestApprovalDetail item in approvalStatus)
+            foreach (var item in findRequisition)
             {
-                item.ApprovalStatus = Convert.ToInt32(Session["UserGroupId"]);
-                item.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+                item.StateId = 6;
             }
-
-            // Submit the changes to the database.
             try
             {
-
                 db.SaveChanges();
 
                 WebMail.SmtpServer = "smtp.gmail.com";
@@ -286,9 +343,91 @@ namespace VehicleRequisitionApp.Controllers
                 Console.WriteLine(e);
                 // Provide for exceptions.
             }
-            ViewBag.ApprovalStatus=db.TblRequestApprovalDetails.Where(i => i.RequisitionId == requisitionId).Select(u=>u.ApprovalStatus).SingleOrDefault();
+            return RedirectToAction("Index");
+
+        }
+
+        public ActionResult DirectorApprove(int requisitionId)
+        {                        
+            TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
+            aApproval.RequisitionId = requisitionId;
+            aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+            aApproval.ApprovalStatus = true;
+            db.TblRequestApprovalDetails.Add(aApproval);
+            db.SaveChanges();
+            var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
+            foreach (var item in findRequisition)
+            {
+                item.StateId = 5;
+            }
+            try
+            {
+                db.SaveChanges();
+
+                WebMail.SmtpServer = "smtp.gmail.com";
+                WebMail.SmtpPort = 587;
+                WebMail.SmtpUseDefaultCredentials = true;
+                WebMail.EnableSsl = true;
+                WebMail.UserName = "rimu.cse45@gmail.com";
+                WebMail.Password = "rimu1234";
+                WebMail.From = "moshiur.mgmh@gmail.com";
+                WebMail.Send(to: "moshiur.mgmh@gmail.com", subject: "Vehicles Approval Status",
+                             body: "<h1>Approved By: " + Session["FullName"] + "</h1>" +
+                                    "<h1>Approval Time: " + DateTime.Now + "</h1>",
+                             cc: "", bcc: "", isBodyHtml: true);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Provide for exceptions.
+            }
             return RedirectToAction("Index");
         }
+
+        public ActionResult PlApprove(int requisitionId)
+        {
+
+            var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
+                        
+            TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
+            aApproval.RequisitionId = requisitionId;
+            aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+            aApproval.ApprovalStatus = true;
+            db.TblRequestApprovalDetails.Add(aApproval);
+            db.SaveChanges();
+
+            foreach (var item in findRequisition)
+            {
+                item.StateId = 2;
+            }
+            try
+            {
+                db.SaveChanges();
+
+                WebMail.SmtpServer = "smtp.gmail.com";
+                WebMail.SmtpPort = 587;
+                WebMail.SmtpUseDefaultCredentials = true;
+                WebMail.EnableSsl = true;
+                WebMail.UserName = "rimu.cse45@gmail.com";
+                WebMail.Password = "rimu1234";
+                WebMail.From = "moshiur.mgmh@gmail.com";
+                WebMail.Send(to: "moshiur.mgmh@gmail.com", subject: "Vehicles Approval Status",
+                             body: "<h1>Approved By: " + Session["FullName"] + "</h1>" +
+                                    "<h1>Approval Time: " + DateTime.Now + "</h1>",
+                             cc: "", bcc: "", isBodyHtml: true);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Provide for exceptions.
+            }
+            return RedirectToAction("Index");
+
+        }
+
+
 
     }
 }

@@ -285,6 +285,30 @@
     <Compile Include="Migrations\201710300746034_Version13.Designer.cs">
       <DependentUpon>201710300746034_Version13.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710310336423_Version14.cs" />
+    <Compile Include="Migrations\201710310336423_Version14.Designer.cs">
+      <DependentUpon>201710310336423_Version14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710310342231_Version15.cs" />
+    <Compile Include="Migrations\201710310342231_Version15.Designer.cs">
+      <DependentUpon>201710310342231_Version15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710310400562_Version16.cs" />
+    <Compile Include="Migrations\201710310400562_Version16.Designer.cs">
+      <DependentUpon>201710310400562_Version16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710310434075_Version17.cs" />
+    <Compile Include="Migrations\201710310434075_Version17.Designer.cs">
+      <DependentUpon>201710310434075_Version17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710310701176_Version18.cs" />
+    <Compile Include="Migrations\201710310701176_Version18.Designer.cs">
+      <DependentUpon>201710310701176_Version18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710310711546_Version19.cs" />
+    <Compile Include="Migrations\201710310711546_Version19.Designer.cs">
+      <DependentUpon>201710310711546_Version19.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangePassWord.cs" />
@@ -297,6 +321,7 @@
     <Compile Include="Models\LookupProjectLeader.cs" />
     <Compile Include="Models\LookupRequisitionCategory.cs" />
     <Compile Include="Models\LookUpFileUpload.cs" />
+    <Compile Include="Models\LookUpState.cs" />
     <Compile Include="Models\LookupUserGroup.cs" />
     <Compile Include="Models\LookupVehicles.cs" />
     <Compile Include="Models\LoopUpRedirectPage.cs" />
@@ -1316,6 +1341,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710300746034_Version13.resx">
       <DependentUpon>201710300746034_Version13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310336423_Version14.resx">
+      <DependentUpon>201710310336423_Version14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310342231_Version15.resx">
+      <DependentUpon>201710310342231_Version15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310400562_Version16.resx">
+      <DependentUpon>201710310400562_Version16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310434075_Version17.resx">
+      <DependentUpon>201710310434075_Version17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310701176_Version18.resx">
+      <DependentUpon>201710310701176_Version18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710310711546_Version19.resx">
+      <DependentUpon>201710310711546_Version19.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
