@@ -149,7 +149,7 @@
             @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RequestSubmissionDate)
+            <label>Submission DateTime</label>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RequiredFromDate)
@@ -174,7 +174,7 @@
         <th>
             Status
         </th>
-        @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+        @if (Convert.ToInt32(Session["UserGroupId"]) >1)
         {
             <th>
                 Action
@@ -302,7 +302,8 @@
                     if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                     {
                         <td>
-                            @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
+                            @Html.ActionLink("Approve Now", "DirectorApprove", new {requisitionId = item.RequisitionId}, new {@class = "btn btn-success"})
                         </td>
                     }
                     if (Convert.ToInt32(Session["UserGroupId"]) == 2)

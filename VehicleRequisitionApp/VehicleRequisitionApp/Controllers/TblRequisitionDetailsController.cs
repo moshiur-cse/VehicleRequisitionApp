@@ -59,6 +59,8 @@ namespace VehicleRequisitionApp.Controllers
 
             if (Convert.ToInt32(Session["UserGroupId"]) == 2)
             {
+                //Issue "Project Leader Resuision on another Project does not show requisition Statsu"
+
                 int employeeId = Convert.ToInt32(Session["EmpId"]);
 
                 var findProjectId =db.LookupProjectLeaders.Where(i => i.EmpId == employeeId).ToList();
@@ -180,7 +182,6 @@ namespace VehicleRequisitionApp.Controllers
         public ActionResult Create([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,UsedFromKM,UsedToKM,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
         {
             string message = "";
-
             if (tblRequisitionDetail.RequiredFromDate < DateTime.Now)
             {
                 message = "* Request Time Must be greater then Cureent Time";
@@ -211,9 +212,29 @@ namespace VehicleRequisitionApp.Controllers
 
             if (ModelState.IsValid)
             {
-                tblRequisitionDetail.StateId = 1;
-                db.TblRequisitionDetails.Add(tblRequisitionDetail);
-                db.SaveChanges();
+                if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                {
+                    tblRequisitionDetail.StateId = 5;
+                    db.TblRequisitionDetails.Add(tblRequisitionDetail);
+                    db.SaveChanges();
+
+                    TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
+                    aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
+                    aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+                    aApproval.ApprovalStatus = true;
+                    db.TblRequestApprovalDetails.Add(aApproval);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    tblRequisitionDetail.StateId = 1;
+                    db.TblRequisitionDetails.Add(tblRequisitionDetail);
+                    db.SaveChanges();
+
+                }
+
+                
+
 
                 //aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
                 //aApproval.ApprovalAuthorityId = 0;
