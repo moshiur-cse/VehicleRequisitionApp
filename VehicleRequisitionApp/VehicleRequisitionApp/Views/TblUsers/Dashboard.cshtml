@@ -40,7 +40,7 @@
                 @foreach (TblRequisitionDetail item in ViewBag.CarStatus)
                 {
                     <tr>
-                        <td>@item.RequiredFromDate</td>
+                        <td>@item.RequiredFromDate.ToString("hh:mm tt")</td>
                         <td>@item.Place</td>
                         <td>@item.LookUpEmployee.EmpFullName</td>
                         <td>@item.LookUpEmployee.EmpMobile</td>

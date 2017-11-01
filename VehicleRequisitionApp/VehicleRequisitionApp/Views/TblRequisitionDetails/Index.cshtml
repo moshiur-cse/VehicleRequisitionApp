@@ -199,13 +199,13 @@
                     @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestSubmissionDate)
+                    @item.RequestSubmissionDate
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequiredFromDate)
+                    @item.RequiredFromDate.ToString("hh:mm tt")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequiredToDate)
+                    @item.RequiredToDate.ToString("hh:mm tt")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Place)
@@ -270,13 +270,13 @@
                     @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestSubmissionDate)
+                    @item.RequestSubmissionDate
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequiredFromDate)
+                    @item.RequiredFromDate.ToString("hh:mm tt")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequiredToDate)
+                    @item.RequiredToDate.ToString("hh:mm tt")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Place)

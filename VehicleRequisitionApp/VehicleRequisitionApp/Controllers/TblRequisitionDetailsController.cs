@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -55,20 +56,45 @@ namespace VehicleRequisitionApp.Controllers
                     return View();
                 }
             }
+
             if (Convert.ToInt32(Session["UserGroupId"]) == 2)
             {
+                int employeeId = Convert.ToInt32(Session["EmpId"]);
+
+                var findProjectId =db.LookupProjectLeaders.Where(i => i.EmpId == employeeId).ToList();
+                List<int> projectIdList=new List<int>();
+
+                foreach(LookupProjectLeader item in findProjectId)
+                {
+                    projectIdList.Add(item.ProjectId);
+                }
+
                 ViewBag.ApproveRequisition =
                         db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                             .Include(t => t.LookupProject)
                             .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.StateId!= 1 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                            .Where(i => projectIdList.Contains(i.ProjectId) && i.StateId != 1 && i.RequiredToDate > DateTime.Now )//DateTime.Now.AddDays(1) && 
                               .ToList();
+
                 ViewBag.NotApproveRequisition =
                         db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                             .Include(t => t.LookupProject)
                             .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.StateId == 1 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                            .Where(i => projectIdList.Contains(i.ProjectId) && i.StateId == 1 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
                               .ToList();
+                //ViewBag.ApproveRequisition =
+                //        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                //            .Include(t => t.LookupProject)
+                //            .Include(t => t.LookupRequisitionCategorys)
+                //            .Where(i => i.StateId!= 1 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                //              .ToList();
+
+                //ViewBag.NotApproveRequisition =
+                //        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                //            .Include(t => t.LookupProject)
+                //            .Include(t => t.LookupRequisitionCategorys)
+                //            .Where(i => i.StateId == 1 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                //              .ToList();
                 return View();
             }
             if (Convert.ToInt32(Session["UserGroupId"]) == 3)
@@ -87,6 +113,7 @@ namespace VehicleRequisitionApp.Controllers
                               .ToList();
                 return View();
             }
+
             if (Convert.ToInt32(Session["UserGroupId"]) == 6)
             {
                 ViewBag.ApproveRequisition =
@@ -124,6 +151,8 @@ namespace VehicleRequisitionApp.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ApprovalStatusDetails = db.TblRequestApprovalDetails.Where(i => i.RequisitionId == id).ToList();
             return View(tblRequisitionDetail);
         }
 
