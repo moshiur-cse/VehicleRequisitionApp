@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices.ComTypes;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -101,17 +102,29 @@ namespace VehicleRequisitionApp.Controllers
             }
             if (Convert.ToInt32(Session["UserGroupId"]) == 3)
             {
+
+                int employeeId = Convert.ToInt32(Session["EmpId"]);
+
+                var findProjectId = db.LookupProjectLeaders.Where(i => i.EmpId == employeeId).ToList();
+                List<int> projectIdList = new List<int>();
+
+                foreach (LookupProjectLeader item in findProjectId)
+                {
+                    projectIdList.Add(item.ProjectId);
+                }
+
+
                 ViewBag.ApproveRequisition =
                         db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                             .Include(t => t.LookupProject)
                             .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.StateId!= 2 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                            .Where(i => i.StateId>2 && i.RequiredToDate > DateTime.Now )//DateTime.Now.AddDays(1) && 
                               .ToList();
                 ViewBag.NotApproveRequisition =
                         db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                             .Include(t => t.LookupProject)
                             .Include(t => t.LookupRequisitionCategorys)
-                            .Where(i => i.StateId== 2 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
+                            .Where(i => i.StateId>=1 && i.StateId <=2 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
                               .ToList();
                 return View();
             }
@@ -218,12 +231,35 @@ namespace VehicleRequisitionApp.Controllers
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
 
-                    TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
-                    aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
-                    aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
-                    aApproval.ApprovalStatus = true;
-                    db.TblRequestApprovalDetails.Add(aApproval);
-                    db.SaveChanges();
+                    try
+                    {
+                        WebMail.SmtpServer = "smtp.cegisbd.com"; //gmail
+                        WebMail.SmtpPort = 587;
+                        WebMail.SmtpUseDefaultCredentials = true;
+                        WebMail.EnableSsl = true;
+                        WebMail.UserName = "vehicleadmin@cegisbd.com";
+                        WebMail.Password ="cegis@2017";
+                        WebMail.From = "moshiur.mgmh@gmail.com";
+                        WebMail.Send(to: "moshiur.mgmh@gmail.com", subject: "Vehicles Approval Status",
+                                     body: "<h1>Approved By: " + Session["FullName"] + "</h1>" +
+                                            "<h1>Approval Time: " + DateTime.Now + "</h1>",
+                                     cc: "", bcc: "", isBodyHtml: true);
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        // Provide for exceptions.
+                    }
+
+                    //TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
+                    //aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
+                    //aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+                    //aApproval.ApprovalStatus = true;
+                    //db.TblRequestApprovalDetails.Add(aApproval);
+                    //db.SaveChanges();
+
+                    DirectorApprovalMethod(tblRequisitionDetail.RequisitionId, 5, "Approved By Director");
                 }
                 else
                 {
@@ -233,21 +269,7 @@ namespace VehicleRequisitionApp.Controllers
 
                 }
 
-                
-
-
-                //aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
-                //aApproval.ApprovalAuthorityId = 0;
-                //aApproval.ApprovalStatus = false;
-                //aApproval.Comments = "";
-                //db.TblRequestApprovalDetails.Add(aApproval);
-                //db.SaveChanges();
-
-
-                //if (Session["UserName"].ToString() == "RMO")
-                //{
-                //    return RedirectToAction("Index");
-                //}
+             
                 return RedirectToAction("Index", "TblRequisitionDetails", new { id = Session["EmpId"] });
             }
 
@@ -303,12 +325,57 @@ namespace VehicleRequisitionApp.Controllers
             {
                 return RedirectToAction("LogIn", "TblUsers");
             }
+
             if (ModelState.IsValid)
             {
                 db.Entry(tblRequisitionDetail).State = EntityState.Modified;
                 db.SaveChanges();
+
+                var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId).ToList();
+
+                //DirectorApprovalMethod(tblRequisitionDetail.RequisitionId, 6, "Vehicle Assigned By Admin Transport");
+                
+
+                TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
+                aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
+                aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+                aApproval.ApprovalStatus = true;
+                aApproval.Comments = "Vehicle Assigned By Admin Transport";
+                db.TblRequestApprovalDetails.Add(aApproval);
+                db.SaveChanges();
+
+                foreach (var item in findRequisition)
+                {
+                    item.StateId = 6;
+                }
+                try
+                {
+                    db.SaveChanges();
+
+                    WebMail.SmtpServer = "smtp.gmail.com";
+                    WebMail.SmtpPort = 587;
+                    WebMail.SmtpUseDefaultCredentials = true;
+                    WebMail.EnableSsl = true;
+                    WebMail.UserName = "vehicleadmin@cegisbd.com";
+                    WebMail.Password = "cegis@2017";
+                    WebMail.From = "moshiur.mgmh@gmail.com";
+                    WebMail.Send(to: "moshiur.mgmh@gmail.com", subject: "Vehicles Approval Status",
+                                 body: "<h1>Approved By: " + Session["FullName"] + "</h1>" +
+                                        "<h1>Approval Time: " + DateTime.Now + "</h1>",
+                                 cc: "", bcc: "", isBodyHtml: true);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    // Provide for exceptions.
+                }
                 return RedirectToAction("Index");
             }
+
+          
+           // return RedirectToAction("Index");
+
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode", tblRequisitionDetail.ProjectId);
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId", "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
@@ -357,99 +424,37 @@ namespace VehicleRequisitionApp.Controllers
 
         public ActionResult AdminTransportApprove(int requisitionId)
         {
-
-            var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
-
-            TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
-            aApproval.RequisitionId = requisitionId;
-            aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
-            aApproval.ApprovalStatus = true;
-            db.TblRequestApprovalDetails.Add(aApproval);
-            db.SaveChanges();
-
-            foreach (var item in findRequisition)
-            {
-                item.StateId = 6;
-            }
-            try
-            {
-                db.SaveChanges();
-
-                WebMail.SmtpServer = "smtp.gmail.com";
-                WebMail.SmtpPort = 587;
-                WebMail.SmtpUseDefaultCredentials = true;
-                WebMail.EnableSsl = true;
-                WebMail.UserName = "rimu.cse45@gmail.com";
-                WebMail.Password = "rimu1234";
-                WebMail.From = "moshiur.mgmh@gmail.com";
-                WebMail.Send(to: "moshiur.mgmh@gmail.com", subject: "Vehicles Approval Status",
-                             body: "<h1>Approved By: " + Session["FullName"] + "</h1>" +
-                                    "<h1>Approval Time: " + DateTime.Now + "</h1>",
-                             cc: "", bcc: "", isBodyHtml: true);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                // Provide for exceptions.
-            }
+            DirectorApprovalMethod(requisitionId, 6, "Vehicle Assigned By Admin Transport");
             return RedirectToAction("Index");
-
         }
 
         public ActionResult DirectorApprove(int requisitionId)
-        {                        
-            TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
-            aApproval.RequisitionId = requisitionId;
-            aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
-            aApproval.ApprovalStatus = true;
-            db.TblRequestApprovalDetails.Add(aApproval);
-            db.SaveChanges();
-            var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
-            foreach (var item in findRequisition)
-            {
-                item.StateId = 5;
-            }
-            try
-            {
-                db.SaveChanges();
+        {
+            DirectorApprovalMethod(requisitionId, 5, "Approved By Director");
 
-                WebMail.SmtpServer = "smtp.gmail.com";
-                WebMail.SmtpPort = 587;
-                WebMail.SmtpUseDefaultCredentials = true;
-                WebMail.EnableSsl = true;
-                WebMail.UserName = "rimu.cse45@gmail.com";
-                WebMail.Password = "rimu1234";
-                WebMail.From = "moshiur.mgmh@gmail.com";
-                WebMail.Send(to: "moshiur.mgmh@gmail.com", subject: "Vehicles Approval Status",
-                             body: "<h1>Approved By: " + Session["FullName"] + "</h1>" +
-                                    "<h1>Approval Time: " + DateTime.Now + "</h1>",
-                             cc: "", bcc: "", isBodyHtml: true);
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                // Provide for exceptions.
-            }
             return RedirectToAction("Index");
         }
 
         public ActionResult PlApprove(int requisitionId)
         {
+            DirectorApprovalMethod(requisitionId, 2, "Recommended By PL");           
+            return RedirectToAction("Index");
 
-            var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
-                        
+        }
+
+        public bool  DirectorApprovalMethod(int requisitionId,int stateId,string comments)
+        {
             TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
             aApproval.RequisitionId = requisitionId;
             aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
             aApproval.ApprovalStatus = true;
+            aApproval.Comments = comments;  //;
             db.TblRequestApprovalDetails.Add(aApproval);
             db.SaveChanges();
-
+            var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
             foreach (var item in findRequisition)
             {
-                item.StateId = 2;
+                item.StateId = stateId;
             }
             try
             {
@@ -459,8 +464,8 @@ namespace VehicleRequisitionApp.Controllers
                 WebMail.SmtpPort = 587;
                 WebMail.SmtpUseDefaultCredentials = true;
                 WebMail.EnableSsl = true;
-                WebMail.UserName = "rimu.cse45@gmail.com";
-                WebMail.Password = "rimu1234";
+                WebMail.UserName = "vehicleadmin@cegisbd.com";
+                WebMail.Password = "cegis@2017";
                 WebMail.From = "moshiur.mgmh@gmail.com";
                 WebMail.Send(to: "moshiur.mgmh@gmail.com", subject: "Vehicles Approval Status",
                              body: "<h1>Approved By: " + Session["FullName"] + "</h1>" +
@@ -473,11 +478,7 @@ namespace VehicleRequisitionApp.Controllers
                 Console.WriteLine(e);
                 // Provide for exceptions.
             }
-            return RedirectToAction("Index");
-
+            return true;
         }
-
-
-
     }
 }

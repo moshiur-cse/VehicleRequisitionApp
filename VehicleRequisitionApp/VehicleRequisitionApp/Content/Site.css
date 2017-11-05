@@ -1,6 +1,6 @@
 ﻿body {
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 0;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -64,4 +64,44 @@ input, select, textarea {
         background-color: #37A84A !important;
     }
 
+.footer_part {
+    margin-top: 10px;
+    text-align: center;
+    background: #ffe4e1;
+    padding: 10px;
+    width: 100%;
+    float: left;
+}
 
+.footer-content {
+    border-top: 1px solid #ddd;
+    background-color: #f0f7f8;
+    padding: 15px;
+}
+
+.logo {
+    text-align: center;
+    display: inline-block;
+    width: 145px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    outline: 0 none;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.cegis {
+    background-image: url('../Views/../Images/CEGIS_logo.png');
+}
+
+
+.navbar-inverse {
+    border-color: rgba(0, 23, 28, 0.15);
+    padding: 1px 0;
+    background-color: #fafdff;
+    -webkit-box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
+    -moz-box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
+    box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
+}

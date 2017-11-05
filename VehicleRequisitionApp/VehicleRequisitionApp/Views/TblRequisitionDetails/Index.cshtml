@@ -199,7 +199,7 @@
                     @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
                 </td>
                 <td>
-                    @item.RequestSubmissionDate
+                    @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
                 </td>
                 <td>
                     @item.RequiredFromDate.ToString("hh:mm tt")
@@ -226,21 +226,22 @@
                     @Html.DisplayFor(modelItem => item.LookUpState.StateName)
                 </td>
 
-                @*@if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
                     {
                         if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                         {
                             <td>
-                                @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                             @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
+                             @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
                             </td>
                         }
-                        if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+                        if (Convert.ToInt32(Session["UserGroupId"]) == 6)
                         {
                             <td>
-                                @Html.ActionLink("Approve Now", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
                             </td>
                         }
-                    }*@
+                    }
 
             </tr>
         }
@@ -270,7 +271,7 @@
                     @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
                 </td>
                 <td>
-                    @item.RequestSubmissionDate
+                    @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
                 </td>
                 <td>
                     @item.RequiredFromDate.ToString("hh:mm tt")
@@ -309,16 +310,17 @@
                     if (Convert.ToInt32(Session["UserGroupId"]) == 2)
                     {
                         <td>
-                            @Html.ActionLink("Approve Now", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                           
+                            @Html.ActionLink("Recommend Now", "PlApprove", new {requisitionId = item.RequisitionId}, new {@class = "btn btn-success"})
                         </td>
                     }
                     if (Convert.ToInt32(Session["UserGroupId"]) == 6)
                     {
                         <td>
 
-                            @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }) |
+                            @Html.ActionLink("Assign Now", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
                             @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
-                            @Html.ActionLink("Approve Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                            @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
                             @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
                         </td>
                     }

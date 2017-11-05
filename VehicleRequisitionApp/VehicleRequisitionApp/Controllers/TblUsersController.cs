@@ -24,7 +24,7 @@ namespace VehicleRequisitionApp.Controllers
         [AllowAnonymous]
         public ActionResult LogIn(TblUser user)
         {
-            string initial="", name="";
+            string initial="", name="", degination="";
             int userId=0, userGroupId=0;
             var controller="";
             var action="";
@@ -38,6 +38,7 @@ namespace VehicleRequisitionApp.Controllers
                                 {
                                     FullName = u.EU.EmpFullName,
                                     Initial = u.EU.EmpInitial,
+                                    Degination=u.EU.EmpDesignation,
                                     aUserId=u.U.UserId
                                 }).ToList();
 
@@ -47,6 +48,7 @@ namespace VehicleRequisitionApp.Controllers
                 initial = item.Initial;
                 name = item.FullName;
                 userId = item.aUserId;
+                degination = item.Degination;
 
             }
 
@@ -56,6 +58,8 @@ namespace VehicleRequisitionApp.Controllers
             {
                 Session["UserName"] = initial;
                 Session["FullName"] = name;
+                Session["Degination"] = degination;
+
                 Session["UserId"] = userId;
                 Session["EmpId"] = user.EmpId;
                 Session["UserGroupId"] = userGroupId;

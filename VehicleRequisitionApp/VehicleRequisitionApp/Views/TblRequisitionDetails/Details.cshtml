@@ -133,7 +133,7 @@
             @foreach (TblRequestApprovalDetail item in ViewBag.ApprovalStatusDetails)
             {
                 <tr>
-                    <td>@item.LookUpEmployeeAuthority.EmpFullName</td><td>@item.LookUpEmployeeAuthority.EmpDesignation</td><td>Approved</td>
+                    <td>@item.LookUpEmployeeAuthority.EmpFullName</td><td>@item.LookUpEmployeeAuthority.EmpDesignation</td><td>@item.Comments</td>
 
                 </tr>
             }
