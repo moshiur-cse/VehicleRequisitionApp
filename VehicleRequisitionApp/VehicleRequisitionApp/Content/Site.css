@@ -1,13 +1,21 @@
-﻿body {
+﻿html {
+    background-color: #F0F7F8;
+    
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 0;
+    background-color: white;
+    
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    /*font-family: fantasy;*/
+    font-family: Helvetica;
+    
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -77,6 +85,14 @@ input, select, textarea {
     border-top: 1px solid #ddd;
     background-color: #f0f7f8;
     padding: 15px;
+
+
+    /*border-color: rgba(0, 23, 28, 0.15);*/
+    padding: 10px 0;
+    /*background-color: #fafdff;*/
+    -webkit-box-shadow:3px 0 0 1px rgba(0, 23, 28, 0.13);
+    -moz-box-shadow: 3px 0 0 1px rgba(0, 23, 28, 0.13);
+    box-shadow: 3px 0 0 1px rgba(0, 23, 28, 0.13);
 }
 
 .logo {
@@ -100,12 +116,11 @@ input, select, textarea {
 .navbar-inverse {
     border-color: rgba(0, 23, 28, 0.15);
     padding: 1px 0;
-    background-color: #fafdff;
+    background-color: #F0F7F8;/*//#fafdff;*/
     -webkit-box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
     -moz-box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
     box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
 }
-
 .navbar-header a {
     float: none;
     display: block;

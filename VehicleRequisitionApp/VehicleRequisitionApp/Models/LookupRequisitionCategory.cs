@@ -12,6 +12,7 @@ namespace VehicleRequisitionApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RequisitionCategoryId { get; set; }
+        [Display(Name = "Requisition Category")]
         public string RequisitionCategory { get; set; }
 
         public virtual List<TblRequisitionDetail> TblRequisitionDetails { get; set; }

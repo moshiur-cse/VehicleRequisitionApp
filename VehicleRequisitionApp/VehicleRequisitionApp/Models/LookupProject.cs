@@ -13,6 +13,7 @@ namespace VehicleRequisitionApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProjectId { get; set; }
         public int SortingSerialNo { get; set; }
+        [Display(Name = "Project Code")]
         public string ProjectCode { get; set; }
         public string ProjectTitle { get; set; }
         public string ClientName { get; set; }
