@@ -8,16 +8,31 @@
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("styles", required: false)
     <style type="text/css">
-        
+        .h3 {
+    margin-top: 1px!important;
+    margin-bottom:1px!important;
+}
+
     </style>
 
 </head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <div class="row"><h3 style="text-align: center; color: #000080; font-size: 40px; font-family: serif;">Vehicles Requisition System</h3></div>
+        <div class="row">
+            
+                <h3 style="text-align: center; color: #000080; font-size: 40px; font-family: serif; margin-top: 1px; margin-bottom: 1px">Vehicles Requisition System</h3>
+
+            @*<div class="col-md-2">
+                @Html.Partial("_LoginPartial")
+            </div>*@
+        </div>
+
         <div class="row">
             <div class="navbar-header">
+
+                @*<h3 style="text-align: center; color: #000080; font-size: 40px; font-family: serif;">Vehicles Requisition System</h3>*@
+                @*@Html.ActionLink("Vehicles Requisition System", "Dashboard", "TblUsers", new {}, new {@class = ""})*@
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -25,18 +40,18 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <img src="~/Images/VR-logo.png" style="height: 70px; padding: 5px"/>
-            
+                <img src="~/Images/VR-logo.png" style="height: 50px; padding: 5px"/>
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (Session["UserId"] != null)
-                    {
+                    @*@if (Session["UserId"] != null)
+                    {*@
                         <li>
                             @Html.ActionLink("Dashboard", "Dashboard", "TblUsers", new {id = Session["EmpId"]}, new {@class = ""})
                         </li>
 
-                        if (Convert.ToInt32(Session["UserGroupId"]) == 7)
+                        @if (Convert.ToInt32(Session["UserGroupId"]) == 7)
                         {
                             <li class="dropdown" style="padding: 10px">
                                 <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" style="background-color: #37A84A">
@@ -78,7 +93,7 @@
                         }
                         <li>@Html.ActionLink("Add Request", "Create", "TblRequisitionDetails")</li>
                         <li>@Html.ActionLink("Request Status", "Index", "TblRequisitionDetails", new {id = Session["EmpId"]}, null)</li>
-                    }
+                    @*}*@
 
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -86,7 +101,7 @@
         </div>
     </div>
 </div>
-<div class="container body-content" style="margin-top: 150px">
+<div class="container body-content" style="margin-top: 80px;margin-bottom: 20px">
     @RenderBody()
 </div>
     <div class="footer-content">

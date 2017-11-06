@@ -105,3 +105,16 @@ input, select, textarea {
     -moz-box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
     box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
 }
+
+.navbar-header a {
+    float: none;
+    display: block;
+    margin-top: 5px;
+    color: #07d;
+    font: normal 28px/1.5 Georgia, "Times New Roman", Times, serif;
+
+}
+a {
+    color: #337ab7;
+    text-decoration: none;
+}

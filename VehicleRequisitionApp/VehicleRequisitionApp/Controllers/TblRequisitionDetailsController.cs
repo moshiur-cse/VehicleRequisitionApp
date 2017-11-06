@@ -194,6 +194,10 @@ namespace VehicleRequisitionApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,UsedFromKM,UsedToKM,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId")] TblRequisitionDetail tblRequisitionDetail)
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "TblUsers");
+            }
             string message = "";
             if (tblRequisitionDetail.RequiredFromDate < DateTime.Now)
             {
