@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using VehicleRequisitionApp.Models;
 
 //https://github.com/moshiur-cse/VehicleRequisitionApp.git
@@ -22,7 +23,7 @@ namespace VehicleRequisitionApp.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult LogIn(TblUser user)
+        public ActionResult LogIn(TblUser user,string initials)
         {
             string initial = "", name = "", degination = "";
             int userId = 0, userGroupId = 0, divId = 0;
@@ -30,10 +31,20 @@ namespace VehicleRequisitionApp.Controllers
             var action = "";
             string hashPass = PassWordHash(user.Password);
 
-            var isUser = db.TblUsers.Where(u => u.EmpId == user.EmpId && u.Password == hashPass);
+            int findEmpId = db.LookUpEmployees.Where(i => i.EmpInitial == initials).Select(i=>i.EmpId).SingleOrDefault();
+
+            if (findEmpId==0)
+            {
+                TempData["Registration"] = "* Invalid Initial";
+                ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
+                return View();
+
+            }
+            
+            var isUser = db.TblUsers.Where(u => u.EmpId == findEmpId && u.Password == hashPass);
 
             var userDetails = db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, eu => eu.EmpId, (u, eu) => new { U = u, EU = eu }).
-                                Where(u => u.U.EmpId == user.EmpId).
+                                Where(u => u.U.EmpId == findEmpId).
                                 Select(u => new
                                 {
                                     FullName = u.EU.EmpFullName,
@@ -65,13 +76,13 @@ namespace VehicleRequisitionApp.Controllers
                 Session["FullName"] = name;
                 Session["Degination"] = degination;
                 Session["UserId"] = userId;
-                Session["EmpId"] = user.EmpId;
+                Session["EmpId"] = findEmpId;
                 Session["UserGroupId"] = userGroupId;
                 Session["DivisionId"] = divId;
             }
             else
             {
-                TempData["Registration"] = "* Invalid Initial or Password";
+                TempData["Registration"] = "* Invalid Password";
                 ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
                 return View();
             }
