@@ -1,6 +1,7 @@
 ﻿@model VehicleRequisitionApp.Models.TblUser
 @{
     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row">
@@ -24,36 +25,42 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.LookUpEmployee.EmpInitial, "Initial", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.EmpId, "Initial", htmlAttributes: new {@class = "control-label col-md-2"})
                             <div class="col-md-10">
-                                @Html.DropDownList("EmpId", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.LookUpEmployee.EmpInitial, "", new { @class = "text-danger" })
+                                @Html.DropDownList("EmpId", null, "--Select--", htmlAttributes: new {@class = "form-control"})
+                                @Html.ValidationMessageFor(model => model.EmpId, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+                        <div id="info" style="display: none">
+                          
+                                 
 
-                        <div style="" class="row">
-                            <div class="col-lg-12">
-                                <div class="col-lg-6">
-                                    @*<a href="#">Not a member yet? Register Now !</a>*@
-                                    @*@Html.ActionLink("Not a member yet? Register Now !", "Register", "User")*@
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-default pull-right">Log in</button>
-                                    @*<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>*@
+                         </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new {@class = "control-label col-md-2"})
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                                    @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
                                 </div>
                             </div>
-                        </div>
-                    }
 
-                </div>
+                            <div style="" class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-6">
+                                        @*<a href="#">Not a member yet? Register Now !</a>*@
+                                        @*@Html.ActionLink("Not a member yet? Register Now !", "Register", "User")*@
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-default pull-right">Log in</button>
+                                        @*<a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>*@
+                                    </div>
+                                </div>
+                            </div>
+                            }
+
+                        </div>
             </div>
         </div>
     </div>
@@ -61,6 +68,38 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+     
+        $("#EmpId").change(function () {
+
+            var empId = $("#EmpId").val();
+            var json = { empId: empId };
+            $("#info").empty();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("EmployeeDetails", "TblUsers")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (key, value) {
+
+                        $("#info").append('<div class="form-group"><label class="control-label col-md-2">Name </label>' +
+                                         '<div class="col-md-10"><input type="textbox" class="form-control" value="' + value.Name + '"readonly></div></div>'+
+                                         '<div class="form-group"><label class="control-label col-md-2">Email </label>' +
+                                         '<div class="col-md-10"><input type="textbox" name="email" class="form-control" value="' + value.Email + '"></div></div>' +
+                                         '<div class="form-group"><label class="control-label col-md-2">Phone No </label>' +
+                                         '<div class="col-md-10"><input type="textbox" name="phoneNo" class="form-control" value="' + value.PhoneNo + '"></div></div>');
+                        $("#info").show();
+                        
+                    });
+
+                }
+            });           
+            });
+            
+    </script>
 }
 
 

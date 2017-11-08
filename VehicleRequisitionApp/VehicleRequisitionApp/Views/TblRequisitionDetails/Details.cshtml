@@ -9,138 +9,142 @@
 
 <div class="row">
     <div class="col-md-6">
-        <h2>Requisition Details</h2>
-        <table class="table table-hover">
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
-                </td>
+        <fieldset>
+            <legend>Requisition Details</legend>
+            <table class="table table-hover">
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.LookUpEmployee.EmpInitial)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
-                </td>
+                    <td>
+                        @Html.DisplayFor(model => model.LookUpEmployee.EmpInitial)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.LookupProject.ProjectCode)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
-                </td>
+                    <td>
+                        @Html.DisplayFor(model => model.LookupProject.ProjectCode)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.RequestSubmissionDate)
-                </td>
+                    <td>
+                        @Html.DisplayFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.RequestSubmissionDate)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.RequestSubmissionDate)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.RequiredFromDate)
-                </td>
+                    <td>
+                        @Html.DisplayFor(model => model.RequestSubmissionDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.RequiredFromDate)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.RequiredFromDate)
-                </td>
-            </tr>
-            <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.RequiredFromDate)
+                    </td>
+                </tr>
+                <tr>
 
-                <td>
-                    @Html.DisplayNameFor(model => model.RequiredToDate)
-                </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.RequiredToDate)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.RequiredToDate)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.Place)
-                </td>
+                    <td>
+                        @Html.DisplayFor(model => model.RequiredToDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Place)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.Place)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.Reason)
-                </td>
+                    <td>
+                        @Html.DisplayFor(model => model.Place)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Reason)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.Reason)
-                </td>
-            </tr>
-            <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.Reason)
+                    </td>
+                </tr>
+                <tr>
 
-                <td>
-                    @Html.DisplayNameFor(model => model.ActuallyUsedFromDate)
-                </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.ActuallyUsedFromDate)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.ActuallyUsedFromDate)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.ActuallyUsedToDate)
-                </td>
+                    <td>
+                        @Html.DisplayFor(model => model.ActuallyUsedFromDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.ActuallyUsedToDate)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.ActuallyUsedToDate)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
-                </td>
+                    <td>
+                        @Html.DisplayFor(model => model.ActuallyUsedToDate)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.AssignedDriverEmpId)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.AssignedVehicleId)
-                </td>
+                    <td>
+                        @Html.DisplayFor(model => model.LookUpDriverEmployee.EmpFullName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.AssignedVehicleId)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(model => model.AssignedVehicleId)
-                </td>
-            </tr>
+                    <td>
+                        @Html.DisplayFor(model => model.LookupVehicles.VehicleNo)
+                    </td>
+                </tr>
 
-        </table>
-
+            </table>
+        </fieldset>
     </div>
     <div class="col-md-6">
-        <h2>Approval Authority List</h2>
-        
-        <table class="table table-hover">
+        <fieldset>
+            <legend>Approval Authority List</legend>
 
-            @foreach (TblRequestApprovalDetail item in ViewBag.ApprovalStatusDetails)
-            {
-                <tr>
-                    <td>@item.LookUpEmployeeAuthority.EmpFullName</td><td>@item.LookUpEmployeeAuthority.EmpDesignation</td><td>@item.Comments</td>
+            <table class="table table-hover">
 
-                </tr>
-            }
-        </table>
+                @foreach (TblRequestApprovalDetail item in ViewBag.ApprovalStatusDetails)
+                {
+                    <tr>
+                        <td>@item.LookUpEmployeeAuthority.EmpFullName</td>
+                        <td>@item.LookUpEmployeeAuthority.EmpDesignation</td>
+                        <td>@item.Comments</td>
+
+                    </tr>
+                }
+            </table>
+
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.RequisitionId }) |*@
+            @Html.ActionLink("Back to List", "Index", null, new { @Class = "btn btn-success pull-right" })
+        </fieldset>
     </div>
 </div>
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.RequisitionId }) |*@
-    @Html.ActionLink("Back to List", "Index")
-</p>

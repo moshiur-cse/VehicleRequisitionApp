@@ -17,16 +17,23 @@
 
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="row">
-            
-                <h3 style="text-align: center; color: #000080; font-size: 30px; font-family: Verdana; margin-top: 1px; margin-bottom: 1px">Vehicles Requisition System</h3>
 
-            @*<div class="col-md-2">
-                @Html.Partial("_LoginPartial")
-            </div>*@
-        </div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div style="background-color: #D9EDF7;">
+        <h3 class="col-md-offset-1 col-lg-12" style="font-size: 30px; font-family: Verdana; margin-top: 0; margin-bottom: 1px">
+            <img src="~/Images/logo.png" style="height: 50px; padding: 5px" />Vehicles Requisition System
+        </h3>
+    </div>
+    <div class="container">
+        @*<div class="row" style="background-color: #d5e3e4">
+                    <h3 style="color: #000080; font-size: 30px; font-family: Verdana; margin-top: 1px; margin-bottom: 1px">
+                        <img src="~/Images/logo.png" style="height: 50px; padding: 5px" />Vehicles Requisition System
+                    </h3>
+
+                    @*<div class="col-md-2">
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                </div>*@
 
         <div class="row">
             <div class="navbar-header">
@@ -40,59 +47,59 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <img src="~/Images/logo.png" style="height: 50px; padding: 5px"/>
+                @*<img src="~/Images/logo.png" style="height: 50px; padding: 5px"/>*@
 
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*@if (Session["UserId"] != null)
-                    {*@
-                        <li>
-                            @Html.ActionLink("Dashboard", "Dashboard", "TblUsers", new {id = Session["EmpId"]}, new {@class = ""})
+                                {*@
+                    <li>
+                        @Html.ActionLink("Dashboard", "Dashboard", "TblUsers", new {id = Session["EmpId"]}, new {@class = ""})
+                    </li>
+
+                    @if (Convert.ToInt32(Session["UserGroupId"]) == 7)
+                    {
+                        <li class="dropdown" style="padding: 10px">
+                            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" style="background-color: #37A84A">
+                                Admin Panel
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Division", "Index", "LookUpDivisions")</li>
+
+                                <li>@Html.ActionLink("Assing Employee Type", "Index", "LookUpEmployeeTypes")</li>
+
+                                <li>@Html.ActionLink("Employee", "Index", "LookUpEmployees")</li>
+
+                                <li>@Html.ActionLink("Management Type", "Index", "LookUpManagementTypes")</li>
+
+                                <li>@Html.ActionLink("Assing Management", "Index", "TblManagementDetails")</li>
+
+                                <li>@Html.ActionLink("Assing Director", "Index", "TblDirectors")</li>
+
+                                <li>@Html.ActionLink("Assing Driver", "Index", "TblDrivers")</li>
+
+                                <li>@Html.ActionLink("Create Projects", "Index", "LookupProjects")</li>
+
+                                <li>@Html.ActionLink("Assign Project Leader", "Index", "LookupProjectLeaders")</li>
+
+                                <li>@Html.ActionLink("User Groups", "Index", "LookupUserGroups")</li>
+
+                                <li>@Html.ActionLink("User Group Distributions", "Index", "TblUserGroupDistributions")</li>
+
+                                <li>@Html.ActionLink("Requisition Categories", "Index", "LookupRequisitionCategories")</li>
+
+                                <li>@Html.ActionLink("Vehicles Details", "Index", "LookupVehicles")</li>
+
+                                <li>@Html.ActionLink("Requisition", "Index", "TblRequisitionDetails")</li>
+
+                                <li>@Html.ActionLink("Request Approval Details", "Index", "TblRequestApprovalDetails")</li>
+                            </ul>
                         </li>
-
-                        @if (Convert.ToInt32(Session["UserGroupId"]) == 7)
-                        {
-                            <li class="dropdown" style="padding: 10px">
-                                <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" style="background-color: #37A84A">
-                                    Admin Panel
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Division", "Index", "LookUpDivisions")</li>
-
-                                    <li>@Html.ActionLink("Assing Employee Type", "Index", "LookUpEmployeeTypes")</li>
-
-                                    <li>@Html.ActionLink("Employee", "Index", "LookUpEmployees")</li>
-
-                                    <li>@Html.ActionLink("Management Type", "Index", "LookUpManagementTypes")</li>
-
-                                    <li>@Html.ActionLink("Assing Management", "Index", "TblManagementDetails")</li>
-
-                                    <li>@Html.ActionLink("Assing Director", "Index", "TblDirectors")</li>
-
-                                    <li>@Html.ActionLink("Assing Driver", "Index", "TblDrivers")</li>
-
-                                    <li>@Html.ActionLink("Create Projects", "Index", "LookupProjects")</li>
-
-                                    <li>@Html.ActionLink("Assign Project Leader", "Index", "LookupProjectLeaders")</li>
-
-                                    <li>@Html.ActionLink("User Groups", "Index", "LookupUserGroups")</li>
-
-                                    <li>@Html.ActionLink("User Group Distributions", "Index", "TblUserGroupDistributions")</li>
-
-                                    <li>@Html.ActionLink("Requisition Categories", "Index", "LookupRequisitionCategories")</li>
-
-                                    <li>@Html.ActionLink("Vehicles Details", "Index", "LookupVehicles")</li>
-
-                                    <li>@Html.ActionLink("Requisition", "Index", "TblRequisitionDetails")</li>
-
-                                    <li>@Html.ActionLink("Request Approval Details", "Index", "TblRequestApprovalDetails")</li>
-                                </ul>
-                            </li>
-                        }
-                        <li>@Html.ActionLink("Add Request", "Create", "TblRequisitionDetails")</li>
-                        <li>@Html.ActionLink("Request Status", "Index", "TblRequisitionDetails", new {id = Session["EmpId"]}, null)</li>
+                    }
+                    <li>@Html.ActionLink("Add Request", "Create", "TblRequisitionDetails")</li>
+                    <li>@Html.ActionLink("Request Status", "Index", "TblRequisitionDetails", new {id = Session["EmpId"]}, null)</li>
                     @*}*@
 
                 </ul>
@@ -101,19 +108,19 @@
         </div>
     </div>
 </div>
-<div class="container body-content" style="margin-top: 80px;margin-bottom: 20px">
-    @RenderBody()
-</div>
-    <div class="footer-content">
-        <footer>
-            <div style="text-align: center;">
-                <a class="logo cegis" target="_blank" href="http://www.cegisbd.com/" title="Center for Environmental and Geographic Information Services"></a>
-            </div>
-                <p style="text-align: center">Copyright @DateTime.Now.Year - All Rights Reserved By CEGIS</p>           
-        </footer>
-    </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        <div class="container body-content" style="margin-top: 80px; margin-bottom: 20px">
+            @RenderBody()
+        </div>
+        <div class="footer-content">
+            <footer>
+                <div style="text-align: center;">
+                    <a class="logo cegis" target="_blank" href="http://www.cegisbd.com/" title="Center for Environmental and Geographic Information Services"></a>
+                </div>
+                <p style="text-align: center">Copyright @DateTime.Now.Year - All Rights Reserved By CEGIS</p>
+            </footer>
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

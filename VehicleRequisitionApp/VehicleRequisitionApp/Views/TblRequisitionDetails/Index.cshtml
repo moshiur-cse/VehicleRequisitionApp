@@ -8,7 +8,24 @@
     ViewBag.ApprovalStatus = 0;
 }
 
-<h2>Requisition List</h2>
+
+@section styles
+{
+    <style>
+        
+
+        #table_scroll_div {
+            /*background-color: #CCE3EA;*/
+            width: auto;
+            /* height: 100px; */
+            /* border: 1px dotted black; */
+            /* overflow: scroll; */
+            /* padding: 20px; */
+            overflow: auto;
+        }
+    </style>
+}
+
 
 @*<p>
         @Html.ActionLink("Create New", "Create")
@@ -133,206 +150,210 @@
             </tr>
         }
     </table>*@
-
-<table id="myTable" class="table table-hover">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
-        </th>
-        <th>
-            <label>Submission DateTime</label>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RequiredFromDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RequiredToDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Place)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Reason)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AssignedVehicleId)
-        </th>
-
-        <th>
-            Status
-        </th>
-        @if (Convert.ToInt32(Session["UserGroupId"]) >1)
-        {
-            <th>
-                Action
-            </th>
-        }
-    </tr>
-    @try
-    {
-        foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
-        {
+<fieldset>
+<legend>Requisition List</legend>
+    <div id="table_scroll_div">
+        <table id="myTable" class="table table-hover">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
-                </td>
-                <td>
-                    @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
-                </td>
-                <td>
-                    @item.RequiredFromDate.ToString("hh:mm tt")
-                </td>
-                <td>
-                    @item.RequiredToDate.ToString("hh:mm tt")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Place)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Reason)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
+                </th>
+                <th>
+                    <label>Submission DateTime</label>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RequiredFromDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RequiredToDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Place)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reason)
+                </th>
 
-                <td>
-                    @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
+                <th>
+                    @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AssignedVehicleId)
+                </th>
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookUpState.StateName)
-                </td>
-
-                @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
-                    {
-                        if (Convert.ToInt32(Session["UserGroupId"]) == 3)
-                        {
-                            <td>
-                             @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
-                             @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
-                            </td>
-                        }
-                        if (Convert.ToInt32(Session["UserGroupId"]) == 6)
-                        {
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
-                            </td>
-                        }
-                    }
-
-            </tr>
-        }
-
-    }
-    catch (Exception)
-    {
-
-    }
-
-
-    @try
-    {
-        foreach (TblRequisitionDetail item in ViewBag.NotApproveRequisition)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
-                </td>
-                <td>
-                    @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
-                </td>
-                <td>
-                    @item.RequiredFromDate.ToString("hh:mm tt")
-                </td>
-                <td>
-                    @item.RequiredToDate.ToString("hh:mm tt")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Place)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Reason)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
-
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.LookUpState.StateName)
-                </td>
-
-                @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                <th>
+                    Status
+                </th>
+                @if (Convert.ToInt32(Session["UserGroupId"]) > 1)
                 {
-                    if (Convert.ToInt32(Session["UserGroupId"]) == 3)
-                    {
+                    <th>
+                        Action
+                    </th>
+                }
+            </tr>
+            @try
+            {
+                foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
+                {
+                    <tr>
                         <td>
-                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
-                            @Html.ActionLink("Approve Now", "DirectorApprove", new {requisitionId = item.RequisitionId}, new {@class = "btn btn-success"})
+                            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
                         </td>
-                    }
-                    if (Convert.ToInt32(Session["UserGroupId"]) == 2)
-                    {
                         <td>
-                           
-                            @Html.ActionLink("Recommend Now", "PlApprove", new {requisitionId = item.RequisitionId}, new {@class = "btn btn-success"})
+                            @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
                         </td>
-                    }
-                    if (Convert.ToInt32(Session["UserGroupId"]) == 6)
-                    {
                         <td>
-
-                            @Html.ActionLink("Assign Now", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
-                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
-                            @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
-                            @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
+                            @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
                         </td>
-                    }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
+                        </td>
+                        <td>
+                            @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
+                        </td>
+                        <td>
+                            @item.RequiredFromDate.ToString("hh:mm tt")
+                        </td>
+                        <td>
+                            @item.RequiredToDate.ToString("hh:mm tt")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Place)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reason)
+                        </td>
 
+                        <td>
+                            @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
 
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LookUpState.StateName)
+                        </td>
+
+                        @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                        {
+                            if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                            {
+                                <td>
+                                    @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
+                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
+                                </td>
+                            }
+                            if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+                            {
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
+                                </td>
+                            }
+                        }
+
+                    </tr>
                 }
 
-            </tr>
-        }
-    }
-    catch (Exception)
-    {
+            }
+            catch (Exception)
+            {
 
-    }
-</table>
+            }
+
+
+            @try
+            {
+                foreach (TblRequisitionDetail item in ViewBag.NotApproveRequisition)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
+                        </td>
+                        <td>
+                            @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
+                        </td>
+                        <td>
+                            @item.RequiredFromDate.ToString("hh:mm tt")
+                        </td>
+                        <td>
+                            @item.RequiredToDate.ToString("hh:mm tt")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Place)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reason)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LookUpState.StateName)
+                        </td>
+
+                        @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                        {
+                            if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                            {
+                                <td>
+                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
+                                    @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                </td>
+                            }
+                            if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+                            {
+                                <td>
+
+                                    @Html.ActionLink("Recommend Now", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                </td>
+                            }
+                            if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+                            {
+                                <td>
+
+                                    @Html.ActionLink("Assign Now", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
+                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
+                                    @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
+                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
+                                </td>
+                            }
+
+
+                        }
+
+                    </tr>
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        </table>
+    </div>
+</fieldset>

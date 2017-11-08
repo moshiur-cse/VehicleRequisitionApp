@@ -1,10 +1,9 @@
-﻿@using VehicleRequisitionApp.Models
-@model VehicleRequisitionApp.Models.LookUpEmployee
-
+﻿@model VehicleRequisitionApp.Models.LookUpEmployee
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @section styles
 {
     <style>
@@ -13,65 +12,15 @@
             text-align: left !important;
         }
 
-        #table_scroll_div {
-            /*background-color: #CCE3EA;*/
-            width: auto;
-            /* height: 100px; */
-            /* border: 1px dotted black; */
-            /* overflow: scroll; */
-            /* padding: 20px; */
-            overflow: auto;
-        }
+        
     </style>
 }
+
 <div class="row">
     <div class="col-md-offset-2 col-lg-8 col-md-offset-2">
         <fieldset>
-            <legend>Today's Vehicles Status</legend>
-            <div id="table_scroll_div">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th><label>Request Time</label></th>
-                            <th><label>Location</label></th>
-                            <th><label>Requester's Name</label></th>
-                            <th><label>Requester Phone No</label></th>
-                            <th><label>Driver's Name</label></th>
-                            <th><label>Driver's Phone No</label></th>
-                            <th><label>Vehicle No</label></th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (TblRequisitionDetail item in ViewBag.CarStatus)
-                        {
-                            <tr>
-                                <td>@item.RequiredFromDate.ToString("hh:mm tt")</td>
-                                <td>@item.Place</td>
-                                <td>@item.LookUpEmployee.EmpFullName</td>
-                                <td>@item.LookUpEmployee.EmpMobile</td>
-                                <td>@item.LookUpDriverEmployee.EmpFullName</td>
-                                <td>@item.LookUpDriverEmployee.EmpMobile </td>
-                                <td>@item.LookupVehicles.VehicleNo</td>
-                            </tr>
-                        }
-                    </tbody>
-
-                </table>
-            </div>
-        </fieldset>
-    </div>
-</div>
-
-
-
-
-
-
-@*<div class="row">
-        <div class="col-md-offset-2 col-lg-8 col-md-offset-2">
-
-            <h2>Profile</h2>
+            <legend>Profile</legend>
+            @*<h2>Profile</h2>*@
             <div class="col-lg-8">
                 <table class="table table-hover">
                     <tr>
@@ -182,9 +131,12 @@
                 </table>
             </div>
             <div class="col-lg-4">
-                <img src="~/UploadedFiles/@ViewBag.Image" height="180" width="160"/>
+                <img src="~/UploadedFiles/@ViewBag.Image" height="180" width="160" />
             </div>
-        </div>
-    </div>*@
+        </fieldset>
+    </div>
+</div>
+
+
 
 

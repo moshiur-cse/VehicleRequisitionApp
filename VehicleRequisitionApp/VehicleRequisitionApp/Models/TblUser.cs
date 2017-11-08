@@ -12,6 +12,8 @@ namespace VehicleRequisitionApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId  { get; set; }
+
+        [Required(ErrorMessage = "Please Select Initial")]
         public int EmpId { get; set; }
         [ForeignKey("EmpId")]
         public virtual LookUpEmployee LookUpEmployee { get; set; }

@@ -78,33 +78,35 @@ namespace VehicleRequisitionApp.Controllers
                 message = "Pin Number Already Exits";
             }
             else { 
-            TblUser aUser = new TblUser();
-                TblUserGroupDistribution aGroupUser = new TblUserGroupDistribution();
-                LookUpFileUpload aFile = new LookUpFileUpload();
-                string pass = PassWordHash(lookUpEmployee.EmpInitial);
+
+                //TblUser aUser = new TblUser();
+                //TblUserGroupDistribution aGroupUser = new TblUserGroupDistribution();
+                //LookUpFileUpload aFile = new LookUpFileUpload();
+                //string pass = PassWordHash(lookUpEmployee.EmpInitial);
 
                 if (ModelState.IsValid)
                 {
                     db.LookUpEmployees.Add(lookUpEmployee);
                     db.SaveChanges();
 
-                    aUser.EmpId = lookUpEmployee.EmpId;
-                    aUser.Password = pass;
-                    db.TblUsers.Add(aUser);
-                    db.SaveChanges();
+                    //aUser.EmpId = lookUpEmployee.EmpId;
+                    //aUser.Password = pass;
+                    //db.TblUsers.Add(aUser);
+                    //db.SaveChanges();
 
-                    aGroupUser.UserId = aUser.UserId;
-                    aGroupUser.UserGroupsId = 1;
-                    db.TblUserGroupDistributions.Add(aGroupUser);
-                    db.SaveChanges();
+                    //aGroupUser.UserId = aUser.UserId;
+                    //aGroupUser.UserGroupsId = 1;
+                    //db.TblUserGroupDistributions.Add(aGroupUser);
+                    //db.SaveChanges();
 
-                    aFile.FileName = "";
-                    aFile.EmpId = lookUpEmployee.EmpId;
-                    db.LookUpFileUploads.Add(aFile);
-                    db.SaveChanges();
+                    //aFile.FileName = "";
+                    //aFile.EmpId = lookUpEmployee.EmpId;
+                    //db.LookUpFileUploads.Add(aFile);
+                    //db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
+
             ViewBag.Error = message;
             ViewBag.EmpDivisionId = new SelectList(db.LookUpDivisions, "DivisionId", "DivFullName", lookUpEmployee.EmpDivisionId);
             ViewBag.EmpTypeId = new SelectList(db.LookUpEmployeeTypes, "EmpTypeId", "EmpType", lookUpEmployee.EmpTypeId);

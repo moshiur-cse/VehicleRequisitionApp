@@ -1294,6 +1294,7 @@
     <Content Include="Views\TblDrivers\Details.cshtml" />
     <Content Include="Views\TblDrivers\Edit.cshtml" />
     <Content Include="Views\TblDrivers\Index.cshtml" />
+    <Content Include="Views\TblUsers\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

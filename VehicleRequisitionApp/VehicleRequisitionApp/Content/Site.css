@@ -1,21 +1,19 @@
 ﻿html {
-    background-color: #F0F7F8;
-    
+    /*background-color: #F0F7F8;*/
 }
 
 body {
     padding-top: 50px;
     padding-bottom: 0;
     background-color: white;
-    
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    font-family: Helvetica;
-    
+    /*font-family: Helvetica;*/
+    font-family:Verdana, Helvetica, Arial;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -85,12 +83,10 @@ input, select, textarea {
     border-top: 1px solid #ddd;
     background-color: #f0f7f8;
     padding: 15px;
-
-
     /*border-color: rgba(0, 23, 28, 0.15);*/
     padding: 10px 0;
     /*background-color: #fafdff;*/
-    -webkit-box-shadow:3px 0 0 1px rgba(0, 23, 28, 0.13);
+    -webkit-box-shadow: 3px 0 0 1px rgba(0, 23, 28, 0.13);
     -moz-box-shadow: 3px 0 0 1px rgba(0, 23, 28, 0.13);
     box-shadow: 3px 0 0 1px rgba(0, 23, 28, 0.13);
 }
@@ -112,24 +108,74 @@ input, select, textarea {
     background-image: url('../Views/../Images/CEGIS_logo.png');
 }
 
-
 .navbar-inverse {
     border-color: rgba(0, 23, 28, 0.15);
     padding: 1px 0;
-    background-color: #F0F7F8;/*//#fafdff;*/
+    background-color: #F0F7F8; /*//#fafdff;*/
     -webkit-box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
     -moz-box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
     box-shadow: 0 2px 3px rgba(0, 23, 28, 0.13);
 }
+
 .navbar-header a {
     float: none;
     display: block;
     margin-top: 5px;
     color: #07d;
     font: normal 28px/1.5 Georgia, "Times New Roman", Times, serif;
-
 }
+
 a {
     color: #337ab7;
     text-decoration: none;
+}
+
+fieldset {
+    border: 1px solid #37A84A;
+    width: auto;
+    height: auto;
+    margin: 3px 0 0 0;
+    padding: 5px 7px 7px 7px;
+    color: #072328;
+    font: normal 9.25pt/1.5 Verdana, Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 8px #ddd inset;
+    -moz-box-shadow: 0 0 8px #ddd inset;
+    -o-box-shadow: 0 0 8px #ddd inset;
+    box-shadow: 0 0 8px #ddd inset;
+}
+
+    fieldset legend {
+        border: 1px none #37A84A;
+        margin: 0 0 0 10px;
+        padding: 5px 10px 6px 10px;
+        color: #fafafa;
+        font: bold 9.5pt/17px "Droid Serif",Georgia,"Courier New",Courier,monospace,serif;
+        background: #37A84A;
+        background-size: 100%;
+        background: -webkit-gradient(linear, left top, left bottom, from(#37A84A), to(#37A84A));
+        background: -webkit-linear-gradient(center top, #43b5d7, #13a3d5);
+        background: -moz-linear-gradient(center top, #43b5d7, #13a3d5);
+        background: -ms-linear-gradient(center top, #43b5d7, #13a3d5);
+        background: -o-linear-gradient(center top, #43b5d7, #13a3d5);
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.07) inset;
+        -moz-box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.07) inset;
+        -o-box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.07) inset;
+        box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.07) inset;
+        -webkit-text-shadow: 0 1px 0 rgba(0, 13, 23, 0.43);
+        -moz-text-shadow: 0 1px 0 rgba(0, 13, 23, 0.43);
+        -o-text-shadow: 0 1px 0 rgba(0, 13, 23, 0.43);
+        text-shadow: 0 1px 0 rgba(0, 13, 23, 0.43);
+    }
+
+legend {
+    width: auto;
 }

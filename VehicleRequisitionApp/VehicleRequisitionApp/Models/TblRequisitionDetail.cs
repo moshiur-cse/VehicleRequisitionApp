@@ -41,9 +41,10 @@ namespace VehicleRequisitionApp.Models
 
         public double? UsedFromKM { get; set; }
         public double? UsedToKM { get; set; }
-        [Display(Name = "From")]
+       
+        [Display(Name = "Actually Used From")]
         public DateTime? ActuallyUsedFromDate { get; set; }
-        [Display(Name = "To")]
+        [Display(Name = "Actually Used To")]
         public DateTime? ActuallyUsedToDate { get; set; }
 
 

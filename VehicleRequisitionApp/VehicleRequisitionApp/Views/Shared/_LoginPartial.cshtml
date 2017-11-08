@@ -18,6 +18,7 @@
 
                         @if (Convert.ToInt32(Session["UserGroupId"]) == 7)
                         {
+                            <li>@Html.ActionLink("View Profile", "Profile", "TblUsers", new { id = Session["EmpId"] }, null)</li>
                             <li>@Html.ActionLink("Update Profile", "Edit", "LookUpEmployees", new {id = Session["EmpId"]}, null)</li>
                             <li>@Html.ActionLink("Update Profile Picture", "Create", "LookUpFileUploads", new {id = Session["EmpId"]}, null)</li>
                         }
@@ -36,7 +37,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        @*<li>@Html.ActionLink("Register", "Register", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
+        <li>@Html.ActionLink("[ Register ]", "Register", "TblUsers", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("[ Log in ]", "LogIn", "TblUsers", routeValues: null, htmlAttributes: new {id = "loginLink"})</li>
     </ul>
 }
