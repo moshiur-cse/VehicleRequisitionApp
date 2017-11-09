@@ -39,6 +39,18 @@ namespace VehicleRequisitionApp.Controllers
         // GET: LookupProjectLeaders/Create
         public ActionResult Create()
         {
+            ViewBag.EmpInfo = db.LookUpEmployees.Select(i => new
+            {
+                empId = i.EmpId,
+                empInitialAndName = i.EmpInitial + " : " + i.EmpFullName
+            }).ToList();
+
+            ViewBag.ProjectInfo = db.LookupProjects.Select(i => new
+            {
+                ProjId = i.ProjectId,
+                CodeAndTitle = i.ProjectCode + " : "+i.ProjectTitle
+
+            }).ToList();
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode");
             return View();
@@ -57,6 +69,21 @@ namespace VehicleRequisitionApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.EmpInfo = db.LookUpEmployees.Select(i => new
+            {
+                empId=i.EmpId,
+                empInitialAndName = i.EmpInitial + " : " + i.EmpFullName
+            }).ToList();
+
+            ViewBag.ProjectInfo = db.LookupProjects.Select(i => new
+            {
+                ProjId = i.ProjectId,
+                CodeAndTitle=i.ProjectCode+" : "+i.ProjectTitle
+
+            }).ToList();
+
+
 
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial", lookupProjectLeader.EmpId);
             ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode", lookupProjectLeader.ProjectId);

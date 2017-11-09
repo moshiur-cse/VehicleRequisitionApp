@@ -1,0 +1,132 @@
+﻿@using VehicleRequisitionApp.Models
+@model VehicleRequisitionApp.Models.TblRequisitionDetail
+@*@{
+    ViewBag.Title = "Print";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+
+@section Styles {
+    <style type="text/css">
+       
+    </style>
+
+}
+<div class="navbar-fixed-top">
+    <h3 style="text-align: center">CEGIS, DHAKA</h3>
+    <h4 style="text-align: center; text-decoration: underline">VEHICLES REQUISITION</h4>
+    <h4 style="text-align: center">(OFFICIAL)</h4>
+    <hr/>
+
+    <div class="row" style="margin-top: 30px"> 
+        @*<div>
+            <p style="font-size: 20px" class="pull-right"><b>Requisition Catergory : </b>@Model.LookupRequisitionCategorys.RequisitionCategory</p> @Html.EditorFor(model => model.LookupRequisitionCategorys.RequisitionCategory, new {htmlAttributes = new {@class = "form-control"}})
+        </div>*@
+
+        <div class="row">
+            <p style="font-size: 18px" class="pull-right"><b>Submission Datetime :</b> @Model.RequestSubmissionDate</p>          
+        </div>
+
+        <div class="col-md-12" style="margin-top: 30px">
+            <p style="margin-right: 1px; font-size: 18px"><b>Requester Name :</b> @Model.LookUpEmployee.EmpFullName</p>
+
+        </div>
+
+        <div class="col-md-12">
+            <p style="margin-right: 1px; font-size: 18px"><b>Designation : </b> @Model.LookUpEmployee.EmpDesignation &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Project Code : </b>@Model.LookupProject.ProjectCode</p>
+        </div>
+
+        <div class="col-md-12">
+
+            <p style="margin-right: 1px; font-size: 18px"><b>Time Required : </b> @Model.RequiredFromDate &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>hour to : </b>@Model.RequiredToDate &nbsp;<b>hour</b></p>
+
+            @*@Html.LabelFor(model => model.RequiredFromDate, "Time Required", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.RequiredFromDate, new {htmlAttributes = new {@class = "form-control", id = "DateTime1"}})
+                @Html.ValidationMessageFor(model => model.RequiredFromDate, "", new {@class = "text-danger"})
+            </div>
+
+            @Html.LabelFor(model => model.RequiredToDate, "hour to", htmlAttributes: new {@class = "control-label col-md-2", style = "text-align:right!important"})
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.RequiredToDate, new {htmlAttributes = new {@class = "form-control", id = "DateTime2"}})
+                @Html.ValidationMessageFor(model => model.RequiredToDate, "", new {@class = "text-danger"})
+            </div>*@
+
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Place, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Place, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Place, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Reason, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Reason, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Reason, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UsedFromKM, "Actual Time used from", htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-1">
+                @Html.EditorFor(model => model.UsedFromKM, new {htmlAttributes = new {@class = "form-control"}})
+            </div>
+
+            @Html.LabelFor(model => model.UsedToKM, "To", htmlAttributes: new {@class = "control-label col-md-1", style = "text-align:right!important"})
+            <div class="col-md-1">
+                @Html.EditorFor(model => model.UsedToKM, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.UsedToKM, "", new {@class = "text-danger"})
+            </div>
+
+            @Html.LabelFor(model => model.ActuallyUsedFromDate, "KM. From", htmlAttributes: new {@class = "control-label col-md-2", style = "text-align:right!important"})
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.ActuallyUsedFromDate, new {htmlAttributes = new {@class = "form-control", id = "DateTime11"}}) @*, *@
+                @Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new {@class = "text-danger"})
+            </div>
+
+            @Html.LabelFor(model => model.ActuallyUsedToDate, "To", htmlAttributes: new {@class = "control-label col-md-1", style = "text-align:right!important"})
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.ActuallyUsedToDate, new {htmlAttributes = new {@class = "form-control", id = "DateTime10"}})@**@
+                @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new {@class = "text-danger"})
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AssignedDriverEmpId, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LookUpDriverEmployee.EmpFullName, new {htmlAttributes = new {@class = "form-control"}})
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AssignedVehicleId, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LookupVehicles.VehicleNo, new {htmlAttributes = new {@class = "form-control"}})
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>        
+
+
+@section Scripts {
+    <script>
+        $("#navContent").hide();
+        $("#footerId").hide();
+
+    </script>
+    
+}
+

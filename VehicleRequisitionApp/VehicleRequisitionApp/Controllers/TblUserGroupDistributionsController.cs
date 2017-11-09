@@ -103,17 +103,26 @@ namespace VehicleRequisitionApp.Controllers
             {
                 return HttpNotFound();
             }
+
+            //ViewBag.EmpInfo = db.LookUpEmployees.Where(i=>i.).Select(i => new
+            //{
+            //    empId = i.EmpId,
+            //    empInitialAndName = i.EmpInitial + " : " + i.EmpFullName
+            //}).ToList();
+
+
+
             ViewBag.UserGroupsId = new SelectList(db.LookupUserGroups, "UserGroupsId", "UserGroupName", tblUserGroupDistribution.UserGroupsId);
             // ViewBag.UserId = new SelectList(db.TblUsers, "UserId", "Password", tblUserGroupDistribution.UserId);
-            var userDetails = db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, e => e.EmpId, (u, e) => new { U = u, E = e }).
-                                 Select(i => new
-                                 {
-                                     initial = i.E.EmpInitial,
-                                     userId = i.U.UserId
-                                 }).ToList();
+            //var userDetails = db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, e => e.EmpId, (u, e) => new { U = u, E = e }).
+            //                     Select(i => new
+            //                     {
+            //                         initial = i.E.EmpInitial,
+            //                         userId = i.U.UserId
+            //                     }).ToList();
 
 
-            ViewBag.UserId = new SelectList(userDetails, "userId", "initial");
+            //ViewBag.UserId = new SelectList(userDetails, "userId", "initial");
             return View(tblUserGroupDistribution);
         }
 
@@ -126,21 +135,21 @@ namespace VehicleRequisitionApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tblUserGroupDistribution).State = EntityState.Modified;
+                db.Entry(tblUserGroupDistribution).State = EntityState.Modified;                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.UserGroupsId = new SelectList(db.LookupUserGroups, "UserGroupsId", "UserGroupName", tblUserGroupDistribution.UserGroupsId);
             //ViewBag.UserId = new SelectList(db.TblUsers, "UserId", "Password", tblUserGroupDistribution.UserId);
-            var userDetails = db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, e => e.EmpId, (u, e) => new { U = u, E = e }).
-                                Select(i => new
-                                {
-                                    initial = i.E.EmpInitial,
-                                    userId = i.U.UserId
-                                }).ToList();
+            //var userDetails = db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, e => e.EmpId, (u, e) => new { U = u, E = e }).
+            //                    Select(i => new
+            //                    {
+            //                        initial = i.E.EmpInitial,
+            //                        userId = i.U.UserId
+            //                    }).ToList();
 
 
-            ViewBag.UserId = new SelectList(userDetails, "userId", "initial");
+            //ViewBag.UserId = new SelectList(userDetails, "userId", "initial");
             return View(tblUserGroupDistribution);
         }
 

@@ -32,15 +32,13 @@ namespace VehicleRequisitionApp.Controllers
             string hashPass = PassWordHash(user.Password);
 
             int findEmpId = db.LookUpEmployees.Where(i => i.EmpInitial == initials).Select(i=>i.EmpId).SingleOrDefault();
-
             if (findEmpId==0)
             {
                 TempData["Registration"] = "* Invalid Initial";
                 ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
                 return View();
 
-            }
-            
+            }          
             var isUser = db.TblUsers.Where(u => u.EmpId == findEmpId && u.Password == hashPass);
 
             var userDetails = db.TblUsers.Join(db.LookUpEmployees, u => u.EmpId, eu => eu.EmpId, (u, eu) => new { U = u, EU = eu }).

@@ -29,219 +29,242 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
+            @Html.ActionLink("Print Requisition", "Prints", new { id = @Model.RequisitionId})
+           
+            
+            @*<button id="btnPrint" class="btn btn-success" onclick="print_report('Requisition_Details', 'Vehicles Requisition Details');">Print</button>*@
 
             <div class="form-horizontal">
                 <fieldset>
                     <legend>Update Requisition</legend>
-                    <hr />
+
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.RequisitionId)
 
-                    <div class="form-group">
+                    <div id="report_div_id">
+                        <div class="form-group">
 
-                        <div class="col-md-offset-4 col-md-8">
-                            @Html.LabelFor(model => model.RequisitionCategoryId, "Requisition Category", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:right!important" })
-                            <div class="col-md-6">
-                                @Html.DropDownList("RequisitionCategoryId", null, htmlAttributes: new { @class = "form-control", style = "display:none" })
-                                @Html.EditorFor(model => model.LookupRequisitionCategorys.RequisitionCategory, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
-                                @Html.ValidationMessageFor(model => model.RequisitionCategoryId, "", new { @class = "text-danger" })
+                            <div class="col-md-offset-4 col-md-8">
+                                @Html.LabelFor(model => model.RequisitionCategoryId, "Requisition Category", htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:right!important" })
+                                <div class="col-md-6">
+                                    @Html.DropDownList("RequisitionCategoryId", null, htmlAttributes: new { @class = "form-control", style = "display:none" })
+                                    @Html.EditorFor(model => model.LookupRequisitionCategorys.RequisitionCategory, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
+                                    @Html.ValidationMessageFor(model => model.RequisitionCategoryId, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-4 col-md-8">
-                            @Html.LabelFor(model => model.RequestSubmissionDate, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:right!important" })
-                            <div class="col-md-6">
-                                @Html.EditorFor(model => model.RequestSubmissionDate, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
-                                @Html.ValidationMessageFor(model => model.RequestSubmissionDate, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-offset-4 col-md-8">
+                                @Html.LabelFor(model => model.RequestSubmissionDate, htmlAttributes: new { @class = "control-label col-md-6", style = "text-align:right!important" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.RequestSubmissionDate, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
+                                    @Html.ValidationMessageFor(model => model.RequestSubmissionDate, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EmpId, "Employee Name", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("EmpId", null, htmlAttributes: new { @class = "form-control", style = "display:none" })
-                            @Html.EditorFor(model => model.LookUpEmployee.EmpFullName, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
-                            @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.LookUpEmployee.EmpDesignation, "Designation", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.LookUpEmployee.EmpDesignation, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
-
-                        </div>
-                        @Html.LabelFor(model => model.ProjectId, "Project Code", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
-                        <div class="col-md-4">
-                            @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", style = "display:none" })
-                            @Html.EditorFor(model => model.LookupProject.ProjectCode, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
-                            @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.RequiredFromDate, "Time Required", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.RequiredFromDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime1" } })
-                            @Html.ValidationMessageFor(model => model.RequiredFromDate, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.EmpId, "Employee Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("EmpId", null, htmlAttributes: new { @class = "form-control", style = "display:none" })
+                                @Html.EditorFor(model => model.LookUpEmployee.EmpFullName, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
+                                @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
 
-                        @Html.LabelFor(model => model.RequiredToDate, "hour to", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
-                        <div class="col-md-4">
-                            @Html.EditorFor(model => model.RequiredToDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime2" } })
-                            @Html.ValidationMessageFor(model => model.RequiredToDate, "", new { @class = "text-danger" })
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LookUpEmployee.EmpDesignation, "Designation", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.LookUpEmployee.EmpDesignation, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
+
+                            </div>
+                            @Html.LabelFor(model => model.ProjectId, "Project Code", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
+                            <div class="col-md-4">
+                                @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control", style = "display:none" })
+                                @Html.EditorFor(model => model.LookupProject.ProjectCode, new { htmlAttributes = new { @class = "form-control", Readonly = "true" } })
+                                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
 
-                    </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequiredFromDate, "Time Required", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.RequiredFromDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime1" } })
+                                @Html.ValidationMessageFor(model => model.RequiredFromDate, "", new { @class = "text-danger" })
+                            </div>
 
-                    @*<div class="form-group">
-                @Html.LabelFor(model => model.RequiredFromDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RequiredFromDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.RequiredFromDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                            @Html.LabelFor(model => model.RequiredToDate, "hour to", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.RequiredToDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime2" } })
+                                @Html.ValidationMessageFor(model => model.RequiredToDate, "", new { @class = "text-danger" })
+                            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.RequiredToDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.RequiredToDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.RequiredToDate, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Reason, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.UsedFromKM, "Actual Time used from", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-1">
-                            @Html.EditorFor(model => model.UsedFromKM, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
 
-                        @Html.LabelFor(model => model.UsedToKM, "To", htmlAttributes: new { @class = "control-label col-md-1", style = "text-align:right!important" })
-                        <div class="col-md-1">
-                            @Html.EditorFor(model => model.UsedToKM, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.UsedToKM, "", new { @class = "text-danger" })
+                        @*<div class="form-group">
+                                @Html.LabelFor(model => model.RequiredFromDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.RequiredFromDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.RequiredFromDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.RequiredToDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.RequiredToDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.RequiredToDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+
+
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
+                            </div>
                         </div>
 
-                        @Html.LabelFor(model => model.ActuallyUsedFromDate, "KM. From", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
-                        <div class="col-md-2">
-                            @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime11" } }) @*, *@
-                            @Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Reason, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+                            </div>
                         </div>
 
-                        @Html.LabelFor(model => model.ActuallyUsedToDate, "To", htmlAttributes: new { @class = "control-label col-md-1", style = "text-align:right!important" })
-                        <div class="col-md-2">
-                            @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime10" } })@**@
-                            @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })
-                        </div>
-
-                    </div>
-
-
-                    @*<div class="form-group">
-                @Html.LabelFor(model => model.UsedFromKM, "From KM", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UsedFromKM, new { htmlAttributes = new { @class = "form-control" } })
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.UsedToKM, "To KM", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UsedToKM, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UsedToKM, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-
-                    @*<div class="form-group">
-                @Html.LabelFor(model => model.ActuallyUsedFromDate, "Actually Used From Date", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
-                <div class="col-md-4">
-                    @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new { @class = "text-danger" })
-                </div>
-
-                @Html.LabelFor(model => model.ActuallyUsedToDate, "Actually Used To Date", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
-                <div class="col-md-4">
-                    @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })
-                </div>
-
-            </div>*@
-
-                    @*<div class="form-group">
-                @Html.LabelFor(model => model.ActuallyUsedToDate, "Actually Used To Date", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ActuallyUsedToDate, "Actually Used To Date", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.AssignedDriverEmpId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.AssignedDriverEmpId, new SelectList(ViewBag.DriverId, "DriverId", "DriverName"), "--Select--", htmlAttributes: new { @class = "form-control" })
-                            @*<section>
-                        <option value="">Select a Driver</option>
-                        @foreach (LookUpEmployee item in ViewBag.DriverId)
+                        @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
                         {
-                            <option value=@item.EmpId>@item.EmpFullName</option>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UsedFromKM, "Actual Time used from", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-1">
+                                    @Html.EditorFor(model => model.UsedFromKM, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+
+                                @Html.LabelFor(model => model.UsedToKM, "To", htmlAttributes: new { @class = "control-label col-md-1", style = "text-align:right!important" })
+                                <div class="col-md-1">
+                                    @Html.EditorFor(model => model.UsedToKM, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UsedToKM, "", new { @class = "text-danger" })
+                                </div>
+
+                                @Html.LabelFor(model => model.ActuallyUsedFromDate, "KM. From", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime11" } }) @*, *@
+                                    @Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new { @class = "text-danger" })
+                                </div>
+
+                                @Html.LabelFor(model => model.ActuallyUsedToDate, "To", htmlAttributes: new { @class = "control-label col-md-1", style = "text-align:right!important" })
+                                <div class="col-md-2">
+                                    @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control", id = "DateTime10" } })@**@
+                                    @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+
+
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.UsedFromKM, "From KM", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.UsedFromKM, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.UsedToKM, "To KM", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.UsedToKM, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.UsedToKM, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.ActuallyUsedFromDate, "Actually Used From Date", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
+                                    <div class="col-md-4">
+                                        @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    @Html.LabelFor(model => model.ActuallyUsedToDate, "Actually Used To Date", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:right!important" })
+                                    <div class="col-md-4">
+                                        @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })
+                                    </div>
+
+                                </div>*@
+
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.ActuallyUsedToDate, "Actually Used To Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ActuallyUsedFromDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ActuallyUsedFromDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ActuallyUsedToDate, "Actually Used To Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ActuallyUsedToDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AssignedDriverEmpId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.AssignedDriverEmpId, new SelectList(ViewBag.DriverId, "DriverId", "DriverName"), "--Select--", htmlAttributes: new { @class = "form-control" })
+                                    @*<section>
+                                            <option value="">Select a Driver</option>
+                                            @foreach (LookUpEmployee item in ViewBag.DriverId)
+                                            {
+                                                <option value=@item.EmpId>@item.EmpFullName</option>
+                                            }
+                                        </section>*@
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AssignedVehicleId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.AssignedVehicleId, new SelectList(ViewBag.VehicleId, "VehiclesId", "VehicleNo"), "--Select--", htmlAttributes: new { @class = "form-control" })
+
+                                </div>
+                            </div>
+
                         }
-                    </section>*@
+                        <div class="form-group" style="display: none">
+                            @Html.LabelFor(model => model.StateId, "State Id", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10 col-md-offset-4">
+                                @Html.EditorFor(model => model.StateId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
                     </div>
+                    @if (Convert.ToInt32(Session["UserGroupId"]) == 1)
+                    {
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Update" class="btn btn-success pull-right" />
+                            </div>
+                        </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.AssignedVehicleId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.AssignedVehicleId, new SelectList(ViewBag.VehicleId, "VehiclesId", "VehicleNo"), "--Select--", htmlAttributes: new { @class = "form-control" })
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Assign" class="btn btn-success pull-right" />
+                            </div>
+                        </div>
+                    }
 
-                        </div>
-                    </div>
-                    <div class="form-group" style="display: none">
-                        @Html.LabelFor(model => model.ActuallyUsedToDate, "State Id", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10 col-md-offset-4">
-                            @Html.EditorFor(model => model.StateId, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.ActuallyUsedToDate, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Assign" class="btn btn-success pull-right"/>
-                    </div>
-                </div>
                     <div>
                         @Html.ActionLink("Back to List", "Index")
                     </div>
@@ -259,7 +282,37 @@
     <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
     <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
 
+   
     <script type="text/javascript">
+
+
+        function print_report(report_div_id, report_title) {
+            if (!confirm('Are you sure to Print ?'))
+                return false;
+
+            if (!report_title)
+                report_title = 'Vehicles Requisition Details';
+            var w = 1020;
+            var h = 580;
+            if (window.screen) {
+                w = window.screen.availWidth;
+                h = window.screen.availHeight;
+            }
+
+            var objWindow = window.open("mra_report", "MF-DBMS Report", "top=20,left=20,width=" + w + ",height=" + h + ",location=0,toolbar=0,statusbar=0,menubar=0,scrollbars=1,resizable=1");
+            objWindow.document.write('<html> <head><title>');
+            objWindow.document.write(report_title);
+            objWindow.document.write('</title></head> <body><div class="report-container">');
+            objWindow.document.write($('#report_div_id').html());
+            objWindow.document.write('</div></body> </html>');
+            objWindow.document.close();
+            objWindow.focus();
+            objWindow.print();
+            return false;
+        }
+
+
+
         $('#DateTime11').datetimepicker({
 
             todayHighlight: true
@@ -269,7 +322,7 @@
 
         });
 
-      
+
         //$('#Date1').datepicker({
         //    autoclose: true,
         //    todayHighlight: true,

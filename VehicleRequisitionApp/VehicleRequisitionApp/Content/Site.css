@@ -135,7 +135,7 @@ fieldset {
     width: auto;
     height: auto;
     margin: 3px 0 0 0;
-    padding: 5px 7px 7px 7px;
+    padding: 5px 20px 7px 20px;
     color: #072328;
     font: normal 9.25pt/1.5 Verdana, Helvetica, Arial, sans-serif;
     background-color: #fff;
@@ -179,3 +179,15 @@ fieldset {
 legend {
     width: auto;
 }
+.control-label {
+    padding-top: 0!important;  
+}
+#table_scroll_div {
+            /*background-color: #CCE3EA;*/
+            width: auto;
+            /* height: 100px; */
+            /* border: 1px dotted black; */
+            /* overflow: scroll; */
+            /* padding: 20px; */
+            overflow: auto;
+        }

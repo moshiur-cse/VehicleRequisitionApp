@@ -11,9 +11,14 @@
 
 @section styles
 {
+    <link href="~/Content/DataTables/jquery.dataTables.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap-dialog.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/buttons.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/buttons.jqueryui.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/dataTables.jqueryui.css" rel="stylesheet" />*@
     <style>
-        
-
         #table_scroll_div {
             /*background-color: #CCE3EA;*/
             width: auto;
@@ -151,209 +156,291 @@
         }
     </table>*@
 <fieldset>
-<legend>Requisition List</legend>
+    <legend>Requisition List</legend>
     <div id="table_scroll_div">
         <table id="myTable" class="table table-hover">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
-                </th>
-                <th>
-                    <label>Submission DateTime</label>
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RequiredFromDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RequiredToDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Place)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Reason)
-                </th>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
+                    </th>
+                    <th>
+                        <label>Submission DateTime</label>
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RequiredFromDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RequiredToDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Place)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Reason)
+                    </th>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AssignedVehicleId)
-                </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AssignedVehicleId)
+                    </th>
 
-                <th>
-                    Status
-                </th>
-                @if (Convert.ToInt32(Session["UserGroupId"]) > 1)
-                {
+                    <th>
+                        Status
+                    </th>
                     <th>
                         Action
                     </th>
-                }
-            </tr>
-            @try
+
+                </tr>
+            </thead>
+            <tbody>
+                @try
             {
                 foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
-                        </td>
-                        <td>
-                            @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
-                        </td>
-                        <td>
-                            @item.RequiredFromDate.ToString("hh:mm tt")
-                        </td>
-                        <td>
-                            @item.RequiredToDate.ToString("hh:mm tt")
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Place)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Reason)
-                        </td>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
+                            </td>
+                            <td>
+                                @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
+                            </td>
+                            <td>
+                                @item.RequiredFromDate.ToString("hh:mm tt")
+                            </td>
+                            <td>
+                                @item.RequiredToDate.ToString("hh:mm tt")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Place)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Reason)
+                            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
+                            <td>
+                                @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
 
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
-                        </td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
+                            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookUpState.StateName)
-                        </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookUpState.StateName)
+                            </td>
 
-                        @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
-                        {
-                            if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+
+                            @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
                             {
-                                <td>
-                                    @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
-                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
-                                </td>
+                                if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                                {
+                                    <td>
+                                        @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
+                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
+                                    </td>
+                                }
+                                if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+                                {
+                                    if (item.StateId == 6) //RMO
+                                    {
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
+                                        </td>
+                                    }
+                                }
                             }
-                            if (Convert.ToInt32(Session["UserGroupId"]) == 6)
-                            {
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
-                                </td>
-                            }
-                        }
 
-                    </tr>
+
+                        </tr>
+                    }
+
+                }
+                catch (Exception)
+                {
+
                 }
 
-            }
-            catch (Exception)
-            {
 
-            }
-
-
-            @try
+                @try
             {
                 foreach (TblRequisitionDetail item in ViewBag.NotApproveRequisition)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
-                        </td>
-                        <td>
-                            @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
-                        </td>
-                        <td>
-                            @item.RequiredFromDate.ToString("hh:mm tt")
-                        </td>
-                        <td>
-                            @item.RequiredToDate.ToString("hh:mm tt")
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Place)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Reason)
-                        </td>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
+                            </td>
+                            <td>
+                                @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
+                            </td>
+                            <td>
+                                @item.RequiredFromDate.ToString("hh:mm tt")
+                            </td>
+                            <td>
+                                @item.RequiredToDate.ToString("hh:mm tt")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Place)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Reason)
+                            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
+                            <td>
+                                @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
 
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
-                        </td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
+                            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LookUpState.StateName)
-                        </td>
-
-                        @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
-                        {
-                            if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LookUpState.StateName)
+                            </td>
+                            @if (Convert.ToInt32(Session["UserGroupId"]) == 1)
                             {
-                                <td>
-                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
-                                    @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
-                                </td>
+                                if (item.StateId == 1) //RMO
+                                {
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
+                                    </td>
+                                }
+
                             }
-                            if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+                            else
+                            //@if (Convert.ToInt32(Session["UserGroupId"]) != 1)
                             {
-                                <td>
+                                if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                                {
+                                    <td>
+                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
+                                        @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                    </td>
+                                }
+                                if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+                                {
+                                    <td>
 
-                                    @Html.ActionLink("Recommend Now", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
-                                </td>
+                                        @Html.ActionLink("Recommend Now", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                    </td>
+                                }
+                                if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+                                {
+                                    <td>
+
+                                        @Html.ActionLink("Assign Now", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
+                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
+                                        @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
+                                        @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
+                                    </td>
+                                }
+
+
                             }
-                            if (Convert.ToInt32(Session["UserGroupId"]) == 6)
-                            {
-                                <td>
 
-                                    @Html.ActionLink("Assign Now", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
-                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
-                                    @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
-                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
-                                </td>
-                            }
-
-
-                        }
-
-                    </tr>
+                        </tr>
+                    }
                 }
-            }
-            catch (Exception)
-            {
+                catch (Exception)
+                {
 
-            }
+                }
+            </tbody>
         </table>
     </div>
 </fieldset>
+@section scripts
+{
+    @*<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>*@
+    @*<script src="~/Scripts/bootstrap-dialog.js"></script>*@
+    @*<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>*@
+    @*<script src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.flash.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.jqueryui.js"></script>
+    <script src="~/Scripts/DataTables/buttons.jqueryui.min.js"></script>
+    <script src="~/Scripts/DataTables/pdfmake.min.js"></script>
+    <script src="~/Scripts/DataTables/jszip.min.js"></script>
+    <script src="~/Scripts/DataTables/vfs_fonts.js"></script>
+    <script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.print.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.colVis.js"></script>*@
+
+    <script>
+        //$(function () {
+        //    $('#myTable').DataTable();
+        //    $('#myTable').DataTable({
+        //        dom: 'Bfrtip',
+        //        lengthChange: false,
+        //        buttons: [{
+        //            extend: 'pdf',
+        //            footer: false,
+        //            exportOptions: {
+        //                columns: [0, 1, 2]
+        //            }
+        //        },
+        //            {
+        //                extend: 'csv',
+        //                footer: false,
+        //                exportOptions: {
+        //                    columns: [0, 1, 2]
+        //                }
+        //            },
+        //            {
+        //                extend: 'excel',
+        //                footer: false,
+        //                exportOptions: {
+        //                    columns: [0, 1, 2]
+        //                }
+        //            },
+
+        //            {
+        //                extend: 'print',
+        //                footer: false,
+        //                exportOptions: {
+        //                    columns: [0, 1, 2]
+        //                }
+        //            },
+        //            {
+        //                extend: 'colvis',
+        //                footer: false
+        //            }
+        //        ]
+        //    });
+
+
+
+        //});
+
+    </script>
+
+}

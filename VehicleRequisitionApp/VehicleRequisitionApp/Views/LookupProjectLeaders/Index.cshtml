@@ -4,43 +4,74 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SortingSerialNo)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpInitial)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SortingSerialNo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProjectLeaderId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProjectLeaderId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProjectLeaderId })
-        </td>
-    </tr>
+@section styles
+{
+    <style>
+        #table_scroll_div {
+            /*background-color: #CCE3EA;*/
+            width: auto;
+            /* height: 100px; */
+            /* border: 1px dotted black; */
+            /* overflow: scroll; */
+            /* padding: 20px; */
+            overflow: auto;
+        }
+    </style>
 }
+<fieldset>
+    <legend>Project Leader List</legend>
 
-</table>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <div id="table_scroll_div">
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SortingSerialNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookupProject.ProjectTitle)
+                </th>
+
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SortingSerialNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpInitial)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LookupProject.ProjectTitle)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ProjectLeaderId }) |
+                        @*@Html.ActionLink("Details", "Details", new { id=item.ProjectLeaderId }) |*@
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ProjectLeaderId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</fieldset>

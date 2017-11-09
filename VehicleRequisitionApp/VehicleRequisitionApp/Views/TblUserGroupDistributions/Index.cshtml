@@ -4,39 +4,127 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.LookupUserGroup.UserGroupName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TblUser.LookUpEmployee.EmpFullName)
-        </th>
-        
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LookupUserGroup.UserGroupName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TblUser.LookUpEmployee.EmpFullName)
-        </td>
-       
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserGroupDistributionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserGroupDistributionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserGroupDistributionId })
-        </td>
-    </tr>
+@section styles
+{
+    <link href="~/Content/DataTables/jquery.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-dialog.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/buttons.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/buttons.jqueryui.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/dataTables.jqueryui.css" rel="stylesheet" />
 }
 
-</table>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<fieldset>
+    <legend>User Group List</legend>
+
+    <table class="table table-hover" id="myTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookupUserGroup.UserGroupName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TblUser.LookUpEmployee.EmpInitial)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TblUser.LookUpEmployee.EmpFullName)
+                </th>
+
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LookupUserGroup.UserGroupName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TblUser.LookUpEmployee.EmpInitial)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TblUser.LookUpEmployee.EmpFullName)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.UserGroupDistributionId })
+                        @*@Html.ActionLink("Details", "Details", new { id=item.UserGroupDistributionId })
+                            @Html.ActionLink("Delete", "Delete", new { id=item.UserGroupDistributionId })*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</fieldset>
+@section scripts
+{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/bootstrap-dialog.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.flash.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.jqueryui.js"></script>
+    <script src="~/Scripts/DataTables/buttons.jqueryui.min.js"></script>
+    <script src="~/Scripts/DataTables/pdfmake.min.js"></script>
+    <script src="~/Scripts/DataTables/jszip.min.js"></script>
+    <script src="~/Scripts/DataTables/vfs_fonts.js"></script>
+    <script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.print.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.colVis.js"></script>
+
+    <script>
+        $(function () {
+
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                lengthChange: false,
+                buttons: [{
+                    extend: 'pdf',
+                    footer: false,
+                    exportOptions: {
+                        columns: [0, 1, 2]
+                    }
+                },
+                    {
+                        extend: 'csv',
+                        footer: false,
+                        exportOptions: {
+                            columns: [0, 1, 2]
+                        }
+                    },
+                    {
+                        extend: 'excel',
+                        footer: false,
+                        exportOptions: {
+                            columns: [0, 1, 2]
+                        }
+                    },
+
+                    {
+                        extend: 'print',
+                        footer: false,
+                        exportOptions: {
+                            columns: [0, 1, 2]
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        footer: false
+                    }
+                ]
+            });
+
+
+
+        });
+
+    </script>
+
+}

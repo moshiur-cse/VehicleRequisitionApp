@@ -38,8 +38,9 @@ namespace VehicleRequisitionApp.Models
         public string Place { get; set; }
 
         public string Reason { get; set; }
-
+        [Display(Name = "Used From KM")]
         public double? UsedFromKM { get; set; }
+        [Display(Name = "Used To KM")]
         public double? UsedToKM { get; set; }
        
         [Display(Name = "Actually Used From")]
