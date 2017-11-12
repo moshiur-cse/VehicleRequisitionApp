@@ -13,7 +13,7 @@ body {
     padding-left: 15px;
     padding-right: 15px;
     /*font-family: Helvetica;*/
-    font-family:Verdana, Helvetica, Arial;
+    font-family: Verdana, Helvetica, Arial;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -179,15 +179,21 @@ fieldset {
 legend {
     width: auto;
 }
+
 .control-label {
-    padding-top: 0!important;  
+    padding-top: 0 !important;
 }
+
 #table_scroll_div {
-            /*background-color: #CCE3EA;*/
-            width: auto;
-            /* height: 100px; */
-            /* border: 1px dotted black; */
-            /* overflow: scroll; */
-            /* padding: 20px; */
-            overflow: auto;
-        }
+    /*background-color: #CCE3EA;*/
+    width: auto;
+    /* height: 100px; */
+    /* border: 1px dotted black; */
+    /* overflow: scroll; */
+    /* padding: 20px; */
+    overflow: auto;
+}
+
+.navbar-fixed-top .navbar-collapse {
+    padding-left: 100px;
+}
