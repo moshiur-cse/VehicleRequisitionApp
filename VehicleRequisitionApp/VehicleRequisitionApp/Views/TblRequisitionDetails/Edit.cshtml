@@ -254,7 +254,6 @@
                                 <input type="submit" value="Update" class="btn btn-success pull-right" />
                             </div>
                         </div>
-
                     }
                     else
                     {
@@ -266,7 +265,7 @@
                     }
 
                     <div>
-                        @Html.ActionLink("Back to List", "Index")
+                        @Html.ActionLink("Back to List", "Index",new {id= Convert.ToInt32(Session["EmpId"])})
                     </div>
                 </fieldset>
             </div>
