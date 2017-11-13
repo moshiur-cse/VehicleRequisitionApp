@@ -29,9 +29,12 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.ActionLink("Print Requisition", "Prints", new { id = @Model.RequisitionId})
-           
-            
+
+            if(Convert.ToInt32(Session["UserGroupId"])>=6)
+             {
+                 @Html.ActionLink("Print Requisition", "Prints", new {id = @Model.RequisitionId})
+             }
+
             @*<button id="btnPrint" class="btn btn-success" onclick="print_report('Requisition_Details', 'Vehicles Requisition Details');">Print</button>*@
 
             <div class="form-horizontal">
@@ -265,7 +268,7 @@
                     }
 
                     <div>
-                        @Html.ActionLink("Back to List", "Index",new {id= Convert.ToInt32(Session["EmpId"])})
+                        @Html.ActionLink("Back to List", "Index",null,new {@Class=""}, new {id= Convert.ToInt32(Session["EmpId"])})
                     </div>
                 </fieldset>
             </div>

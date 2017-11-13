@@ -164,7 +164,7 @@
             </table>
 
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.RequisitionId }) |*@
-            @Html.ActionLink("Back to List", "Index", null, new { @Class = "btn btn-success pull-right" })
+            @Html.ActionLink("Back to List", "Index", null, new { @Class = "btn btn-success pull-right"  }, new { id = Convert.ToInt32(Session["EmpId"])})
         </fieldset>
     </div>
 </div>
