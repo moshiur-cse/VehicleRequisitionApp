@@ -31,8 +31,10 @@ namespace VehicleRequisitionApp.Models
         public DateTime RequestSubmissionDate { get; set; }
 
         [Display(Name = "From")]
+        [Required(ErrorMessage = "Please select  date time ")]
         public DateTime RequiredFromDate { get; set; }
         [Display(Name = "To")]
+        [Required(ErrorMessage = "Please select  date time ")]
         public DateTime RequiredToDate { get; set; }
         [Required]
         public string Place { get; set; }

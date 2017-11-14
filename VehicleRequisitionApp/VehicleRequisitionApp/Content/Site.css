@@ -158,8 +158,8 @@ fieldset {
         background: #37A84A;
         background-size: 100%;
         background: -webkit-gradient(linear, left top, left bottom, from(#37A84A), to(#37A84A));
-        background: -webkit-linear-gradient(center top, #43b5d7, #13a3d5);
-        background: -moz-linear-gradient(center top, #43b5d7, #13a3d5);
+        background: -webkit-linear-gradient(center top, #39AB4C, #39AB4C);
+        background: -moz-linear-gradient(center top, #39AB4C, #39AB4C);
         background: -ms-linear-gradient(center top, #43b5d7, #13a3d5);
         background: -o-linear-gradient(center top, #43b5d7, #13a3d5);
         -webkit-border-radius: 5px;
