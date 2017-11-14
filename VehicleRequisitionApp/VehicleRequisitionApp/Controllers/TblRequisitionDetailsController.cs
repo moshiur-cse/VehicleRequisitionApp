@@ -169,6 +169,10 @@ namespace VehicleRequisitionApp.Controllers
 
         public ActionResult PreviousRequisition()
         {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "TblUsers");
+            }
             ViewBag.ApproveRequisition =
                db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                    .Include(t => t.LookupProject)

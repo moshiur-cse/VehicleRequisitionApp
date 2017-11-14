@@ -34,15 +34,15 @@
     <legend>Previous Requisition List</legend>
 @*<h2>Previous Requisition List</h2>*@
 <div id="table_scroll_div">
-    <table id="myTable" class="table table-hover">
+    <table id="myTable" class="table table-bordered">
         <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
-                </th>
+                </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
                 </th>
@@ -90,9 +90,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpInitial)
                         </td>
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
-                        </td>
+                        </td>*@
                         <td>
                             @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
                         </td>
@@ -152,9 +152,9 @@
         </tbody>
     </table>
 </div>
-@if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
+@if (Convert.ToInt32(Session["UserGroupId"]) >= 6) 
 {
-    @Html.ActionLink("Previous Requisition", "PreviousRequisition")
+    @*@Html.ActionLink("Previous Requisition", "PreviousRequisition")*@
 }
     </fieldset>
     @section scripts
@@ -221,7 +221,7 @@
                             extend: 'print',
                             footer: false,
                             exportOptions: {
-                                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                                columns: [0, 1,2, 3, 4, 5, 6, 7, 8, 9, 10]
                             }
                         }
                         //,

@@ -258,7 +258,7 @@
                                 {
                                     <td>
                                         @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
-                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
+                                        @Html.ActionLink("Details", "Details", new {id = item.RequisitionId})
                                     </td>
                                 }
                                 if (Convert.ToInt32(Session["UserGroupId"]) == 6)
@@ -266,10 +266,14 @@
                                     if (item.StateId == 6) //RMO
                                     {
                                         <td>
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
+                                            @Html.ActionLink("Edit", "Edit", new {id = item.RequisitionId}, new {@class = "btn btn-success"})
                                         </td>
                                     }
                                 }
+                            }
+                            else
+                            {
+                                <td></td>
                             }
 
 
@@ -347,22 +351,26 @@
                                         @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
                                     </td>
                                 }
-                                if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+                                else if (Convert.ToInt32(Session["UserGroupId"]) == 2)
                                 {
                                     <td>
 
                                         @Html.ActionLink("Recommend Now", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
                                     </td>
                                 }
-                                if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+                                else if (Convert.ToInt32(Session["UserGroupId"]) == 6)
                                 {
                                     <td>
 
-                                        @Html.ActionLink("Assign Now", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
-                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
+                                        @Html.ActionLink("Assign Now", "Edit", new {id = item.RequisitionId}, new {@class = "btn btn-success"})
+                                        @Html.ActionLink("Details", "Details", new {id = item.RequisitionId})
                                         @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
                                         @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
                                     </td>
+                                }
+                                else
+                                {
+                                    <td></td>
                                 }
 
 

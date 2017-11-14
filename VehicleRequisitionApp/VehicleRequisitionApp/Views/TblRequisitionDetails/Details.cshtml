@@ -11,7 +11,7 @@
     <div class="col-md-6">
         <fieldset>
             <legend>Requisition Details</legend>
-            <table class="table table-hover">
+            <table class="table table-bordered">
                 <tr>
                     <td>
                         @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
@@ -150,17 +150,26 @@
         <fieldset>
             <legend>Approval Authority List</legend>
 
-            <table class="table table-hover">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Designation</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
 
-                @foreach (TblRequestApprovalDetail item in ViewBag.ApprovalStatusDetails)
-                {
-                    <tr>
-                        <td>@item.LookUpEmployeeAuthority.EmpFullName</td>
-                        <td>@item.LookUpEmployeeAuthority.EmpDesignation</td>
-                        <td>@item.Comments</td>
+                    @foreach (TblRequestApprovalDetail item in ViewBag.ApprovalStatusDetails)
+                    {
+                        <tr>
+                            <td>@item.LookUpEmployeeAuthority.EmpFullName</td>
+                            <td>@item.LookUpEmployeeAuthority.EmpDesignation</td>
+                            <td>@item.Comments</td>
 
-                    </tr>
-                }
+                        </tr>
+                    }
+                </tbody>
             </table>
 
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.RequisitionId }) |*@
