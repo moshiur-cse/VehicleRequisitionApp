@@ -1541,6 +1541,7 @@
     <Content Include="Views\TblDrivers\Index.cshtml" />
     <Content Include="Views\TblUsers\Profile.cshtml" />
     <Content Include="Views\TblRequisitionDetails\Print.cshtml" />
+    <Content Include="Views\TblRequisitionDetails\PreviousRequisition.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

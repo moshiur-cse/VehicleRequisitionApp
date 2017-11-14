@@ -13,11 +13,11 @@
 {
     <link href="~/Content/DataTables/jquery.dataTables.css" rel="stylesheet" />
     @*<link href="~/Content/bootstrap-dialog.css" rel="stylesheet" />
-    <link href="~/Content/DataTables/buttons.dataTables.min.css" rel="stylesheet" />
-    <link href="~/Content/DataTables/buttons.dataTables.css" rel="stylesheet" />
-    <link href="~/Content/DataTables/jquery-ui.css" rel="stylesheet" />
-    <link href="~/Content/DataTables/buttons.jqueryui.css" rel="stylesheet" />
-    <link href="~/Content/DataTables/dataTables.jqueryui.css" rel="stylesheet" />*@
+        <link href="~/Content/DataTables/buttons.dataTables.min.css" rel="stylesheet" />
+        <link href="~/Content/DataTables/buttons.dataTables.css" rel="stylesheet" />
+        <link href="~/Content/DataTables/jquery-ui.css" rel="stylesheet" />
+        <link href="~/Content/DataTables/buttons.jqueryui.css" rel="stylesheet" />
+        <link href="~/Content/DataTables/dataTables.jqueryui.css" rel="stylesheet" />*@
     <style>
         #table_scroll_div {
             /*background-color: #CCE3EA;*/
@@ -156,7 +156,7 @@
         }
     </table>*@
 <fieldset>
-    <legend>Requisition List</legend>
+    <legend>Today's Requisition List</legend>
     <div id="table_scroll_div">
         <table id="myTable" class="table table-hover">
             <thead>
@@ -207,9 +207,9 @@
             </thead>
             <tbody>
                 @try
-            {
-                foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
                 {
+                    foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
+                    {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
@@ -284,9 +284,9 @@
 
 
                 @try
-            {
-                foreach (TblRequisitionDetail item in ViewBag.NotApproveRequisition)
                 {
+                    foreach (TblRequisitionDetail item in ViewBag.NotApproveRequisition)
+                    {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
@@ -378,6 +378,10 @@
             </tbody>
         </table>
     </div>
+    @if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
+    {
+        @Html.ActionLink("Previous Requisition", "PreviousRequisition")
+    }
 </fieldset>
 @section scripts
 {
@@ -385,15 +389,15 @@
     @*<script src="~/Scripts/bootstrap-dialog.js"></script>*@
     @*<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>*@
     @*<script src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
-    <script src="~/Scripts/DataTables/buttons.flash.min.js"></script>
-    <script src="~/Scripts/DataTables/dataTables.jqueryui.js"></script>
-    <script src="~/Scripts/DataTables/buttons.jqueryui.min.js"></script>
-    <script src="~/Scripts/DataTables/pdfmake.min.js"></script>
-    <script src="~/Scripts/DataTables/jszip.min.js"></script>
-    <script src="~/Scripts/DataTables/vfs_fonts.js"></script>
-    <script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
-    <script src="~/Scripts/DataTables/buttons.print.min.js"></script>
-    <script src="~/Scripts/DataTables/buttons.colVis.js"></script>*@
+        <script src="~/Scripts/DataTables/buttons.flash.min.js"></script>
+        <script src="~/Scripts/DataTables/dataTables.jqueryui.js"></script>
+        <script src="~/Scripts/DataTables/buttons.jqueryui.min.js"></script>
+        <script src="~/Scripts/DataTables/pdfmake.min.js"></script>
+        <script src="~/Scripts/DataTables/jszip.min.js"></script>
+        <script src="~/Scripts/DataTables/vfs_fonts.js"></script>
+        <script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
+        <script src="~/Scripts/DataTables/buttons.print.min.js"></script>
+        <script src="~/Scripts/DataTables/buttons.colVis.js"></script>*@
 
     <script>
         //$(function () {
@@ -436,9 +440,6 @@
         //            }
         //        ]
         //    });
-
-
-
         //});
 
     </script>

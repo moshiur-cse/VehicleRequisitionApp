@@ -167,6 +167,17 @@ namespace VehicleRequisitionApp.Controllers
             return View();
         }
 
+        public ActionResult PreviousRequisition()
+        {
+            ViewBag.ApproveRequisition =
+               db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                   .Include(t => t.LookupProject)
+                   .Include(t => t.LookupRequisitionCategorys)
+                   .ToList();
+            return View();
+           
+        }
+
         // GET: TblRequisitionDetails/Details/5
         public ActionResult Details(int? id)
         {
