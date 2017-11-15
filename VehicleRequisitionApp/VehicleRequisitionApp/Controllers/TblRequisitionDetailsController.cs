@@ -20,8 +20,10 @@ namespace VehicleRequisitionApp.Controllers
         private MyDbContext db = new MyDbContext();
 
         // GET: TblRequisitionDetails
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? id,int? divisionId) //, int? isLay=1
         {
+
+            //ViewBag.isLay = isLay;
             if (Session["UserId"] == null)
             {
                 return RedirectToAction("LogIn", "TblUsers");
@@ -45,8 +47,8 @@ namespace VehicleRequisitionApp.Controllers
                         .Include(t => t.LookupRequisitionCategorys)
                         .Where(i => i.EmpId == id && i.StateId != 6 && i.RequiredToDate > DateTime.Now)
                         //DateTime.Now.AddDays(1) && 
-                        .ToList();
-
+                        .ToList(); 
+                                       
                     return View();
 
                 }
@@ -83,7 +85,6 @@ namespace VehicleRequisitionApp.Controllers
                         .Where(
                             i =>
                                 projectIdList.Contains(i.ProjectId) && i.StateId != 1 && i.RequiredToDate > DateTime.Now)
-                        //DateTime.Now.AddDays(1) && 
                         .ToList();
 
                 ViewBag.NotApproveRequisition =
@@ -115,30 +116,32 @@ namespace VehicleRequisitionApp.Controllers
             if (Convert.ToInt32(Session["UserGroupId"]) == 3)
             {
 
-                int employeeId = Convert.ToInt32(Session["EmpId"]);
+                //int employeeId = Convert.ToInt32(Session["EmpId"]);
 
-                var findProjectId = db.LookupProjectLeaders.Where(i => i.EmpId == employeeId).ToList();
-                List<int> projectIdList = new List<int>();
+                //var findProjectId = db.LookupProjectLeaders.Where(i => i.EmpId == employeeId).ToList();
+                //List<int> projectIdList = new List<int>();
 
-                foreach (LookupProjectLeader item in findProjectId)
-                {
-                    projectIdList.Add(item.ProjectId);
-                }
+                //foreach (LookupProjectLeader item in findProjectId)
+                //{
+                //    projectIdList.Add(item.ProjectId);
+                //}
 
+                var divId = divisionId==null? Convert.ToInt32(Session["DivisionId"]): divisionId;
 
                 ViewBag.ApproveRequisition =
                     db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                         .Include(t => t.LookupProject)
                         .Include(t => t.LookupRequisitionCategorys)
-                        .Where(i => i.StateId > 2 && i.RequiredToDate > DateTime.Now) //DateTime.Now.AddDays(1) && 
+                        .Where(i => i.StateId > 2 && i.LookUpEmployee.EmpDivisionId==divId && i.RequiredToDate > DateTime.Now) //DateTime.Now.AddDays(1) && 
                         .ToList();
                 ViewBag.NotApproveRequisition =
                     db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                         .Include(t => t.LookupProject)
                         .Include(t => t.LookupRequisitionCategorys)
-                        .Where(i => i.StateId >= 1 && i.StateId <= 2 && i.RequiredToDate > DateTime.Now)
+                        .Where(i => i.StateId >= 1 && i.StateId <= 2 && i.LookUpEmployee.EmpDivisionId == divId && i.RequiredToDate > DateTime.Now)
                         //DateTime.Now.AddDays(1) && 
                         .ToList();
+                ViewBag.DivisionList = db.LookUpDivisions.ToList();
                 return View();
             }
 
@@ -164,6 +167,7 @@ namespace VehicleRequisitionApp.Controllers
                     .Include(t => t.LookupProject)
                     .Include(t => t.LookupRequisitionCategorys)
                     .ToList();
+           
             return View();
         }
 

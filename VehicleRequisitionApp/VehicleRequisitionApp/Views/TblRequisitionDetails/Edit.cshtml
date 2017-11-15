@@ -1,6 +1,5 @@
 ﻿@using VehicleRequisitionApp.Models
 @model VehicleRequisitionApp.Models.TblRequisitionDetail
-
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,9 +19,7 @@
             text-align: left !important;
         }
     </style>
-
 }
-
 <div class="row">
     <div class="col-md-offset-1 col-md-10 col-md-offset-1">
         @if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
@@ -290,33 +287,6 @@
     <script type="text/javascript">
 
 
-        //function print_report(report_div_id, report_title) {
-        //    if (!confirm('Are you sure to Print ?'))
-        //        return false;
-
-        //    if (!report_title)
-        //        report_title = 'Vehicles Requisition Details';
-        //    var w = 1020;
-        //    var h = 580;
-        //    if (window.screen) {
-        //        w = window.screen.availWidth;
-        //        h = window.screen.availHeight;
-        //    }
-
-        //    var objWindow = window.open("mra_report", "MF-DBMS Report", "top=20,left=20,width=" + w + ",height=" + h + ",location=0,toolbar=0,statusbar=0,menubar=0,scrollbars=1,resizable=1");
-        //    objWindow.document.write('<html> <head><title>');
-        //    objWindow.document.write(report_title);
-        //    objWindow.document.write('</title></head> <body><div class="report-container">');
-        //    objWindow.document.write($('#report_div_id').html());
-        //    objWindow.document.write('</div></body> </html>');
-        //    objWindow.document.close();
-        //    objWindow.focus();
-        //    objWindow.print();
-        //    return false;
-        //}
-
-
-
         $('#DateTime11').datetimepicker({
 
             todayHighlight: true
@@ -324,13 +294,6 @@
 
         $('#DateTime10').datetimepicker({
 
-        });
-
-
-        //$('#Date1').datepicker({
-        //    autoclose: true,
-        //    todayHighlight: true,
-        //    format: 'dd/mm/yyyy'
-        //});
+        });      
     </script>
 }
