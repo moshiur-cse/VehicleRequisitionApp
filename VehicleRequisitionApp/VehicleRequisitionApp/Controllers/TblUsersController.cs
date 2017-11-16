@@ -102,7 +102,7 @@ namespace VehicleRequisitionApp.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Register(TblUser user,string email, string phoneNo)
+        public ActionResult Register(RegisterModel user,string email, string phoneNo)
         {
             //if (Session["UserId"] == null)
             //{
@@ -278,12 +278,24 @@ namespace VehicleRequisitionApp.Controllers
             var empInfo = db.LookUpEmployees.Where(i => i.EmpId == empId).Select
                         (u => new
                         {
-                            Name=u.EmpFullName,
+                            Id = u.EmpId,
+                            Name =u.EmpFullName,
                             Email=u.EmpEmail,
                             PhoneNo=u.EmpMobile                                                        
                         }).ToList();
 
             return Json(empInfo, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult AutoCompleteInitial(string initial)
+        {
+            //Searching records from list using LINQ query  
+            var empInitial = db.LookUpEmployees.Where(i => i.EmpInitial.StartsWith(initial)).Select
+                       (u => new{
+                           Id = u.EmpId,
+                           Initial = u.EmpInitial,                          
+                       }).ToList();
+            return Json(empInitial, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -632,8 +632,15 @@ namespace VehicleRequisitionApp.Controllers
                 tblRequisitionDetail.ProjectId);
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId",
                 "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
+
+
+
+            ViewBag.ApprovalStatusDetails = db.TblRequestApprovalDetails.Where(i => i.RequisitionId == id).ToList();
+
             return View(tblRequisitionDetail);
 
         }
+
+       
     }
 }
