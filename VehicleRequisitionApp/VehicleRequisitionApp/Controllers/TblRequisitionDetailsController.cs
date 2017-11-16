@@ -593,9 +593,9 @@ namespace VehicleRequisitionApp.Controllers
             return true;
         }
 
-        public ActionResult Prints(int id)
+        public ActionResult Prints(int id,string name)
         {
-            var report = new ActionAsPdf("Print", new {id = id})
+            var report = new ActionAsPdf("Print", new {id = id,name=name})
             {
                 PageSize = Size.A4,
                 PageOrientation = Orientation.Portrait,
@@ -606,7 +606,7 @@ namespace VehicleRequisitionApp.Controllers
             return report;
         }
 
-        public ActionResult Print(int id)
+        public ActionResult Print(int id,string name)
         {
 
             
@@ -636,6 +636,11 @@ namespace VehicleRequisitionApp.Controllers
 
 
             ViewBag.ApprovalStatusDetails = db.TblRequestApprovalDetails.Where(i => i.RequisitionId == id).ToList();
+            
+
+
+                ViewBag.AdminTransport = name;
+            
 
             return View(tblRequisitionDetail);
 

@@ -162,7 +162,7 @@
                                     {
                                         <td style="width: 120px">
                                             @Html.ActionLink("Edit", "Edit", new {id = item.RequisitionId}, new {@class = "btn btn-success",style="float: left;margin-right: 2px"})
-                                            @Html.ActionLink("Print", "Prints", new {id = item.RequisitionId}, new {@Class = "btn btn-success", target = "blank"})
+                                            @Html.ActionLink("Print", "Prints", new {id = item.RequisitionId,name= Session["FullName"]}, new {@Class = "btn btn-success", target = "blank"})
                                         </td>
 
                                     }

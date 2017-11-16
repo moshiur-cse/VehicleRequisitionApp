@@ -29,6 +29,7 @@ namespace VehicleRequisitionApp.Controllers
             int userId = 0, userGroupId = 0, divId = 0;
             var controller = "";
             var action = "";
+
             string hashPass = PassWordHash(user.Password);
 
             int findEmpId = db.LookUpEmployees.Where(i => i.EmpInitial == initials).Select(i=>i.EmpId).SingleOrDefault();
