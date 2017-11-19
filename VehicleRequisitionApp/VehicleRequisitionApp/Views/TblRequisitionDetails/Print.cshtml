@@ -19,13 +19,16 @@
         label {
             font-family: italic;
         }
+        table tr td th {
+            border: 2px solid black;
+        }
 
        
     </style>
 }
 <div class="navbar-fixed-top" style="margin-left: 50px">
 
-    @*<img src="~/Images/logo.png" height="80"/>  <img class="pull-right" src="~/Images/CEGIS_logo.png" height="60" />*@
+    <img src="~/Images/logo.png" height="80"/>  <img class="pull-right" src="~/Images/CEGIS_logo.png" height="60" />
     <h3 style="text-align: center">CEGIS, DHAKA</h3>
     <h4 style="text-align: center; text-decoration: underline">VEHICLES REQUISITION</h4>
     <h4 style="text-align: center">(OFFICIAL)</h4>
@@ -39,26 +42,53 @@
         </div>
     </div>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" style="border: 1px solid black">
         <tr>
-            <td colspan="5">
+            @*<td colspan="5">
                 <p>
                     <b>Requester's Name :</b>
                     @Model.LookUpEmployee.EmpFullName
                 </p>
+            </td>*@
+
+            <td colspan="1">
+                <p>
+                    <b>Requester's Name </b>
+                   
+                </p>
+            </td>
+            <td colspan="8">
+                <p>
+                    
+                    @Model.LookUpEmployee.EmpFullName
+                </p>
+
             </td>
         </tr>
 
         <tr>
-            <td colspan="2">
+            <td colspan="1">
                 <p>
-                    <b>Designation :</b>
+                    <b>Designation </b>
+                  
+                </p>
+            </td>
+            <td colspan="4">
+                <p>
+                   
                     @Model.LookUpEmployee.EmpDesignation
                 </p>
             </td>
+            <td colspan="1">
+                <p>
+                    <b>Project</b>
+                   
+                </p>
+
+            </td>
             <td colspan="3">
                 <p>
-                    <b>Project :</b>
+                 
                     @Model.LookupProject.ProjectCode
                 </p>
 
@@ -66,24 +96,42 @@
         </tr>
 
         <tr>
-            <td colspan="5">
+            <td colspan="1">
                 <p>
-                    <b>Date Required :</b>
+                    <b>Date Required </b>
+                  
+                </p>
+            </td>
+            <td colspan="8">
+                <p>
+                  
                     @Model.RequiredFromDate.ToString("dd-MM-yyyy")
                 </p>
             </td>
         </tr>
 
         <tr>
-            <td colspan="2">
+            <td colspan="1">
                 <p>
-                    <b>Time Required :</b>
+                    <b>Time Required </b>
+                   
+                </p>
+            </td>
+            <td colspan="4">
+                <p>
+                    
                     @Model.RequiredFromDate.ToString("t")
                 </p>
             </td>
-            <td colspan="3">
+            <td colspan="1">
                 <p>
-                    <b>hour to :</b>
+                    <b>hour to</b>
+                 
+                </p>
+
+            </td>
+            <td colspan="3">
+                <p>                  
                     @Model.RequiredToDate.ToString("t")
                 </p>
 
@@ -91,32 +139,58 @@
         </tr>
 
         <tr>
-            <td colspan="5">
+            <td colspan="1">
                 <p>
-                    <b>Place : </b>
+                    <b>Place</b>
+                 
+                </p>
+            </td>
+            <td colspan="8">
+                <p>
+                    
                     @Model.Place
                 </p>
             </td>
         </tr>
 
         <tr>
-            <td colspan="5">
+            <td colspan="1">
                 <p>
-                    <b>Reason : </b>
+                    <b>Reason</b>
+                   
+                </p>
+            </td>
+            <td colspan="8">
+                <p>
+                   
                     @Model.Reason
                 </p>
             </td>
         </tr>
         <tr>
-            <td style="width: 290px">
+            <td style="width: 200px">
                 <p>
-                    <b>Actual Time used from :</b>
+                    <b>Actual Time used from</b>
+               
+                </p>
+            </td>
+           
+            <td style="width: 90px">
+                <p>
+                   
                     @Model.UsedFromKM
                 </p>
             </td>
-            <td>
+            <td width="30px">
                 <p>
-                    <b>To :</b>
+                    <b>To</b>
+                  
+                </p>
+
+            </td>
+            <td width="100px">
+                <p>
+                  
                     @Model.UsedToKM
                 </p>
 
@@ -127,20 +201,34 @@
                 </p>
 
             </td>
-            <td style="width: 180px">
+            <td width="60px">
                 <p>
-                    <b>From : </b>
+                    <b>From</b>             
+                </p>
+
+            </td>
+            <td width="70px">
+                <p>
+                  
                     @(Model.ActuallyUsedFromDate != null ? Convert.ToDateTime(Model.ActuallyUsedFromDate).ToString("t") : null)
                 </p>
 
             </td>
-            <td>
+            <td width="30px">
                 <p>
-                    <b>To :</b>
+                    <b>To</b>
+                  
+                </p>
+
+            </td>
+            <td width="70px">
+                <p>
+
                     @(Model.ActuallyUsedFromDate != null ? Convert.ToDateTime(Model.ActuallyUsedToDate).ToString("t") : null)
                 </p>
 
             </td>
+
         </tr>
 
 
@@ -198,13 +286,13 @@
 
 </table>
 
-    <table>
+    <table class="table table-bordered">
         <tr>
             @foreach (TblRequestApprovalDetail item in ViewBag.ApprovalStatusDetails)
             {         
                 @*<td>@item.LookUpEmployeeAuthority.EmpFullName</td>
                 <td>@item.LookUpEmployeeAuthority.EmpDesignation</td>*@
-                <td style="padding-right: 20px">                   
+                <td style="padding-right: 20px;text-align: center">                   
                         <b style="font-size: 16px;text-decoration:underline">@item.Comments</b>
                     <p>@item.LookUpEmployeeAuthority.EmpFullName</p>
                     
