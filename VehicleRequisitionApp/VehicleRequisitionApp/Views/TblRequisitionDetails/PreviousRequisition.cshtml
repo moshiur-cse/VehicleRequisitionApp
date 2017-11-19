@@ -1,44 +1,35 @@
-﻿@using Microsoft.Ajax.Utilities
-@using VehicleRequisitionApp.Models
-@model IEnumerable<VehicleRequisitionApp.Models.TblRequisitionDetail>
-
+﻿@using VehicleRequisitionApp.Models
+@model IEnumerable<TblRequisitionDetail>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.ApprovalStatus = 0;
 }
 
-
 @section styles
 {
+    <link href="~/Content/DataTables/jquery-ui.css" rel="stylesheet" />
     <link href="~/Content/DataTables/jquery.dataTables.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-dialog.css" rel="stylesheet" />
     <link href="~/Content/DataTables/buttons.dataTables.min.css" rel="stylesheet" />
     <link href="~/Content/DataTables/buttons.dataTables.css" rel="stylesheet" />
-    <link href="~/Content/DataTables/jquery-ui.css" rel="stylesheet" />
     <link href="~/Content/DataTables/buttons.jqueryui.css" rel="stylesheet" />
     <link href="~/Content/DataTables/dataTables.jqueryui.css" rel="stylesheet" />
     <style>
         #table_scroll_div {
-            /*background-color: #CCE3EA;*/
             width: auto;
-            /* height: 100px; */
-            /*border: 1px solid #2F6621;*/
-            /* overflow: scroll; */
-            /*padding: 20px;*/
             overflow: auto;
         }
     </style>
 }
 <fieldset>
     <legend>Previous Requisition List</legend>
-@*<h2>Previous Requisition List</h2>*@
 <div id="table_scroll_div">
-    <table id="myTable" class="table table-bordered">
+    <table id="myTable" class="table table-hover">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.LookUpEmployee.EmpInitial)
+                    @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
                 </th>
                 @*<th>
                     @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
@@ -65,12 +56,12 @@
                     @Html.DisplayNameFor(model => model.Reason)
                 </th>
 
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.AssignedVehicleId)
-                </th>
+                </th>*@
 
                 <th>
                     Status
@@ -82,13 +73,13 @@
             </tr>
         </thead>
         <tbody>
-            @try
-            {
-                foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
+            @*@try
+            {*@
+                @foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpInitial)
+                            @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
                         </td>
                         @*<td>
                             @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
@@ -115,13 +106,13 @@
                             @Html.DisplayFor(modelItem => item.Reason)
                         </td>
 
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
 
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
-                        </td>
+                        </td>*@
 
                         <td>
                             @Html.DisplayFor(modelItem => item.LookUpState.StateName)
@@ -131,69 +122,74 @@
 
                         @if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
                         {
-                            if (item.StateId >= 2) //RMO
+                            if (item.StateId == 6) //RMO
                             {
-                                <td>
-                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId })
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success" })
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })
+                                <td width="160px">
+                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "width:72px;margin-bottom: 2px" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId }, new { @class = "btn btn-success",style= "width:72px;margin-bottom: 2px" })
+                                    @Html.ActionLink("Edit", "Edit", new {id = item.RequisitionId}, new {@class = "btn btn-success", style = "width:72px;margin-bottom: 2px" })
+                                    @Html.ActionLink("Print", "Prints", new {id = item.RequisitionId, name = Session["FullName"]}, new {@Class = "btn btn-success", target = "blank", style = "width:72px;margin-bottom: 2px" })
+
+                                </td>
+
+                                
+                            }
+                            else
+                            {
+                                <td style="width: 100px">
+                                    <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
                                 </td>
                             }
                         }
+                        else
+                        {
+                            <td style="width: 100px">
+                                <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
+                            </td>
+                        }
+                        
 
                     </tr>
                 }
 
-            }
-            catch (Exception)
-            {
+            @*}
+    catch(Exception e)
+    {
 
-            }
+    }*@
         </tbody>
     </table>
 </div>
-@if (Convert.ToInt32(Session["UserGroupId"]) >= 6) 
-{
-    @*@Html.ActionLink("Previous Requisition", "PreviousRequisition")*@
-}
-    </fieldset>
-    @section scripts
-{
-        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-        <script src="~/Scripts/bootstrap-dialog.js"></script>
-        <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
-        <script src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
-        <script src="~/Scripts/DataTables/buttons.flash.min.js"></script>
-        <script src="~/Scripts/DataTables/dataTables.jqueryui.js"></script>
-        <script src="~/Scripts/DataTables/buttons.jqueryui.min.js"></script>
-        <script src="~/Scripts/DataTables/pdfmake.min.js"></script>
-        <script src="~/Scripts/DataTables/jszip.min.js"></script>
-        <script src="~/Scripts/DataTables/vfs_fonts.js"></script>
-        <script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
-        <script src="~/Scripts/DataTables/buttons.print.min.js"></script>
-        <script src="~/Scripts/DataTables/buttons.colVis.js"></script>
 
-        <script>
-            $(function () {
-                //$('#myTable').DataTable({
-                //    aLengthMenu: [[5,10, 20,50, 100, -1],
-                //                  [5,10, 20,50, 100, "All"]],
-                //    iDisplayLength: 100,
-                //    "sDom": 'Rfrtlip'
-                //});
-                $('#myTable').DataTable({                    
-                    //sDom: 'Rfrtlip',
+    </fieldset>
+@section scripts
+{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/bootstrap-dialog.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.flash.min.js"></script>
+    <script src="~/Scripts/DataTables/dataTables.jqueryui.js"></script>
+    <script src="~/Scripts/DataTables/buttons.jqueryui.min.js"></script>
+    <script src="~/Scripts/DataTables/pdfmake.min.js"></script>
+    <script src="~/Scripts/DataTables/jszip.min.js"></script>
+    <script src="~/Scripts/DataTables/vfs_fonts.js"></script>
+    <script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.print.min.js"></script>
+    <script src="~/Scripts/DataTables/buttons.colVis.js"></script>
+
+    <script>
+        $(function () {
+            //$('#myTable').DataTable();
+
+                $('#myTable').DataTable({
                     dom: 'Bfrtip',
-                    
-                    //lengthChange: true,
                     aLengthMenu: [[5, 10, 20, 50, 100, -1],
                                   [5, 10, 20, 50, 100, "All"]],
-                    //sDom: 'Rfrtlip',
                     buttons: [
                         'pageLength',
                         {
-                        //extend: 'pdf',
-                        //footer: false,
                         extend: 'pdfHtml5',
                         orientation: 'landscape',
                         pageSize: 'A4',
@@ -202,13 +198,7 @@
                             columns: [0, 1, 2,3,4,5,6,7,8,9,10]
                         }
                     },
-                        //{
-                        //    extend: 'csv',
-                        //    footer: false,
-                        //    exportOptions: {
-                        //        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-                        //    }
-                        //},
+                        
                         {
                             extend: 'excel',
                             footer: false,
@@ -216,26 +206,15 @@
                                 columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                             }
                         },
-
                         {
                             extend: 'print',
                             footer: false,
                             exportOptions: {
                                 columns: [0, 1,2, 3, 4, 5, 6, 7, 8, 9, 10]
                             }
-                        }
-                        //,
-                        //{
-                        //    extend: 'colvis',
-                        //    footer: false
-                        //}
+                        }                        
                     ]
-                    
                 });
             });
-
-        </script>
-
-    }
-
-
+    </script>
+}

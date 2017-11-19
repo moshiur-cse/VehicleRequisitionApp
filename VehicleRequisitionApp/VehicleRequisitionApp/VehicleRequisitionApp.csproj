@@ -313,6 +313,14 @@
     <Compile Include="Migrations\201710310711546_Version19.Designer.cs">
       <DependentUpon>201710310711546_Version19.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711190328541_Version20.cs" />
+    <Compile Include="Migrations\201711190328541_Version20.Designer.cs">
+      <DependentUpon>201711190328541_Version20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711190346310_Version21.cs" />
+    <Compile Include="Migrations\201711190346310_Version21.Designer.cs">
+      <DependentUpon>201711190346310_Version21.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChangePassWord.cs" />
@@ -1608,6 +1616,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710310711546_Version19.resx">
       <DependentUpon>201710310711546_Version19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711190328541_Version20.resx">
+      <DependentUpon>201711190328541_Version20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711190346310_Version21.resx">
+      <DependentUpon>201711190346310_Version21.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -31,6 +31,10 @@
             /* padding: 20px; */
             overflow: auto;
         }
+
+        th {
+            text-align: center;
+        }
     </style>
 }
 
@@ -38,7 +42,7 @@
 @if (Convert.ToInt32(Session["UserGroupId"]) == 3)
 {
     <div class="row">
-        @Html.Label("DivisionId", "Division", new { @Class = "control-label col-md-offset-7 col-md-1",style="margin-top: 5px;width: 70px" })
+        @Html.Label("DivisionId", "Division", new { @Class = "control-label col-md-offset-7 col-md-1", style = "margin-top: 5px;width: 70px" })
         <div class="col-md-4">
             @Html.DropDownList("divisionId", new SelectList(ViewBag.DivisionList, "DivisionId", "DivFullName", Convert.ToInt32(Session["DivisionId"])), htmlAttributes: new { @class = "form-control" })
         </div>
@@ -48,8 +52,8 @@
 <fieldset>
     <legend>Today's Requisition List</legend>
     <div id="table_scroll_div">
-        <table id="myTable" class="table table-hover">
-            <thead>
+        <table id="myTable" class="table table-hover table-bordered">
+            <thead style="background-color: #C3E6CB">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
@@ -100,7 +104,7 @@
                 {
                     foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
                     {
-                        <tr>
+                        <tr class="table-success" style="background-color: #e5f5f7">
                             <td style="width: 170px">
                                 @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
                             </td>
@@ -141,48 +145,44 @@
                                 @Html.DisplayFor(modelItem => item.LookUpState.StateName)
                             </td>
 
-                            @if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                            @*@if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                                {*@
+                            @if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                             {
-                                if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                                <td style="width: 100px;">
+                                    @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
+                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @Class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                </td>
+                            }
+                            @*if (Convert.ToInt32(Session["UserGroupId"]) == 2)
                                 {
-                                    <td style="width: 100px;">
-                                        @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
-                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @Class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                    <td style="width: 100px">
+                                        <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
                                     </td>
+                                }*@
+                            else if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+                            {
+                                if (item.StateId == 6) //RMO
+                                {
+                                    <td style="width: 120px">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "float: left;margin-right: 2px" })
+                                        @Html.ActionLink("Print", "Prints", new { id = item.RequisitionId, name = Session["FullName"] }, new { @Class = "btn btn-success", target = "blank" })
+                                    </td>
+
                                 }
-                                if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+                                else
                                 {
                                     <td style="width: 100px">
                                         <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
                                     </td>
                                 }
-                                if (Convert.ToInt32(Session["UserGroupId"]) == 6)
-                                {
-                                    if (item.StateId == 6) //RMO
-                                    {
-                                        <td style="width: 120px">
-                                            @Html.ActionLink("Edit", "Edit", new {id = item.RequisitionId}, new {@class = "btn btn-success",style="float: left;margin-right: 2px"})
-                                            @Html.ActionLink("Print", "Prints", new {id = item.RequisitionId,name= Session["FullName"]}, new {@Class = "btn btn-success", target = "blank"})
-                                        </td>
 
-                                    }
-                                    else
-                                    {
-                                        <td style="width: 100px">
-                                            <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
-                                        </td>
-                                    }
-
-                                }
-                            }
-                            else
+                            }else
                             {
                                 <td style="width: 100px">
                                     <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
                                 </td>
                             }
-
-
                         </tr>
                     }
 
@@ -191,13 +191,13 @@
                 {
 
                 }
-
-
+            </tbody>
+            <tbody>
                 @try
                 {
                     foreach (TblRequisitionDetail item in ViewBag.NotApproveRequisition)
                     {
-                        <tr>
+                        <tr class="table-success" style="background-color: #fdf1f3;">
                             <td style="width: 170px">
                                 @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
                             </td>
@@ -244,6 +244,13 @@
                                     <td style="width: 100px">
                                         @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
                                     </td>
+                                }
+                                else
+                                {
+                                    <td style="width: 100px">
+                                        <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
+                                    </td>
+
                                 }
 
                             }

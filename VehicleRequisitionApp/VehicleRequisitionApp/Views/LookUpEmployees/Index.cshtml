@@ -5,135 +5,250 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @*@Html.DisplayNameFor(model => model.SortingSerialNo)*@
-            <label>SL NO</label>
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LookUpDivision.DivFullName)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.LookUpEmployeeType.EmpType)
-        </th>*@
-
-        <th>
-            @Html.DisplayNameFor(model => model.EmpPinNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpInitial)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpFullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpDesignation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpLevel)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.EmpEmail)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.EmpMobile)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmpRoomNo)
-        </th>
-        @*<th>
-        @Html.DisplayNameFor(model => model.EmpPresentAddress)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.EmpNid)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.EmpPaasportNo)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.EmpBloodGroup)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.EmpHighestDegree)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.EmpHighestDegreeMajorSubject)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.EmpCareerSummary)
-    </th>*@
-        <th>Action</th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SortingSerialNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LookUpDivision.DivFullName)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.LookUpEmployeeType.EmpType)
-        </td>*@
-
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpPinNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpInitial)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpFullName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpDesignation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpLevel)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.EmpEmail)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpMobile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmpRoomNo)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.EmpPresentAddress)
-        </td>
-        <td>
-        @Html.DisplayFor(modelItem => item.EmpNid)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmpPaasportNo)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmpBloodGroup)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmpHighestDegree)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmpHighestDegreeMajorSubject)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmpCareerSummary)
-    </td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.EmpId}) |
-            @Html.ActionLink("Details", "Details", new {id = item.EmpId}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.EmpId})
-        </td>
-    </tr>
+@section styles
+{
+    <link href="~/Content/DataTables/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/jquery.dataTables.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap-dialog.css" rel="stylesheet" />*@
+    @*<link href="~/Content/DataTables/buttons.dataTables.min.css" rel="stylesheet" />*@
+    <link href="~/Content/DataTables/buttons.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/buttons.jqueryui.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/dataTables.jqueryui.css" rel="stylesheet" />
+    <style>
+        #table_scroll_div {
+            /*background-color: #CCE3EA;*/
+            width: auto;
+            /* height: 100px; */
+            /*border: 1px solid #2F6621;*/
+            /* overflow: scroll; */
+            /*padding: 20px;*/
+            overflow: auto;
+        }
+    </style>
 }
 
-</table>
+
+<fieldset>
+    <legend>Employee List</legend>
+    @*<h2>Previous Requisition List</h2>*@
+    <div id="table_scroll_div">
+        <table class="table" id="myTable">
+            <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.SortingSerialNo)*@
+                    <label>SL NO</label>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LookUpDivision.DivFullName)
+                </th>
+                @*<th>
+                            @Html.DisplayNameFor(model => model.LookUpEmployeeType.EmpType)
+                        </th>*@
+
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpPinNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpInitial)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpFullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpDesignation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpLevel)
+                </th>
+                @*<th>
+                            @Html.DisplayNameFor(model => model.EmpEmail)
+                        </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpMobile)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmpRoomNo)
+                </th>
+                @*<th>
+                            @Html.DisplayNameFor(model => model.EmpPresentAddress)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmpNid)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmpPaasportNo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmpBloodGroup)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmpHighestDegree)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmpHighestDegreeMajorSubject)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmpCareerSummary)
+                        </th>*@
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SortingSerialNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LookUpDivision.DivFullName)
+                    </td>
+                    @*<td>
+                                @Html.DisplayFor(modelItem => item.LookUpEmployeeType.EmpType)
+                            </td>*@
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpPinNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpInitial)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpFullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpDesignation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpLevel)
+                    </td>
+                    @*<td>
+                                @Html.DisplayFor(modelItem => item.EmpEmail)
+                            </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpMobile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmpRoomNo)
+                    </td>
+                    @*<td>
+                                    @Html.DisplayFor(modelItem => item.EmpPresentAddress)
+                                </td>
+                                <td>
+                                @Html.DisplayFor(modelItem => item.EmpNid)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpPaasportNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpBloodGroup)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpHighestDegree)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpHighestDegreeMajorSubject)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmpCareerSummary)
+                            </td>*@
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {id = item.EmpId}) |
+                        @Html.ActionLink("Details", "Details", new {id = item.EmpId}) |
+                        @Html.ActionLink("Delete", "Delete", new {id = item.EmpId})
+                    </td>
+                </tr>
+            }
+            </tbody>
+
+        </table>
+    </div>
+</fieldset>
+<p style="margin-top: 5px">
+    @Html.ActionLink("Add New", "Create", "", new { @Class = "btn btn-success" })
+</p>
+
+        @section scripts
+{
+            <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+            @*@*<script src="~/Scripts/bootstrap-dialog.js"></script>*@
+
+            @*<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>*@
+            <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+            <script src="~/Scripts/DataTables/dataTables.buttons.min.js"></script>
+            <script src="~/Scripts/DataTables/buttons.flash.min.js"></script>
+            <script src="~/Scripts/DataTables/dataTables.jqueryui.js"></script>
+            <script src="~/Scripts/DataTables/buttons.jqueryui.min.js"></script>
+            <script src="~/Scripts/DataTables/pdfmake.min.js"></script>
+            <script src="~/Scripts/DataTables/jszip.min.js"></script>
+            <script src="~/Scripts/DataTables/vfs_fonts.js"></script>
+            <script src="~/Scripts/DataTables/buttons.html5.min.js"></script>
+            <script src="~/Scripts/DataTables/buttons.print.min.js"></script>
+            <script src="~/Scripts/DataTables/buttons.colVis.js"></script>
+
+            <script>
+                $(function () {
+                    //$('#myTable').DataTable({
+                    //    aLengthMenu: [[5,10, 20,50, 100, -1],
+                    //                  [5,10, 20,50, 100, "All"]],
+                    //    iDisplayLength: 100,
+                    //    "sDom": 'Rfrtlip'
+                    //});
+                    $('#myTable').DataTable({
+                        //sDom: 'Rfrtlip',
+                        dom: 'Bfrtip',
+
+                        //lengthChange: true,
+                        aLengthMenu: [[5, 10, 20, 50, 100, -1],
+                                      [5, 10, 20, 50, 100, "All"]],
+                        //sDom: 'Rfrtlip',
+                        buttons: [
+                            'pageLength',
+                            {
+                                //extend: 'pdf',
+                                //footer: false,
+                                extend: 'pdfHtml5',
+                                orientation: 'landscape',
+                                pageSize: 'A4',
+
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                                }
+                            },
+                            //{
+                            //    extend: 'csv',
+                            //    footer: false,
+                            //    exportOptions: {
+                            //        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                            //    }
+                            //},
+                            {
+                                extend: 'excel',
+                                footer: false,
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                                }
+                            },
+
+                            {
+                                extend: 'print',
+                                footer: false,
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                                }
+                            }
+                            //,
+                            //{
+                            //    extend: 'colvis',
+                            //    footer: false
+                            //}
+                        ]
+
+                    });
+                });
+
+            </script>
+        }
+
+

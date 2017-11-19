@@ -46,7 +46,7 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProjectId,SortingSerialNo,ProjectCode,ProjectTitle,ClientName,ProjectStartingDate,ProjectEndingDate")] LookupProject lookupProject)
+        public ActionResult Create([Bind(Include = "ProjectId,SortingSerialNo,ProjectCode,ProjectName,ProjectClient,ProjectCluster,ProjectPl")] LookupProject lookupProject)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,10 @@ namespace VehicleRequisitionApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProjectId,SortingSerialNo,ProjectCode,ProjectTitle,ClientName,ProjectStartingDate,ProjectEndingDate")] LookupProject lookupProject)
+
+
+
+        public ActionResult Edit([Bind(Include = "ProjectId,SortingSerialNo,ProjectCode,ProjectName,ProjectClient,ProjectCluster,ProjectPl")] LookupProject lookupProject)
         {
             if (ModelState.IsValid)
             {

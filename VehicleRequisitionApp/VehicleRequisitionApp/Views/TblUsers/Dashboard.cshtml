@@ -22,6 +22,9 @@
             /* padding: 20px; */
             overflow: auto;
         }
+         th {
+            text-align: center;
+        }
     </style>
 }
 <div class="row">
@@ -29,8 +32,8 @@
         <fieldset>
             <legend>Today's Vehicles Status</legend>
             <div id="table_scroll_div">
-                <table class="table table-hover">
-                    <thead>
+                <table class="table table-hover table-bordered">
+                    <thead style="background-color: #C3E6CB">
                         <tr>
                             <th><label>Request Time</label></th>
                             <th><label>Location</label></th>
@@ -45,7 +48,7 @@
                     <tbody>
                         @foreach (TblRequisitionDetail item in ViewBag.CarStatus)
                         {
-                            <tr>
+                            <tr style="background-color: #e5f5f7">
                                 <td>@item.RequiredFromDate.ToString("hh:mm tt")</td>
                                 <td>@item.Place</td>
                                 <td>@item.LookUpEmployee.EmpFullName</td>

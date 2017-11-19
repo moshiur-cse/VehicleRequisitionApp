@@ -48,7 +48,7 @@ namespace VehicleRequisitionApp.Controllers
             ViewBag.ProjectInfo = db.LookupProjects.Select(i => new
             {
                 ProjId = i.ProjectId,
-                CodeAndTitle = i.ProjectCode + " : "+i.ProjectTitle
+                CodeAndTitle = i.ProjectCode + " : "+i.ProjectName
 
             }).ToList();
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpInitial");
@@ -79,7 +79,7 @@ namespace VehicleRequisitionApp.Controllers
             ViewBag.ProjectInfo = db.LookupProjects.Select(i => new
             {
                 ProjId = i.ProjectId,
-                CodeAndTitle=i.ProjectCode+" : "+i.ProjectTitle
+                CodeAndTitle=i.ProjectCode+" : "+i.ProjectName
 
             }).ToList();
 

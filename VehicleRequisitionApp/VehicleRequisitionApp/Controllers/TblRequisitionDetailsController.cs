@@ -68,15 +68,25 @@ namespace VehicleRequisitionApp.Controllers
             {
                 //Issue "Project Leader Requisition on another Project does not show requisition Statsu"
 
-                int employeeId = Convert.ToInt32(Session["EmpId"]);
+                //int employeeId = Convert.ToInt32(Session["EmpId"]);
+                string employeeInitial = Session["UserName"].ToString();
 
-                var findProjectId = db.LookupProjectLeaders.Where(i => i.EmpId == employeeId).ToList();
+                var findProjectId = db.LookupProjects.Where(i => i.ProjectPl == employeeInitial).ToList();
+
                 List<int> projectIdList = new List<int>();
 
-                foreach (LookupProjectLeader item in findProjectId)
+                //var findProjectId = db.LookupProjectLeaders.Where(i => i.EmpId == employeeId).ToList();
+                //List<int> projectIdList = new List<int>();
+
+                foreach (LookupProject item in findProjectId)
                 {
                     projectIdList.Add(item.ProjectId);
                 }
+
+                //foreach (LookupProjectLeader item in findProjectId)
+                //{
+                //    projectIdList.Add(item.ProjectId);
+                //}
 
                 ViewBag.ApproveRequisition =
                     db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
@@ -275,11 +285,24 @@ namespace VehicleRequisitionApp.Controllers
 
             if (ModelState.IsValid)
             {
-                var plId =
-                    db.LookupProjectLeaders.Where(i => i.ProjectId == tblRequisitionDetail.ProjectId)
-                        .Select(i => i.EmpId)
+                //var plId =
+                //    db.LookupProjectLeaders.Where(i => i.ProjectId == tblRequisitionDetail.ProjectId)
+                //        .Select(i => i.EmpId)
+                //        .SingleOrDefault();
+
+
+                //var plEmail = db.LookUpEmployees.Where(i => i.EmpId == plId).Select(i => i.EmpEmail).SingleOrDefault();
+
+
+
+
+                var plInitial =
+                    db.LookupProjects.Where(i => i.ProjectId == tblRequisitionDetail.ProjectId)
+                        .Select(i => i.ProjectPl)
                         .SingleOrDefault();
-                var plEmail = db.LookUpEmployees.Where(i => i.EmpId == plId).Select(i => i.EmpEmail).SingleOrDefault();
+
+                var plEmails = db.LookUpEmployees.Where(i => i.EmpInitial == plInitial).Select(i => i.EmpEmail).SingleOrDefault();
+
 
 
                 if (Convert.ToInt32(Session["UserGroupId"]) == 3)
@@ -310,7 +333,7 @@ namespace VehicleRequisitionApp.Controllers
                         WebMail.UserName = "vehicleadmin";
                         WebMail.Password = "cegis@2017";
                         WebMail.From = "vehicleadmin@cegisbd.com";
-                        WebMail.Send(to: plEmail, subject: "New Vehicle Requisition",
+                        WebMail.Send(to: plEmails, subject: "New Vehicle Requisition",
                             body: "<h3>Request By: " + Session["FullName"] + "</h3>" +
                                   "<p>Place: " + tblRequisitionDetail.Place + "</p>" +
                                   "<p>Reson: " + tblRequisitionDetail.Reason + "</p>" +

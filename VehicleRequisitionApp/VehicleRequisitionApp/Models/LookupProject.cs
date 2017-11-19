@@ -12,13 +12,16 @@ namespace VehicleRequisitionApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProjectId { get; set; }
-        public int SortingSerialNo { get; set; }
+        public int? SortingSerialNo { get; set; }
         [Display(Name = "Project Code")]
         public string ProjectCode { get; set; }
-        public string ProjectTitle { get; set; }
-        public string ClientName { get; set; }
-        public DateTime ProjectStartingDate { get; set; }
-        public DateTime ProjectEndingDate { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectPl { get; set; }
+        public string ProjectType { get; set; }
+        public string ProjectCluster { get; set; }
+        public string ProjectClient { get; set; }                
+        public string Exclude{ get; set; }
+        
         public virtual List<LookupProjectLeader> LookupProjectLeaders { get; set; }        
         public virtual List<TblRequisitionDetail> TblRequisitionDetails { get; set; }
     }
