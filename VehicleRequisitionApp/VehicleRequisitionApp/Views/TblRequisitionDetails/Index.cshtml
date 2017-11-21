@@ -30,15 +30,16 @@
             /* overflow: scroll; */
             /* padding: 20px; */
             overflow: auto;
-            border-radius: 5px
+            border-radius: 5px;
         }
 
-        th{
+        th {
             text-align: center;
         }
-         td {
-             text-align: center;
-         }
+
+        td {
+            text-align: center;
+        }
     </style>
 }
 
@@ -54,259 +55,274 @@
 }
 
 <fieldset>
-    <legend>Today's Requisition List</legend>
-    <div id="table_scroll_div">
-        <table id="myTable" class="table table-hover table-bordered">
-            <thead style="background-color: #C3E6CB">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
-                    </th>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
-                        </th>*@
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
-                        </th>*@
-                    <th>
-                        @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
-                    </th>
-                    <th>
-                        <label>Submission DateTime</label>
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.RequiredFromDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.RequiredToDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Place)
-                    </th>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.Reason)
-                        </th>*@
-
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
+<legend>Today's Requisition List </legend>
+   
+        <div id="table_scroll_div">
+            <table id="myTable" class="table table-hover table-bordered">
+                <thead style="background-color: #C3E6CB">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LookUpEmployee.EmpFullName)
+                        </th>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
+                            </th>*@
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
+                            </th>*@
+                        <th>
+                            @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.AssignedVehicleId)
-                        </th>*@
+                            <label>Submission DateTime</label>
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RequiredFromDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RequiredToDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Place)
+                        </th>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.Reason)
+                            </th>*@
 
-                    <th>
-                        Status
-                    </th>
-                    <th style="text-align: center;">
-                        Action
-                    </th>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.AssignedDriverEmpId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AssignedVehicleId)
+                            </th>*@
 
-                </tr>
-            </thead>
-            <tbody>
-                @try
-                {
-                    foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
+                        <th>
+                            Status
+                        </th>
+                        <th style="text-align: center;">
+                            Action
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @try
                     {
-                        <tr class="table-success" style="background-color: #e5f5f7">
-                            <td style="width: 170px">
-                                @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
-                            </td>
-                            @*<td>
-                                    @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
-                                </td>*@
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-                                </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
-                            </td>
-                            <td>
-                                @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
-                            </td>
-                            <td>
-                                @item.RequiredFromDate.ToString("hh:mm tt")
-                            </td>
-                            <td>
-                                @item.RequiredToDate.ToString("hh:mm tt")
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Place)
-                            </td>
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => item.Reason)
-                                </td>*@
-
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
-
+                        foreach (TblRequisitionDetail item in ViewBag.ApproveRequisition)
+                        {
+                            <tr class="table-success" style="background-color: #e5f5f7">
+                                <td style="width: 170px">
+                                    @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
+                                    </td>*@
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
+                                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
-                                </td>*@
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LookUpState.StateName)
-                            </td>
-
-                            @*@if (Convert.ToInt32(Session["UserGroupId"]) != 1)
-                                {*@
-                            @if (Convert.ToInt32(Session["UserGroupId"]) == 3)
-                            {
-                                <td style="width: 100px;">
-                                    @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
-                                    @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @Class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
-                                </td>
-                            }
-                            @*if (Convert.ToInt32(Session["UserGroupId"]) == 2)
-                                {
-                                    <td style="width: 100px">
-                                        <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
-                                    </td>
-                                }*@
-                            else if (Convert.ToInt32(Session["UserGroupId"]) == 6)
-                            {
-                                if (item.StateId == 6) //RMO
-                                {
-                                    <td style="width: 120px">
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "float: left;margin-right: 2px" })
-                                        @Html.ActionLink("Print", "Prints", new { id = item.RequisitionId, name = Session["FullName"] }, new { @Class = "btn btn-success", target = "blank" })
-                                    </td>
-
-                                }
-                                else
-                                {
-                                    <td style="width: 100px">
-                                        <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
-                                    </td>
-                                }
-
-                            }else
-                            {
-                                <td style="width: 100px">
-                                    <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
-                                </td>
-                            }
-                        </tr>
-                    }
-
-                }
-                catch (Exception)
-                {
-
-                }
-            </tbody>
-            <tbody>
-                @try
-                {
-                    foreach (TblRequisitionDetail item in ViewBag.NotApproveRequisition)
-                    {
-                        <tr class="table-success" style="background-color: #fdf1f3;">
-                            <td style="width: 170px">
-                                @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
-                            </td>
-                            @*<td>
-                                    @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
-                                </td>*@
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-                                </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
-                            </td>
-                            <td>
-                                @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
-                            </td>
-                            <td>
-                                @item.RequiredFromDate.ToString("hh:mm tt")
-                            </td>
-                            <td>
-                                @item.RequiredToDate.ToString("hh:mm tt")
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Place)
-                            </td>
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => item.Reason)
-                                </td>*@
-
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
-
+                                    @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
-                                </td>*@
+                                    @item.RequiredFromDate.ToString("hh:mm tt")
+                                </td>
+                                <td>
+                                    @item.RequiredToDate.ToString("hh:mm tt")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Place)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.Reason)
+                                    </td>*@
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LookUpState.StateName)
-                            </td>
-                            @if (Convert.ToInt32(Session["UserGroupId"]) == 1)
-                            {
-                                if (item.StateId == 1) //RMO
-                                {
-                                    <td style="width: 100px">
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
+
                                     </td>
-                                }
-                                else
-                                {
-                                    <td style="width: 100px">
-                                        <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
-                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
+                                    </td>*@
 
-                                }
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LookUpState.StateName)
+                                </td>
 
-                            }
-                            else
-                            //@if (Convert.ToInt32(Session["UserGroupId"]) != 1)
-                            {
-                                if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                                @*@if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                                    {*@
+                                @if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                                 {
                                     <td style="width: 100px;">
-                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
-                                        @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                        @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
+                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @Class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
                                     </td>
                                 }
-                                else if (Convert.ToInt32(Session["UserGroupId"]) == 2)
-                                {
-                                    <td style="width: 100px">
-
-                                        @Html.ActionLink("Recommend Now", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
-                                    </td>
-                                }
+                                @*if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+                                    {
+                                        <td style="width: 100px">
+                                            <label style="width: 120px; color: bisque; margin-top: 10px;text-align: center ">No Action</label>
+                                        </td>
+                                    }*@
                                 else if (Convert.ToInt32(Session["UserGroupId"]) == 6)
                                 {
-                                    <td style="width: 100px">
+                                    if (item.StateId == 6) //RMO
+                                    {
+                                        <td style="width: 140px">
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "float: left;margin-right: 2px" })
+                                            @Html.ActionLink("Print", "Prints", new { id = item.RequisitionId, name = Session["FullName"] }, new { @Class = "btn btn-success", target = "blank" })
+                                        </td>
 
-                                        @Html.ActionLink("Assign Now", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
-                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
-                                        @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
-                                        @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
-                                    </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="width: 100px">
+                                            <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Action</label>
+                                        </td>
+                                    }
+
                                 }
                                 else
                                 {
-                                    <td></td>
+                                    <td style="width: 100px">
+                                        <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Action</label>
+                                    </td>
+                                }
+                            </tr>
+                        }
+
+
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                </tbody>
+                <tbody>
+                    @try
+                    {
+                        foreach (TblRequisitionDetail item in ViewBag.NotApproveRequisition)
+                        {
+                            <tr class="table-success" style="background-color: #fdf1f3;">
+                                <td style="width: 170px">
+                                    @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
+                                    </td>*@
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
+                                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
+                                </td>
+                                <td>
+                                    @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
+                                </td>
+                                <td>
+                                    @item.RequiredFromDate.ToString("hh:mm tt")
+                                </td>
+                                <td>
+                                    @item.RequiredToDate.ToString("hh:mm tt")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Place)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.Reason)
+                                    </td>*@
+
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => @item.LookUpDriverEmployee.EmpFullName)
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LookupVehicles.VehicleNo)
+                                    </td>*@
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LookUpState.StateName)
+                                </td>
+                                @if (Convert.ToInt32(Session["UserGroupId"]) == 1)
+                                {
+                                    if (item.StateId == 1) //RMO
+                                    {
+                                        <td style="width: 100px">
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="width: 100px">
+                                            <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Action</label>
+                                        </td>
+
+                                    }
+
+                                }
+                                else
+                                //@if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                                {
+                                    if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                                    {
+                                        <td style="width: 100px;">
+                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                            @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                        </td>
+                                    }
+                                    else if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+                                    {
+                                        <td style="width: 100px">
+
+                                            @Html.ActionLink("Recommend Now", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                        </td>
+                                    }
+                                    else if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+                                    {
+                                        <td style="width: 100px">
+
+                                            @Html.ActionLink("Assign Now", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                            @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
+                                            @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+
+
                                 }
 
-
-                            }
-
-                        </tr>
+                            </tr>
+                        }
                     }
-                }
-                catch (Exception)
-                {
+                    catch (Exception)
+                    {
 
+
+                    }
+                </tbody>
+                @if (ViewBag.NotApproveRequisition.Count == 0 && ViewBag.ApproveRequisition.Count == 0)
+            {
+                    <tbody>
+                        <tr>
+                            <td colspan="8">
+                                <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Requisition</label>
+                            </td>
+                        </tr>
+                    </tbody>
                 }
-            </tbody>
-        </table>
-    </div>
-    @if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
-    {
-        @Html.ActionLink("Previous Requisition", "PreviousRequisition")
-    }
+                
+            </table>
+        </div>
+        @if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
+        {
+            @Html.ActionLink("Previous Requisition", "PreviousRequisition")
+        }
 </fieldset>
 
 @section scripts

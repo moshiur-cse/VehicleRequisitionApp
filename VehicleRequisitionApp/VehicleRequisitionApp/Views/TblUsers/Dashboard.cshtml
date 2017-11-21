@@ -22,14 +22,15 @@
             /* padding: 20px; */
             overflow: auto;
             border-radius: 5px;
-            
         }
-          th{
+
+        th {
             text-align: center;
         }
-         td {
-             text-align: center;
-         }
+
+        td {
+            text-align: center;
+        }
     </style>
 }
 <div class="row">
@@ -53,6 +54,7 @@
                     <tbody>
                         @foreach (TblRequisitionDetail item in ViewBag.CarStatus)
                         {
+
                             <tr style="background-color: #e5f5f7">
                                 <td>@item.RequiredFromDate.ToString("hh:mm tt")</td>
                                 <td>@item.Place</td>
@@ -63,6 +65,15 @@
                                 <td>@item.LookupVehicles.VehicleNo</td>
                             </tr>
                         }
+                        @if (ViewBag.CarStatus.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="7">
+                                    <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Requisition</label>
+                                </td>
+                            </tr>
+                        }
+
                     </tbody>
 
                 </table>

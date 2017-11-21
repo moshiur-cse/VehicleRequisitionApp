@@ -274,9 +274,9 @@ namespace VehicleRequisitionApp.Controllers
             }
             return hash.ToString();
         }
-        public JsonResult EmployeeDetails(int? empId)
+        public JsonResult EmployeeDetails(string empId)
         {
-            var empInfo = db.LookUpEmployees.Where(i => i.EmpId == empId).Select
+            var empInfo = db.LookUpEmployees.Where(i => i.EmpInitial == empId).Select
                         (u => new
                         {
                             Id = u.EmpId,
