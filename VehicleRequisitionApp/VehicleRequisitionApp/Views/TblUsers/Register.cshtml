@@ -93,7 +93,7 @@
                     success: function(data) {
                         response($.map(data, function(item) {
                             //$("#EmpInitial").attr('label', item.Initial);
-                            $("#EmpInitial").attr('data', item.Id);
+                            $("#EmpInitial").attr('data', item.Initial);
                             //$("#EmpInitial").attr('value', item.Id);
                             //return;
                             return { label: item.Initial, value: item.Initial };
@@ -112,7 +112,7 @@
         $("#EmpInitial").on('keyup change', function() {
            
             if ($(this).val().length === 3) {
-                load_data($(this).attr('data'));
+                load_data($(this).val());
             } else {
                 
                 $("#info").empty();
@@ -136,10 +136,8 @@
                     //$.each(data, function (key, value) {  //
                         $("#info").append('<div class="form-group"><label class="control-label col-md-2">Name </label>' +
                             '<div class="col-md-10"><input type="textbox" class="form-control" value="' + data[0].Name + '"readonly></div></div>' +
-
                             '<div class="form-group" style="display:none"><label class="control-label col-md-2">EmpId </label>' +
                             '<div class="col-md-10"><input type="textbox" id="EmpId" name="EmpId" class="form-control" value="' + data[0].Id + '"readonly></div></div>' +
-
                             '<div class="form-group"><label class="control-label col-md-2">Email </label>' +
                             '<div class="col-md-10"><input type="textbox" name="email" class="form-control" value="' + data[0].Email + '"></div></div>' +
                             '<div class="form-group"><label class="control-label col-md-2">Phone No </label>' +

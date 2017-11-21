@@ -171,11 +171,17 @@ namespace VehicleRequisitionApp.Controllers
                         .ToList();
                 return View();
             }
+            ViewBag.NotApproveRequisition = db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                    .Include(t => t.LookupProject)
+                    .Include(t => t.LookupRequisitionCategorys)
+                    .Where(i => i.StateId != 6)
+                    .ToList();
 
             ViewBag.ApproveRequisition =
                 db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                     .Include(t => t.LookupProject)
                     .Include(t => t.LookupRequisitionCategorys)
+                    .Where(i => i.StateId == 6)
                     .ToList();
            
             return View();
@@ -229,7 +235,7 @@ namespace VehicleRequisitionApp.Controllers
             ViewBag.EmpId = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == id), "EmpId", "EmpFullName");
             ViewBag.EmpDesignation = new SelectList(db.LookUpEmployees.Where(i => i.EmpId == id), "EmpId",
                 "EmpDesignation");
-            ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode");
+            ViewBag.ProjectId = new SelectList(db.LookupProjects,"ProjectId", "ProjectCode");
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId",
                 "RequisitionCategory");
             return View();

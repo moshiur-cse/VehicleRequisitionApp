@@ -1,7 +1,6 @@
 ﻿html {
     /*background-color: #F0F7F8;*/
 }
-
 body {
     padding-top: 50px;
     padding-bottom: 0;
@@ -31,7 +30,6 @@ body {
 input, select, textarea {
     max-width: 100% !important;
 }
-
 .navbar-inverse {
     background-color: white !important;
     border-color: white !important;
@@ -148,7 +146,6 @@ fieldset {
     -o-box-shadow: 0 0 8px #ddd inset;
     box-shadow: 0 0 8px #ddd inset;
 }
-
     fieldset legend {
         border: 1px none #37A84A;
         margin: 0 0 0 10px;
