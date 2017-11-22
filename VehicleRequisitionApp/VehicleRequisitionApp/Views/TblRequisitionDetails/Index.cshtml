@@ -30,7 +30,7 @@
             /* overflow: scroll; */
             /* padding: 20px; */
             overflow: auto;
-            border-radius: 5px;
+            /*border-radius: 5px;*/
         }
 
         th {
@@ -39,6 +39,16 @@
 
         td {
             text-align: center;
+        }
+         table {
+            border: 1px solid #49B054 !important;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            border: 1px solid #49B054 !important;
+            vertical-align: middle!important;
+            text-align: center !important;
         }
     </style>
 }
@@ -74,7 +84,7 @@
                             @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
                         </th>
                         <th>
-                            <label>Submission DateTime</label>
+                            <label>Submission Date</label>
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.RequiredFromDate)
@@ -155,9 +165,9 @@
                                     {*@
                                 @if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                                 {
-                                    <td style="width: 100px;">
+                                    <td>
                                         @*@Html.ActionLink("Edit", "Edit", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
-                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @Class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                        @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @Class = "btn btn-success", style = "margin-bottom: 2px;" })
                                     </td>
                                 }
                                 @*if (Convert.ToInt32(Session["UserGroupId"]) == 2)
@@ -170,15 +180,15 @@
                                 {
                                     if (item.StateId == 6) //RMO
                                     {
-                                        <td style="width: 140px">
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "float: left;margin-right: 2px" })
+                                        <td style="width: 140px;text-align: center">
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-right: 2px" })
                                             @Html.ActionLink("Print", "Prints", new { id = item.RequisitionId, name = Session["FullName"] }, new { @Class = "btn btn-success", target = "blank" })
                                         </td>
 
                                     }
                                     else
                                     {
-                                        <td style="width: 100px">
+                                        <td>
                                             <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Action</label>
                                         </td>
                                     }
@@ -186,7 +196,7 @@
                                 }
                                 else
                                 {
-                                    <td style="width: 100px">
+                                    <td>
                                         <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Action</label>
                                     </td>
                                 }
@@ -249,13 +259,13 @@
                                 {
                                     if (item.StateId == 1) //RMO
                                     {
-                                        <td style="width: 100px">
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;" })
                                         </td>
                                     }
                                     else
                                     {
-                                        <td style="width: 100px">
+                                        <td>
                                             <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Action</label>
                                         </td>
 
@@ -267,24 +277,24 @@
                                 {
                                     if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                                     {
-                                        <td style="width: 100px;">
-                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
-                                            @Html.ActionLink("Approve Now", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                        <td style="width: 200px;">
+                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;" })
+                                            @Html.ActionLink("Approve", "DirectorApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
                                         </td>
                                     }
                                     else if (Convert.ToInt32(Session["UserGroupId"]) == 2)
                                     {
-                                        <td style="width: 100px">
+                                        <td>
 
-                                            @Html.ActionLink("Recommend Now", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                            @Html.ActionLink("Recommend", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
                                         </td>
                                     }
                                     else if (Convert.ToInt32(Session["UserGroupId"]) == 6)
                                     {
-                                        <td style="width: 100px">
+                                        <td style="width: 200px">
 
-                                            @Html.ActionLink("Assign Now", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
-                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;width: 120px;" })
+                                            @Html.ActionLink("Assign", "Edit", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;" })
+                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;;" })
                                             @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
                                             @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
                                         </td>

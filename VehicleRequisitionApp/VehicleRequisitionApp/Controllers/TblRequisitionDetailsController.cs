@@ -663,14 +663,32 @@ namespace VehicleRequisitionApp.Controllers
                 "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
 
 
+            ViewBag.ApprovalStatusDetails = db.TblRequestApprovalDetails.Where(i => i.RequisitionId == id).ToList();            
+            ViewBag.AdminTransport = name;
 
-            ViewBag.ApprovalStatusDetails = db.TblRequestApprovalDetails.Where(i => i.RequisitionId == id).ToList();
+            ViewBag.PL =
+                db.TblRequestApprovalDetails.Where(i => i.RequisitionId == id && i.Comments== "Recommended By PL")
+                    .Select(i => i.LookUpEmployeeAuthority.EmpFullName)
+                    .SingleOrDefault();
+
+            ViewBag.Director =
+                db.TblRequestApprovalDetails.Where(i => i.RequisitionId == id && i.Comments == "Approved By Director")
+                    .Select(i => i.LookUpEmployeeAuthority.EmpFullName)
+                    .SingleOrDefault();
             
 
+            ViewBag.DED =
+                db.TblRequestApprovalDetails.Where(i => i.RequisitionId == id && i.Comments == "Approved By DED")
+                    .Select(i => i.LookUpEmployeeAuthority.EmpFullName)
+                    .SingleOrDefault();
+           
 
-                ViewBag.AdminTransport = name;
+            ViewBag.ED =
+    db.TblRequestApprovalDetails.Where(i => i.RequisitionId == id && i.Comments == "Approved By ED")
+        .Select(i => i.LookUpEmployeeAuthority.EmpFullName)
+        .SingleOrDefault();
+
             
-
             return View(tblRequisitionDetail);
 
         }

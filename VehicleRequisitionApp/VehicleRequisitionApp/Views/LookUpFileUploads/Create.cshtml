@@ -16,7 +16,6 @@
             background-color: #fff;
             background-repeat: no-repeat;
         }
-
             #image strong {
                 position: relative;
                 right: 0px;
@@ -33,7 +32,6 @@
                 bottom: 0px;
             }
     </style>
-
 }
 
 <h2>@ViewBag.Message</h2>
@@ -49,6 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FileName, "Change Profile Picture", htmlAttributes: new { @class = "control-label col-md-2" })
 
+
             <div class="col-md-10">
                 <label>
                     <div id="image">
@@ -61,14 +60,12 @@
 
             <label style="color: red">* Resulation Must Be 180*160 and Maximum Size 100 KB</label>
         </div>
-
         @*<div class="form-group">
                 @Html.LabelFor(model => model.FileName, "Uplaod file", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <img src="~/UploadedFiles/@Model.FileName" height="180" width="160" />
                 </div>
             </div>*@
-
         <div class="form-group" style="display: none">
             @Html.LabelFor(model => model.EmpId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -76,7 +73,6 @@
                 @Html.ValidationMessageFor(model => model.EmpId, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group" style="display: none">
             @Html.LabelFor(model => model.FileId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -85,7 +81,6 @@
                     @Html.ValidationMessageFor(model => model.EmpId, "", new {@class = "text-danger"})*@
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Upload" class="btn btn-default" />
@@ -114,11 +109,8 @@
                 imgUrl = urls + inputImage;
                 imgText = "Change ";
             }
-
             $("#image").css("background-image", "url('" + imgUrl + "')");
             $("#image strong").html(imgText);
-
-
             $("#inputImage").on("change", function (evt) {
                 var imgTempPath = URL.createObjectURL(evt.target.files[0]);
                 $("#image").css("background-image", "url('" + imgTempPath + "')");
@@ -127,5 +119,4 @@
         });
 
     </script>
-
 }

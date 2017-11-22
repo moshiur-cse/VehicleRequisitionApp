@@ -536,6 +536,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\CEGIS_logo.png" />
+    <Content Include="Images\CEGIS_Print_Logo.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\page_loading.gif" />
     <Content Include="Images\page_loading1.gif" />

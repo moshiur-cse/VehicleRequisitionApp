@@ -21,20 +21,30 @@
             /* overflow: scroll; */
             /* padding: 20px; */
             overflow: auto;
-            border-radius: 5px;
+            /*border-radius: 5px;*/
         }
 
-        th {
+         th {
             text-align: center;
         }
 
         td {
             text-align: center;
         }
+         table {
+            border: 1px solid #49B054 !important;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            border: 1px solid #49B054 !important;
+            vertical-align: middle!important;
+            text-align: center !important;
+        }
     </style>
 }
 <div class="row">
-    <div class="col-md-offset-2 col-lg-8 col-md-offset-2">
+    <div class="col-md-offset-1 col-lg-10 col-md-offset-1">
         <fieldset>
             <legend>Today's Vehicles Status</legend>
             <div id="table_scroll_div">
@@ -44,7 +54,7 @@
                             <th><label>Request Time</label></th>
                             <th><label>Location</label></th>
                             <th><label>Requester's Name</label></th>
-                            <th><label>Requester Phone No</label></th>
+                            <th><label>Requester's Phone No</label></th>
                             <th><label>Driver's Name</label></th>
                             <th><label>Driver's Phone No</label></th>
                             <th><label>Vehicle No</label></th>
