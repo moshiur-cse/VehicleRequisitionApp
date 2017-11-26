@@ -635,6 +635,176 @@ namespace VehicleRequisitionApp.Controllers
             return report;
         }
 
+
+        public ActionResult CombinedRequisition(List<string> combinedRequisitionList) //IEnumerable<int?> productCategoryIds = null
+        {
+            List<int> projectIdList = new List<int>();
+
+            int rId=0;
+            
+            for (int i=0; i<combinedRequisitionList.Count;i++)
+            {
+                if (combinedRequisitionList[i] == "")
+                {
+                    projectIdList.Add(0);
+                }
+                else
+                {
+                    projectIdList.Add(Convert.ToInt32(combinedRequisitionList[i]));
+                    rId = Convert.ToInt32(combinedRequisitionList[i]);
+                }              
+            }
+
+            ViewBag.Conbined =
+                    db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                        .Include(t => t.LookupProject)
+                        .Include(t => t.LookupRequisitionCategorys)
+                        .Where(i => projectIdList.Contains(i.RequisitionId)).ToList();
+
+
+            string employee ="";
+            foreach (TblRequisitionDetail aEmpoyeeList in ViewBag.Conbined)
+            {
+                employee += employee==""? aEmpoyeeList.LookUpEmployee.EmpFullName : ", "+aEmpoyeeList.LookUpEmployee.EmpFullName;
+            }
+            string project = "";
+            foreach (TblRequisitionDetail aProjectList in ViewBag.Conbined)
+            {
+                project += project == "" ? aProjectList.LookupProject.ProjectCode : ", " + aProjectList.LookupProject.ProjectCode;
+            }
+            string place = "";
+            foreach (TblRequisitionDetail aPlaceList in ViewBag.Conbined)
+            {
+                place += place == "" ? aPlaceList.Place : ", " + aPlaceList.Place;
+            }
+
+            string reson = "";
+            foreach (TblRequisitionDetail aResonList in ViewBag.Conbined)
+            {
+                reson += reson == "" ? aResonList.Reason : ", " + aResonList.Reason;
+            }
+            ViewBag.EmpoyeeList = employee;
+            ViewBag.ProjectList = project;
+            ViewBag.PlaceList = place;
+            ViewBag.ResonList = reson;
+
+
+
+            TblRequisitionDetail tblRequisitionDetail = db.TblRequisitionDetails.Find(rId);
+
+
+            if (tblRequisitionDetail == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.DriverId = db.LookUpEmployees.Where(u => u.EmpDesignation == "Driver").
+                Select(i => new
+                {
+                    DriverName = i.EmpFullName,
+                    DriverId = i.EmpId
+                }).ToList();
+
+
+
+            //ViewBag.DriverId = new SelectList(db.LookUpDivisions, "DriverId", "DriverName");
+            ViewBag.VehicleId = db.LookupVehicles.ToList();
+            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
+            ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode",
+                tblRequisitionDetail.ProjectId);
+
+            ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId",
+               "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
+
+            return View(tblRequisitionDetail);
+
+            //return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CombinedRequisition(
+           [Bind(
+                Include =
+                    "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,UsedFromKM,UsedToKM,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId,StateId"
+                )] TblRequisitionDetail tblRequisitionDetail)
+        {
+            if (Session["UserId"] == null)
+            {
+                return RedirectToAction("LogIn", "TblUsers");
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(tblRequisitionDetail).State = EntityState.Modified;
+                db.SaveChanges();
+
+
+
+                //DirectorApprovalMethod(tblRequisitionDetail.RequisitionId, 6, "Vehicle Assigned By Admin Transport");
+
+
+                //TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
+                //aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
+                //aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+                //aApproval.ApprovalStatus = true;
+                //aApproval.Comments = "Vehicle Assigned By Admin Transport";
+                //db.TblRequestApprovalDetails.Add(aApproval);
+                //db.SaveChanges();
+                if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                {
+                    var findRequisition =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .ToList();
+
+                    var requesterName =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .Select(i => i.LookUpEmployee.EmpFullName)
+                            .SingleOrDefault();
+                    var requesterEmail =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .Select(i => i.LookUpEmployee.EmpEmail)
+                            .SingleOrDefault();
+
+                    foreach (var item in findRequisition)
+                    {
+                        item.StateId = 6;
+                    }
+                    try
+                    {
+                        db.SaveChanges();
+                        WebMail.SmtpServer = "130.180.3.10"; //gmail.com
+                        WebMail.SmtpPort = 25; //587
+                        WebMail.SmtpUseDefaultCredentials = true;
+                        WebMail.EnableSsl = false;
+                        WebMail.UserName = "vehicleadmin";
+                        WebMail.Password = "cegis@2017";
+                        WebMail.From = "vehicleadmin@cegisbd.com";
+                        WebMail.Send(to: requesterEmail, subject: "Vehicle Requisition Approval Status",
+                            body: "<h3> Requester Name : " + requesterName + "</h3>" +
+                                  "<p> Your Vehicles is Assigned By : " + Session["FullName"] + "</p>",
+                            cc: "", bcc: "", isBodyHtml: true);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        // Provide for exceptions.
+                    }
+                    return RedirectToAction("Index");
+                }
+
+            }
+            //return RedirectToAction("Index");
+
+            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
+            ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode",
+                tblRequisitionDetail.ProjectId);
+            ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId",
+                "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
+            return View(tblRequisitionDetail);
+        }
+
+
+
         public ActionResult Print(int id,string name)
         {
 

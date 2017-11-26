@@ -39,7 +39,7 @@
                         
                             @Html.LabelFor(model => model.RequisitionCategoryId, "Requisition Category", htmlAttributes: new { @class = "control-label col-md-offset-6 col-md-3", style = "text-align:right!important" })
                             <div class="col-md-3">
-                                @Html.DropDownList("RequisitionCategoryId",null, "--Select Category--", htmlAttributes: new { @class = "form-control" })
+                                @Html.DropDownList("RequisitionCategoryId",null, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.RequisitionCategoryId, "", new { @class = "text-danger" })
                             </div>
                        
