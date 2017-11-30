@@ -314,7 +314,7 @@
                     {
                         <td style="width: 200px">
 
-                            @Html.ActionLink("Assign", "Edit", new {id = item.RequisitionId}, new {@class = "btn btn-success", style = "margin-bottom: 2px;"})
+                            @Html.ActionLink("Assign", "Edit", new {id = item.RequisitionId}, new {@class = "btn btn-success assign", style = "margin-bottom: 2px;"})
                             @Html.ActionLink("Details", "Details", new {id = item.RequisitionId}, new {@class = "btn btn-success", style = "margin-bottom: 2px;;"})
                             @*@Html.ActionLink("Assign Now", "AdminTransportApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })*@
                             @*@Html.ActionLink("Delete", "Delete", new { id = item.RequisitionId })*@
@@ -385,9 +385,7 @@ if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
                 //var totalChk = $(this).closest('tbody').find("input:checkbox:not([name=''])").length;
                 var totalChk = $(".Check:not([name=''])").length;
                 //totalChk = totalChk || 0;
-
                 $(this).attr('name', 'combinedRequisitionList[' + totalChk + ']');
-
                 $("#Combined").show();
             } else {
                 $(this).attr('name', '');
@@ -396,9 +394,14 @@ if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
                     $(".Check:checked").each(function(cbCount) {
                         $(this).attr('name', 'combinedRequisitionList[' + cbCount + ']');
                     });
+                    $(".assign").hide(); //.assign                    
                     $("#Combined").show();
+                } else if ($(".Check:checked").length == 0) {
+                    $(".assign").show();
+                    $("#Combined").hide();
                 } else
                     $("#Combined").hide();
+               
             }
 
         });
