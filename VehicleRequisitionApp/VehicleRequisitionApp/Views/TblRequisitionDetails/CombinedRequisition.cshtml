@@ -27,15 +27,13 @@
         @using (Html.BeginForm("CombinedRequisition", "TblRequisitionDetails"))
         {
             @Html.AntiForgeryToken()
-
-
+           
 
             @*<button id="btnPrint" class="btn btn-success" onclick="print_report('Requisition_Details', 'Vehicles Requisition Details');">Print</button>*@
 
             <div class="form-horizontal">
                 <fieldset>
                     <legend>Update Requisition</legend>
-
 
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.RequisitionId)

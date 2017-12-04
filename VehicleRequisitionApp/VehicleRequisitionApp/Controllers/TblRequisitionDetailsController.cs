@@ -716,59 +716,54 @@ namespace VehicleRequisitionApp.Controllers
             ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId",
                "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
 
+            TempData["RequisitionListId"] = projectIdList;
+
+            //ViewBag. = projectIdList;
+
             return View(tblRequisitionDetail);
 
             //return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CombinedRequisition(
-           [Bind(
-                Include =
-                    "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,UsedFromKM,UsedToKM,ActuallyUsedFromDate,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId,StateId"
-                )] TblRequisitionDetail tblRequisitionDetail)
+        public ActionResult CombinedRequisition(double? UsedFromKM,double? UsedToKM,DateTime? ActuallyUsedFromDate,DateTime? ActuallyUsedToDate,int AssignedDriverEmpId,int AssignedVehicleId, List<int> requisitionListId)
         {
+            List<int> rIdList = (List<int>)TempData["RequisitionListId"];
+
             if (Session["UserId"] == null)
             {
                 return RedirectToAction("LogIn", "TblUsers");
             }
-
-            if (ModelState.IsValid)
+                    
+            for(int j= 0; j < rIdList.Count; j++)
             {
-                db.Entry(tblRequisitionDetail).State = EntityState.Modified;
-                db.SaveChanges();
+                TblRequisitionDetail aTblRequisitionDetail = db.TblRequisitionDetails.Find(rIdList[j]);
 
+                aTblRequisitionDetail.StateId = 6;
+                aTblRequisitionDetail.AssignedDriverEmpId = AssignedDriverEmpId;
+                aTblRequisitionDetail.AssignedVehicleId = AssignedVehicleId;
 
+                //db.Entry(tblRequisitionDetail).State = EntityState.Modified;
+                //db.SaveChanges();                
+                //if (Convert.ToInt32(Session["UserGroupId"]) != 1)
+                //{
+                    //var findRequisition =
+                    //    db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                    //        .ToList();
 
-                //DirectorApprovalMethod(tblRequisitionDetail.RequisitionId, 6, "Vehicle Assigned By Admin Transport");
+                    //var requesterName =
+                    //    db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                    //        .Select(i => i.LookUpEmployee.EmpFullName)
+                    //        .SingleOrDefault();
+                    //var requesterEmail =
+                    //    db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                    //        .Select(i => i.LookUpEmployee.EmpEmail)
+                    //        .SingleOrDefault();
 
-
-                //TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
-                //aApproval.RequisitionId = tblRequisitionDetail.RequisitionId;
-                //aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
-                //aApproval.ApprovalStatus = true;
-                //aApproval.Comments = "Vehicle Assigned By Admin Transport";
-                //db.TblRequestApprovalDetails.Add(aApproval);
-                //db.SaveChanges();
-                if (Convert.ToInt32(Session["UserGroupId"]) != 1)
-                {
-                    var findRequisition =
-                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
-                            .ToList();
-
-                    var requesterName =
-                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
-                            .Select(i => i.LookUpEmployee.EmpFullName)
-                            .SingleOrDefault();
-                    var requesterEmail =
-                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
-                            .Select(i => i.LookUpEmployee.EmpEmail)
-                            .SingleOrDefault();
-
-                    foreach (var item in findRequisition)
-                    {
-                        item.StateId = 6;
-                    }
+                    //foreach (var item in findRequisition)
+                    //{
+                    //    item.StateId = 6;
+                    //}
                     try
                     {
                         db.SaveChanges();
@@ -779,28 +774,30 @@ namespace VehicleRequisitionApp.Controllers
                         WebMail.UserName = "vehicleadmin";
                         WebMail.Password = "cegis@2017";
                         WebMail.From = "vehicleadmin@cegisbd.com";
-                        WebMail.Send(to: requesterEmail, subject: "Vehicle Requisition Approval Status",
-                            body: "<h3> Requester Name : " + requesterName + "</h3>" +
+                        WebMail.Send(to: aTblRequisitionDetail.LookUpEmployee.EmpEmail, subject: "Vehicle Requisition Approval Status",
+                            body: "<h3> Requester Name : " + aTblRequisitionDetail.LookUpEmployee.EmpFullName + "</h3>" +
                                   "<p> Your Vehicles is Assigned By : " + Session["FullName"] + "</p>",
                             cc: "", bcc: "", isBodyHtml: true);
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
-                        // Provide for exceptions.
-                    }
-                    return RedirectToAction("Index");
+                    //TempData["UserMessage"] = new MessageVM() { CssClassName = "alert-error", Title = "Error!", Message = "Operation Failed." };
+                    // Provide for exceptions.
                 }
 
+                //}
+
             }
+            return RedirectToAction("Index");
             //return RedirectToAction("Index");
 
-            ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
-            ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode",
-                tblRequisitionDetail.ProjectId);
-            ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId",
-                "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
-            return View(tblRequisitionDetail);
+            //ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
+            //ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode",
+            //    tblRequisitionDetail.ProjectId);
+            //ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId",
+            //    "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
+            //return View();
         }
 
 

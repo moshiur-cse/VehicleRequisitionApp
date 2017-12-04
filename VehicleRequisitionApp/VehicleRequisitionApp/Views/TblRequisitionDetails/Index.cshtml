@@ -390,7 +390,7 @@ if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
             } else {
                 $(this).attr('name', '');
 
-                if ($(".Check:checked").length > 0) {
+                if ($(".Check:checked").length > 1) {
                     $(".Check:checked").each(function(cbCount) {
                         $(this).attr('name', 'combinedRequisitionList[' + cbCount + ']');
                     });
@@ -405,8 +405,6 @@ if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
             }
 
         });
-
-
         $("#divisionId").change(function() {
             var divId = $("#divisionId").val();
             var empId = @Convert.ToInt32(Session["EmpId"]);
@@ -427,7 +425,11 @@ if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
 
             if (getUrl == "http://rmo") {
                 urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            } else {
+            }else if (getUrl == "http://202.53.173.179") {
+                urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            }else if (getUrl == "http://cegisbd.com") {
+                urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            }else {
                 urL = getUrl + "/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
             }
             window.location.href = urL;

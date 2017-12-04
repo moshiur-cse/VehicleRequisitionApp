@@ -66,12 +66,9 @@ namespace VehicleRequisitionApp.Models
         public int StateId { get; set; }
         [ForeignKey("StateId")]
         public virtual LookUpState LookUpState {get; set; }
-
         public virtual List<TblRequestApprovalDetail> TblRequestApprovalDetail { get; set; }
-
-
-
-
+        public virtual List<LookUpCombinedRequisition> LookUpCombinedRequisition { get; set; }
+        
 
     }
 }

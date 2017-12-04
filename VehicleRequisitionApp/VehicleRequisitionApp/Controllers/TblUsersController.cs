@@ -226,6 +226,11 @@ namespace VehicleRequisitionApp.Controllers
             {
                 return RedirectToAction("LogIn", "TblUsers");
             }
+            if (user.Password!=user.ConfirmPassword)
+            {
+                TempData["Error"] = "The password and confirmation password do not match.";
+                return View(user);
+            }
             string oldPass = PassWordHash(user.OldPassword);
 
             var isUser = db.TblUsers.Where(u => u.UserId == user.UserId && u.Password == oldPass);
@@ -234,7 +239,7 @@ namespace VehicleRequisitionApp.Controllers
             {
                 var result = (from u in db.TblUsers where u.UserId == user.UserId select u);
 
-                string hashPass = PassWordHash(user.NewPassword);
+                string hashPass = PassWordHash(user.Password);
 
                 foreach (TblUser item in result)
                 {
