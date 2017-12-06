@@ -53,7 +53,6 @@ namespace VehicleRequisitionApp.Models
 
         [Display(Name = "Assigned Driver")] 
         public int? AssignedDriverEmpId { get; set; }
-
         [ForeignKey("AssignedDriverEmpId")]
         public virtual LookUpEmployee LookUpDriverEmployee { get; set; }
 
@@ -66,9 +65,27 @@ namespace VehicleRequisitionApp.Models
         public int StateId { get; set; }
         [ForeignKey("StateId")]
         public virtual LookUpState LookUpState {get; set; }
+
+        public int? AssignId { get; set; }
+
         public virtual List<TblRequestApprovalDetail> TblRequestApprovalDetail { get; set; }
         public virtual List<LookUpCombinedRequisition> LookUpCombinedRequisition { get; set; }
         
 
+    }
+
+    public class CombinedRequisition
+    {
+        public int AssignId { get; set; }
+
+        public DateTime RequiredFromDate { get; set; }
+        public string Place { get; set; }
+        public string EmpFullName { get; set; }
+        public string EmpMobile { get; set; }
+        public string DriverName { get; set; }
+        public string DriverPhoneNo { get; set; }
+        public string VehicleNo { get; set; }
+
+       
     }
 }

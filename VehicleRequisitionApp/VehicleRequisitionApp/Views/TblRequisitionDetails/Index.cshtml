@@ -1,6 +1,7 @@
-﻿@using Microsoft.Ajax.Utilities
+﻿@using System
+@using Microsoft.Ajax.Utilities
 @using VehicleRequisitionApp.Models
-@model IEnumerable<VehicleRequisitionApp.Models.TblRequisitionDetail>
+@model System.Collections.Generic.IEnumerable<VehicleRequisitionApp.Models.TblRequisitionDetail>
 
 @{
     ViewBag.Title = "Index";
@@ -421,17 +422,17 @@ if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
 
 
             var getUrl = window.location.origin;
-            var urL;
+            var urL=getUrl + "/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
 
-            if (getUrl == "http://rmo") {
-                urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            }else if (getUrl == "http://202.53.173.179") {
-                urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            }else if (getUrl == "http://cegisbd.com") {
-                urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            }else {
-                urL = getUrl + "/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            }
+            //if (getUrl == "http://rmo") {
+            //    urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            //}else if (getUrl == "http://202.53.173.179") {
+            //    urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            //}else if (getUrl == "http://cegisbd.com") {
+            //    urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            //}else {
+            //    urL = getUrl + "/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            //}
             window.location.href = urL;
             //alert(urL);
             @*$.ajax({

@@ -252,6 +252,7 @@ namespace VehicleRequisitionApp.Controllers
                     "RequisitionId,RequisitionCategoryId,EmpId,ProjectId,RequestSubmissionDate,RequiredFromDate,RequiredToDate,Place,Reason,ActuallyUsedFromDate,UsedFromKM,UsedToKM,ActuallyUsedToDate,AssignedDriverEmpId,AssignedVehicleId"
                 )] TblRequisitionDetail tblRequisitionDetail)
         {
+            tblRequisitionDetail.AssignId = 0;
             if (Session["UserId"] == null)
             {
                 return RedirectToAction("LogIn", "TblUsers");
@@ -314,6 +315,8 @@ namespace VehicleRequisitionApp.Controllers
                 if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                 {
                     tblRequisitionDetail.StateId = 5;
+                   
+
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
 
@@ -328,6 +331,7 @@ namespace VehicleRequisitionApp.Controllers
                 else
                 {
                     tblRequisitionDetail.StateId = 1;
+                 
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
                     try
@@ -460,6 +464,7 @@ namespace VehicleRequisitionApp.Controllers
                     foreach (var item in findRequisition)
                     {
                         item.StateId = 6;
+                        item.AssignId = 1;
                     }
                     try
                     {
@@ -734,6 +739,10 @@ namespace VehicleRequisitionApp.Controllers
             {
                 return RedirectToAction("LogIn", "TblUsers");
             }
+
+            int assignId = Convert.ToInt32(db.TblRequisitionDetails.Max(i => i.AssignId).Value)+1; 
+
+
                     
             for(int j= 0; j < rIdList.Count; j++)
             {
@@ -742,6 +751,7 @@ namespace VehicleRequisitionApp.Controllers
                 aTblRequisitionDetail.StateId = 6;
                 aTblRequisitionDetail.AssignedDriverEmpId = AssignedDriverEmpId;
                 aTblRequisitionDetail.AssignedVehicleId = AssignedVehicleId;
+                aTblRequisitionDetail.AssignId = assignId;
 
                 //db.Entry(tblRequisitionDetail).State = EntityState.Modified;
                 //db.SaveChanges();                
