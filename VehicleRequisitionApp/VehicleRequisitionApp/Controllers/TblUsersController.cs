@@ -183,54 +183,39 @@ namespace VehicleRequisitionApp.Controllers
             {
                 return HttpNotFound();
             }
-
-         
-
+                     
             ViewBag.Image = db.LookUpFileUploads.Where(i => i.EmpId == id).Select(i => i.FileName).SingleOrDefault();
 
             ViewBag.CarStatus = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate > DateTime.Now && i.AssignId==1).ToList();
 
             ViewBag.ConbinedRequisition = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate > DateTime.Now && i.AssignId!= 1)
-               .GroupBy(k => k.AssignId)
+               .GroupBy(k => new { k.AssignId, k.LookUpDriverEmployee.EmpFullName,k.LookUpDriverEmployee.EmpMobile, k.LookupVehicles.VehicleNo} )
                .Select(k=> new
                {
-                AssignId = k.Key,
-                RequiredFromDate = k.Min(l=>l.RequiredFromDate),               
-                //Place=k.Select(l=>l.Place),
-
-                   Place = k.Select(l => l.Place),
-
+                AssignIds = k.Key.AssignId,
+                RequiredFromDate = k.Min(l=>l.RequiredFromDate),                             
+                Place = k.Select(l => l.Place),
                 EmpFullName = k.Select(l => l.LookUpEmployee.EmpFullName),
                 EmpMobile = k.Select(l => l.LookUpEmployee.EmpMobile),                
-                DriverName = k.Select(l => l.LookUpDriverEmployee.EmpFullName),
-                DriverPhoneNo = k.Select(l => l.LookUpDriverEmployee.EmpMobile),
-                VehicleNo = k.Select(l => l.LookupVehicles.VehicleNo)
-
+                DriverName = k.Key.EmpFullName,
+                DriverPhoneNo = k.Key.EmpMobile,
+                Vehicle = k.Key.VehicleNo
                }).ToList();
-
-
             List<CombinedRequisition> aList=new List<CombinedRequisition>();
-
             CombinedRequisition aCombinedRequisition;
-
             for (int r = 0; r < ViewBag.ConbinedRequisition.Count; r++)
             {
                 aCombinedRequisition = new CombinedRequisition();
-                aCombinedRequisition.AssignId = ViewBag.ConbinedRequisition[r].AssignId;
-                aCombinedRequisition.RequiredFromDate=ViewBag.ConbinedRequisition[r].RequiredFromDate;
-                //for (int j=0;j< item[i].Place.Count();j++)
-                //{                    
+                aCombinedRequisition.AssignId = ViewBag.ConbinedRequisition[r].AssignIds;
+                aCombinedRequisition.RequiredFromDate=ViewBag.ConbinedRequisition[r].RequiredFromDate;              
                 aCombinedRequisition.Place= string.Join(",", ViewBag.ConbinedRequisition[r].Place);
                 aCombinedRequisition.EmpFullName=string.Join(", ", ViewBag.ConbinedRequisition[r].EmpFullName);
                 aCombinedRequisition.EmpMobile=string.Join(", ", ViewBag.ConbinedRequisition[r].EmpMobile);
-                aCombinedRequisition.DriverName=ViewBag.ConbinedRequisition[r].DriverName;
+                aCombinedRequisition.DriverName= ViewBag.ConbinedRequisition[r].DriverName;
                 aCombinedRequisition.DriverPhoneNo=ViewBag.ConbinedRequisition[r].DriverPhoneNo;
-                aCombinedRequisition.VehicleNo = ViewBag.ConbinedRequisition[r].VehicleNo;
+                aCombinedRequisition.VehicleNo =  ViewBag.ConbinedRequisition[r].Vehicle;
                 aList.Add(aCombinedRequisition);
-                //}
-
             }
-
             return View(aList);
             //return View();
         }

@@ -1,7 +1,7 @@
 ﻿@using System
 @using Microsoft.Ajax.Utilities
 @using VehicleRequisitionApp.Models
-@model System.Collections.Generic.IEnumerable<VehicleRequisitionApp.Models.TblRequisitionDetail>
+@model VehicleRequisitionApp.Models.TblRequisitionDetail
 
 @{
     ViewBag.Title = "Index";
@@ -420,19 +420,21 @@ if (Convert.ToInt32(Session["UserGroupId"]) >= 6)
                 window.location.href = url;
             }*@
 
+            
 
             var getUrl = window.location.origin;
-            var urL=getUrl + "/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            //var hostpath=window.location.pathname;
+            var urL;
 
-            //if (getUrl == "http://rmo") {
-            //    urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            //}else if (getUrl == "http://202.53.173.179") {
-            //    urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            //}else if (getUrl == "http://cegisbd.com") {
-            //    urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            //}else {
-            //    urL = getUrl + "/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            //}
+            if (getUrl == "http://rmo") {
+                urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            }else if (getUrl == "http://202.53.173.179") {
+                urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            }else if (getUrl == "http://cegisbd.com") {
+                urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            }else {
+                urL = getUrl + "/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
+            }
             window.location.href = urL;
             //alert(urL);
             @*$.ajax({
