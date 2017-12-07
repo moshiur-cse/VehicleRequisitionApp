@@ -208,7 +208,7 @@ namespace VehicleRequisitionApp.Controllers
                 aCombinedRequisition = new CombinedRequisition();
                 aCombinedRequisition.AssignId = ViewBag.ConbinedRequisition[r].AssignIds;
                 aCombinedRequisition.RequiredFromDate=ViewBag.ConbinedRequisition[r].RequiredFromDate;              
-                aCombinedRequisition.Place= string.Join(",", ViewBag.ConbinedRequisition[r].Place);
+                aCombinedRequisition.Place= string.Join(", ", ViewBag.ConbinedRequisition[r].Place);
                 aCombinedRequisition.EmpFullName=string.Join(", ", ViewBag.ConbinedRequisition[r].EmpFullName);
                 aCombinedRequisition.EmpMobile=string.Join(", ", ViewBag.ConbinedRequisition[r].EmpMobile);
                 aCombinedRequisition.DriverName= ViewBag.ConbinedRequisition[r].DriverName;

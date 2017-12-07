@@ -79,13 +79,14 @@ namespace VehicleRequisitionApp.Models
         public int AssignId { get; set; }
 
         public DateTime RequiredFromDate { get; set; }
+        public DateTime RequiredToDate { get; set; }
+
         public string Place { get; set; }
         public string EmpFullName { get; set; }
         public string EmpMobile { get; set; }
         public string DriverName { get; set; }
         public string DriverPhoneNo { get; set; }
         public string VehicleNo { get; set; }
-
-       
+        public string ProjectCode { get; set; }      
     }
 }

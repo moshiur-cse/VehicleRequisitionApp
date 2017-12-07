@@ -101,7 +101,7 @@
                         @foreach(var item in Model)
                         {
                             <tr style="background-color: #e5f5f7">
-                                <td> @item.RequiredFromDate.ToString()</td>
+                                <td> @item.RequiredFromDate.ToString("hh:mm tt")</td>
                                 <td> @item.Place</td>
                                 <td> @item.EmpFullName</td>
                                 <td>@item.EmpMobile</td>

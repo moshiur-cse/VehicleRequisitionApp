@@ -3,6 +3,7 @@
 @using VehicleRequisitionApp.Models
 @model VehicleRequisitionApp.Models.TblRequisitionDetail
 
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -78,7 +79,7 @@
         @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
         {
             <th>
-                Check
+                Is Combined ?
             </th>
         }
         <th>
@@ -87,15 +88,15 @@
         @*<th>
                             @Html.DisplayNameFor(model => model.LookUpEmployee.EmpDesignation)
                         </th>*@
-        @*<th>
+        <th>
                             @Html.DisplayNameFor(model => model.LookupProject.ProjectCode)
-                        </th>*@
-        <th>
+                        </th>
+        @*<th>
             @Html.DisplayNameFor(model => model.LookupRequisitionCategorys.RequisitionCategory)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             <label>Submission Date</label>
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.RequiredFromDate)
         </th>
@@ -133,7 +134,7 @@
             <tr class="table-success" style="background-color: #e5f5f7">
                 @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
                 {
-                    <td></td>
+                    <td><input type="radio"></td>
                 }
                 <td style="width: 170px">
                     @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
@@ -141,15 +142,15 @@
                 @*<td>
                                     @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
                                 </td>*@
-                @*<td>
+                <td>
                                     @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-                                </td>*@
-                <td>
+                                </td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
-                </td>
-                <td>
+                </td>*@
+                @*<td>
                     @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
-                </td>
+                </td>*@
                 <td>
                     @item.RequiredFromDate.ToString("hh:mm tt")
                 </td>
@@ -224,13 +225,48 @@
 
     }
     </tbody>
+        @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
+        {
+            <tbody>
+            @try
+            {
+                foreach (CombinedRequisition item in ViewBag.Combined)
+                {
+                    <tr style="background-color: #afeeee">
+                        <td><input type="radio"  Checked></td>
+                        <td> @item.EmpFullName</td>
+                       
+                        
+                        
+                        <td>@item.ProjectCode</td>
+                        @*<td>Submission Date</td>*@
+                        <td> @item.RequiredFromDate.ToString("hh:mm tt")</td>
+                        <td>@item.RequiredToDate.ToString("hh:mm tt")</td>
+
+                        <td> @item.Place</td>
+                       
+                        <td>Combinedly Approved</td>
+                        <td style="width: 140px; text-align: center">
+                            @Html.ActionLink("Edit", "EditCombinedRequisition", new { assignId = item.AssignId }, new { @class = "btn btn-success", style = "margin-right: 2px" })
+                            @Html.ActionLink("Print", "CombinedPrints", new { id = item.AssignId, name = Session["FullName"] }, new { @Class = "btn btn-success", target = "blank" })
+                        </td>
+                    </tr>
+                }
+            }
+            catch (Exception)
+            {
+
+
+            }
+            </tbody>
+        }
     <tbody>
     @try
     {
         int count = 0;
         foreach (TblRequisitionDetail item in ViewBag.NotApproveRequisition)
         {
-            <tr class="table-success" style="background-color: #fdf1f3;">
+            <tr class="table-success" style="background-color: #F8CECE;">
                 @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
                 {
                     <td>
@@ -244,15 +280,15 @@
                 @*<td>
                                     @Html.DisplayFor(model => item.LookUpEmployee.EmpDesignation)
                                 </td>*@
-                @*<td>
+                <td>
                                     @Html.DisplayFor(modelItem => item.LookupProject.ProjectCode)
-                                </td>*@
-                <td>
+                                </td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.LookupRequisitionCategorys.RequisitionCategory)
-                </td>
-                <td>
+                </td>*@
+                @*<td>
                     @item.RequestSubmissionDate.ToString("dd-MM-yyyy HH:mm:ss")
-                </td>
+                </td>*@
                 <td>
                     @item.RequiredFromDate.ToString("hh:mm tt")
                 </td>

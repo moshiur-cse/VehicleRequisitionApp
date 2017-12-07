@@ -1,0 +1,423 @@
+﻿@using VehicleRequisitionApp.Models
+@model VehicleRequisitionApp.Models.TblRequisitionDetail
+@{
+    ViewBag.Title = "Print";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style type="text/css">
+        * {
+            font-family: Verdana, Helvetica, Arial;
+            color: #333;
+        }
+
+        p {
+            font-size: 14px;
+            font-family: Verdana, Helvetica, Arial;
+            /*font-family: "Times New Roman";*/
+            color: #222;
+        }
+
+            p label {
+                font-size: 14px;
+                font-family: Verdana, Helvetica, Arial;
+                color: #222;
+                /*font-family: "Times New Roman";*/
+                /*color: black;*/
+            }
+
+        label {
+            font-family: italic;
+        }
+
+        table {
+            border: 1px solid #333 !important;
+            border-collapse: collapse;
+        }
+
+            table th, table td {
+                border: 1px solid #333 !important;
+                vertical-align: middle;
+            }
+    </style>
+}
+<div class="navbar-fixed-top" style="margin-left: 50px">
+
+    @*<img src="~/Images/logo.png" height="80" />  <img class="pull-right" src="~/Images/CEGIS_logo.png" height="60" />*@
+
+    <img class="pull-left" src="~/Images/CEGIS_Print_Logo.png" height="60" />
+
+    <h3 style="margin-left: 330px">CEGIS, DHAKA</h3>
+    <h4 style="margin-left: 310px; text-decoration: underline">VEHICLES REQUISITION</h4>
+
+    @*<h3 style="text-align: center">CEGIS, DHAKA</h3>
+        <h4 style="text-align: center; text-decoration: underline">VEHICLES REQUISITION</h4>*@
+    <h4 style="text-align: center">(OFFICIAL)</h4>
+    @*<hr />*@
+    <div class="row">
+        <div class="col-md-10 col-md-offset-2">
+            <p style="margin-right: 20px" class="pull-right">
+                <b>Date :</b>
+                <label>@Model.RequestSubmissionDate.ToString("dd-MM-yyyy")</label>
+            </p>
+        </div>
+    </div>
+    <table class="table table-bordered" style="border: 1px solid black">
+        <tr>
+            @*<td colspan="5">
+                    <p>
+                        <b>Requester's Name :</b>
+                        @Model.LookUpEmployee.EmpFullName
+                    </p>
+                </td>*@
+
+            <td colspan="1">
+                <p>
+                    <b>Requester's Name </b>
+
+                </p>
+            </td>
+            <td colspan="8">
+                <p>
+
+                    @ViewBag.empName
+                </p>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="1">
+                <p>
+                    <b>Designation </b>
+
+                </p>
+            </td>
+            <td colspan="4">
+                <p>
+                 
+
+                    @ViewBag.empDesignation
+                </p>
+            </td>
+            <td colspan="1">
+                <p>
+                    <b>Project</b>
+
+                </p>
+
+            </td>
+            <td colspan="3">
+                <p>
+                   
+                    @ViewBag.projectCode
+                </p>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="1">
+                <p>
+                    <b>Date Required</b>
+
+                </p>
+            </td>
+            <td colspan="8">
+                <p>
+
+                    @Model.RequiredFromDate.ToString("dd-MM-yyyy")
+                </p>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="1">
+                <p>
+                    <b>Time Required </b>
+
+                </p>
+            </td>
+            <td colspan="4">
+                <p>
+                    @Model.RequiredFromDate.ToString("t")
+                </p>
+            </td>
+            <td colspan="1">
+                <p>
+                    <b>hour to</b>
+
+                </p>
+
+            </td>
+            <td colspan="3">
+                <p>
+                    @Model.RequiredToDate.ToString("t")
+                </p>
+
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="1">
+                <p>
+                    <b>Place</b>
+
+                </p>
+            </td>
+            <td colspan="8">
+                <p>                                     
+                    @ViewBag.place
+                </p>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="1">
+                <p>
+                    <b>Reason</b>
+
+                </p>
+            </td>
+            <td colspan="8">
+                <p>                
+                    @ViewBag.reason
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 200px">
+                <p>
+                    <b>Actual Time used from</b>
+
+                </p>
+            </td>
+
+            <td style="width: 90px">
+                <p>
+
+                    @Model.UsedFromKM
+                </p>
+            </td>
+            <td width="30px">
+                <p>
+                    <b>To</b>
+
+                </p>
+
+            </td>
+            <td width="100px">
+                <p>
+
+                    @Model.UsedToKM
+                </p>
+
+            </td>
+            <td style="width: 30px">
+                <p>
+                    km.
+                </p>
+
+            </td>
+            <td width="60px">
+                <p>
+                    <b>From</b>
+                </p>
+
+            </td>
+            <td width="70px">
+                <p>
+
+                    @(Model.ActuallyUsedFromDate != null ? Convert.ToDateTime(Model.ActuallyUsedFromDate).ToString("t") : null)
+                </p>
+
+            </td>
+            <td width="30px">
+                <p>
+                    <b>To</b>
+
+                </p>
+
+            </td>
+            <td width="70px">
+                <p>
+
+                    @(Model.ActuallyUsedFromDate != null ? Convert.ToDateTime(Model.ActuallyUsedToDate).ToString("t") : null)
+                </p>
+
+            </td>
+
+        </tr>
+    </table>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>
+                Reviewed & Approved
+            </h4>
+        </div>
+    </div>
+    <div>
+        <div style="float: left">
+            <table class="table table-bordered">
+                <tr>
+                    <td colspan="5">
+                        <p>
+                            <b>By: Admin. officer/Admin. Asstt : </b>
+                            @ViewBag.AdminTransport
+
+                        </p>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <p>
+                            <b>Driver Assigned : </b>
+                            @try
+                            {
+                                @Model.LookUpDriverEmployee.EmpFullName
+                            }
+                            catch
+                            {
+                            }
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <p>
+                            <b>Vehicle No : </b>
+                            @try
+                            {
+                                @Model.LookupVehicles.VehicleNo
+                            }
+                            catch
+                            {
+                            }
+                        </p>
+                    </td>
+
+                </tr>
+
+
+            </table>
+        </div>
+        <div style="float: right; margin-top: 1px;">
+            <table class="table table-bordered">
+                <tr>
+                    <td style="padding: 20px;text-align: center">
+
+                        <p style="font-size: 16px;">@Model.LookUpEmployee.EmpFullName</p>
+                        <b style="text-decoration: overline;">Requester</b>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <tr>
+
+            <td style="text-align: center">
+
+                @if (@ViewBag.PL == null)
+                {
+                    <p style="font-size: 16px;">&nbsp;</p>
+                }
+                else
+                {
+                    <p style="font-size: 16px;">@ViewBag.PL</p>
+
+                }
+                <b style="text-decoration: overline">Project Leader</b>
+            </td>
+
+            <td style="text-align: center">
+
+                @if (@ViewBag.Director == null)
+                {
+                    <p style="font-size: 16px;">&nbsp;</p>
+                }
+                else
+                {
+
+                    <p style="font-size: 16px;">@ViewBag.Director</p>
+                }
+
+
+                <b style="text-decoration: overline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Director&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+            </td>
+
+
+            <td style="text-align: center">
+
+
+                @if (@ViewBag.DED == null)
+                {
+                    <p style="font-size: 16px;">&nbsp;</p>
+                }
+                else
+                {
+                    <p style="font-size: 16px;">@ViewBag.DED</p>
+                }
+
+                <b style="text-decoration: overline">Deputy Executive Director </b>
+            </td>
+
+
+            <td style="text-align: center">
+
+                @if (ViewBag.ED == null)
+                {
+
+                    <p style="font-size: 16px;">&nbsp;</p>
+                }
+                else
+                {
+                    <p style="font-size: 16px;">@ViewBag.ED</p>
+                }
+
+                <b style="text-decoration:overline">Executive Director </b>
+            </td>
+
+
+        </tr>
+
+    </table>
+   
+
+    <div class="row" style="margin-top: 1px">
+        @*<div>
+                <p style="font-size: 20px" class="pull-right"><b>Requisition Catergory : </b>@Model.LookupRequisitionCategorys.RequisitionCategory</p> @Html.EditorFor(model => model.LookupRequisitionCategorys.RequisitionCategory, new {htmlAttributes = new {@class = "form-control"}})
+            </div>*@
+        <div class="row" style="margin-right: 35px;margin-top:50px">
+            <div class="row pull-right">
+                <p>Printed By : Officer Transport</p>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-right: 20px">
+            <div class="row pull-right">
+                <p> This is electronically generated vehicle requisition form which is valid without signature.</p>
+            </div>
+        </div>
+
+        @*<div class="col-md-12" style="margin-right: 20px">
+                <div class="row"><hr/></div>
+            </div>*@
+
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $("#navContent").hide();
+
+        //$(".navbar-header").hide();
+
+        $("#footerId").hide();
+    </script>
+}
+
+
+
