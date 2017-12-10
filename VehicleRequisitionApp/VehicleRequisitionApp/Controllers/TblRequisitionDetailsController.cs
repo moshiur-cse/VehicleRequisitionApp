@@ -171,7 +171,7 @@ namespace VehicleRequisitionApp.Controllers
                         .ToList();
 
 
-                ViewBag.ConbinedRequisition = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate > DateTime.Now && i.AssignId != 1)
+                ViewBag.ConbinedRequisition = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate > DateTime.Now && i.AssignId!= 1 && i.AssignId != 0)
               .GroupBy(k => new { k.AssignId, k.LookUpDriverEmployee.EmpFullName, k.LookUpDriverEmployee.EmpMobile, k.LookupVehicles.VehicleNo })
               .Select(k => new
               {
@@ -486,6 +486,7 @@ namespace VehicleRequisitionApp.Controllers
                     foreach (var item in findRequisition)
                     {
                         item.StateId = 6;
+                        item.AssignId = 1;
                     }
                     try
                     {
@@ -921,8 +922,6 @@ namespace VehicleRequisitionApp.Controllers
 
         public ActionResult Print(int id, string name)
         {
-
-
             TblRequisitionDetail tblRequisitionDetail = db.TblRequisitionDetails.Find(id);
             if (tblRequisitionDetail == null)
             {

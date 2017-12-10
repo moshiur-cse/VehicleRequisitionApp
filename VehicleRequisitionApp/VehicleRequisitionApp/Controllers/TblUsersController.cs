@@ -188,7 +188,7 @@ namespace VehicleRequisitionApp.Controllers
 
             ViewBag.CarStatus = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate > DateTime.Now && i.AssignId==1).ToList();
 
-            ViewBag.ConbinedRequisition = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate > DateTime.Now && i.AssignId!= 1)
+            ViewBag.ConbinedRequisition = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate > DateTime.Now && i.AssignId!= 1 && i.AssignId != 0)
                .GroupBy(k => new { k.AssignId, k.LookUpDriverEmployee.EmpFullName,k.LookUpDriverEmployee.EmpMobile, k.LookupVehicles.VehicleNo} )
                .Select(k=> new
                {
