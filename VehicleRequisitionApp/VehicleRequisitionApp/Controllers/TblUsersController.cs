@@ -124,15 +124,10 @@ namespace VehicleRequisitionApp.Controllers
                 TempData["Registration"] = "Your are already Registered. Please Sing in here...";
                 return RedirectToAction("LogIn", "TblUsers");
             }
-
-            
-
-            if (ModelState.IsValid)
-            {
+            if (status.Count()==0) { 
                 aTblUser.EmpId = user.EmpId;
                 aTblUser.Password = hashPass;
                 db.TblUsers.Add(aTblUser);
-
 
                 aGroupUser.UserId = aTblUser.UserId;
                 aGroupUser.UserGroupsId = 1;
@@ -310,19 +305,32 @@ namespace VehicleRequisitionApp.Controllers
             }
             return hash.ToString();
         }
-        public JsonResult EmployeeDetails(string empId)
+        public JsonResult EmployeeDetails(int empId)
         {
-            var empInfo = db.LookUpEmployees.Where(i => i.EmpInitial == empId).Select
+            var empInfo = db.LookUpEmployees.Where(i => i.EmpId == empId).Select
                         (u => new
                         {
                             Id = u.EmpId,
-                            Name =u.EmpFullName,
-                            Email=u.EmpEmail,
-                            PhoneNo=u.EmpMobile                                                        
+                            Name = u.EmpFullName,
+                            Email = u.EmpEmail,
+                            PhoneNo = u.EmpMobile
                         }).ToList();
 
             return Json(empInfo, JsonRequestBehavior.AllowGet);
         }
+        //public JsonResult EmployeeDetails(string empId)
+        //{
+        //    var empInfo = db.LookUpEmployees.Where(i => i.EmpInitial == empId).Select
+        //                (u => new
+        //                {
+        //                    Id = u.EmpId,
+        //                    Name =u.EmpFullName,
+        //                    Email=u.EmpEmail,
+        //                    PhoneNo=u.EmpMobile                                                        
+        //                }).ToList();
+
+        //    return Json(empInfo, JsonRequestBehavior.AllowGet);
+        //}
         [HttpPost]
         public JsonResult AutoCompleteInitial(string initial)
         {
