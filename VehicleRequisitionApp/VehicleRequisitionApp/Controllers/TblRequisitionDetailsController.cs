@@ -50,7 +50,6 @@ namespace VehicleRequisitionApp.Controllers
                         .ToList();
 
                     return View();
-
                 }
 
                 if (id != null)
@@ -66,76 +65,53 @@ namespace VehicleRequisitionApp.Controllers
 
             if (Convert.ToInt32(Session["UserGroupId"]) == 2)
             {
-                //Issue "Project Leader Requisition on another Project does not show requisition Statsu"
 
-                //int employeeId = Convert.ToInt32(Session["EmpId"]);
                 string employeeInitial = Session["UserName"].ToString();
 
                 var findProjectId = db.LookupProjects.Where(i => i.ProjectPl == employeeInitial).ToList();
 
                 List<int> projectIdList = new List<int>();
 
-                //var findProjectId = db.LookupProjectLeaders.Where(i => i.EmpId == employeeId).ToList();
-                //List<int> projectIdList = new List<int>();
-
                 foreach (LookupProject item in findProjectId)
                 {
                     projectIdList.Add(item.ProjectId);
                 }
 
-                //foreach (LookupProjectLeader item in findProjectId)
-                //{
-                //    projectIdList.Add(item.ProjectId);
-                //}
+            
+                if (findProjectId.Count > 0)
+                {
+                    ViewBag.ApproveRequisition =
+                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                            .Include(t => t.LookupProject)
+                            .Include(t => t.LookupRequisitionCategorys)
+                            .Where(
+                                i =>
+                                    (projectIdList.Contains(i.ProjectId) || i.EmpId == id) && i.StateId != 1 &&
+                                    i.RequiredToDate > DateTime.Now)
+                            .ToList();
 
-                ViewBag.ApproveRequisition =
-                    db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
-                        .Include(t => t.LookupProject)
-                        .Include(t => t.LookupRequisitionCategorys)
-                        .Where(
-                            i =>
-                                projectIdList.Contains(i.ProjectId) && i.StateId != 1 && i.RequiredToDate > DateTime.Now)
-                        .ToList();
-
-                ViewBag.NotApproveRequisition =
-                    db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
-                        .Include(t => t.LookupProject)
-                        .Include(t => t.LookupRequisitionCategorys)
-                        .Where(
-                            i =>
-                                projectIdList.Contains(i.ProjectId) && i.StateId == 1 && i.RequiredToDate > DateTime.Now)
-                        //DateTime.Now.AddDays(1) && 
-                        .ToList();
-                //ViewBag.ApproveRequisition =
-                //        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
-                //            .Include(t => t.LookupProject)
-                //            .Include(t => t.LookupRequisitionCategorys)
-                //            .Where(i => i.StateId!= 1 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
-                //              .ToList();
-
-                //ViewBag.NotApproveRequisition =
-                //        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
-                //            .Include(t => t.LookupProject)
-                //            .Include(t => t.LookupRequisitionCategorys)
-                //            .Where(i => i.StateId == 1 && i.RequiredToDate > DateTime.Now)//DateTime.Now.AddDays(1) && 
-                //              .ToList();
+                    ViewBag.NotApproveRequisition =
+                        db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                            .Include(t => t.LookupProject)
+                            .Include(t => t.LookupRequisitionCategorys)
+                            .Where(
+                                i =>
+                                    (projectIdList.Contains(i.ProjectId) || i.EmpId == id) && i.StateId == 1 &&
+                                    i.RequiredToDate > DateTime.Now)
+                            //DateTime.Now.AddDays(1) && 
+                            .ToList();
+                    //ViewBag.IsProjectLeader = 1;
+                }
+                
+                   
+                
                 return View();
             }
 
 
             if (Convert.ToInt32(Session["UserGroupId"]) == 3)
             {
-
-                //int employeeId = Convert.ToInt32(Session["EmpId"]);
-
-                //var findProjectId = db.LookupProjectLeaders.Where(i => i.EmpId == employeeId).ToList();
-                //List<int> projectIdList = new List<int>();
-
-                //foreach (LookupProjectLeader item in findProjectId)
-                //{
-                //    projectIdList.Add(item.ProjectId);
-                //}
-
+               
                 var divId = divisionId == null ? Convert.ToInt32(Session["DivisionId"]) : divisionId;
 
                 ViewBag.ApproveRequisition =
@@ -323,21 +299,9 @@ namespace VehicleRequisitionApp.Controllers
                 return View();
             }
 
-            //TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
-
             if (ModelState.IsValid)
             {
-                //var plId =
-                //    db.LookupProjectLeaders.Where(i => i.ProjectId == tblRequisitionDetail.ProjectId)
-                //        .Select(i => i.EmpId)
-                //        .SingleOrDefault();
-
-
-                //var plEmail = db.LookUpEmployees.Where(i => i.EmpId == plId).Select(i => i.EmpEmail).SingleOrDefault();
-
-
-
-
+                
                 var plInitial =
                     db.LookupProjects.Where(i => i.ProjectId == tblRequisitionDetail.ProjectId)
                         .Select(i => i.ProjectPl)
@@ -350,48 +314,65 @@ namespace VehicleRequisitionApp.Controllers
                 if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                 {
                     tblRequisitionDetail.StateId = 5;
-
-
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
-
                     var requesterName =
                         db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
                             .Select(i => i.LookUpEmployee.EmpFullName).SingleOrDefault();
 
+                    var projectCode =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .Select(i => i.LookupProject.ProjectCode).SingleOrDefault();
+
+
                     var adminTransportEmail = "moshiur.mgmh@gmail.com";
-                    ApprovalMethod(tblRequisitionDetail.RequisitionId, 5, "Approved By Director", adminTransportEmail,
-                        requesterName);
+
+
+                    ApprovalMethod(tblRequisitionDetail.RequisitionId, 5, "Approved By Director", adminTransportEmail,requesterName,projectCode);
+                }
+                else if (Convert.ToInt32(Session["UserGroupId"]) == 2)
+                {
+                    tblRequisitionDetail.StateId = 2;
+                    db.TblRequisitionDetails.Add(tblRequisitionDetail);
+                    db.SaveChanges();
+
+                    var requesterDivId =
+                db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                    .Select(i => i.LookUpEmployee.EmpDivisionId)
+                    .SingleOrDefault();
+
+                    var requesterName = db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                        .Select(i => i.LookUpEmployee.EmpFullName)
+                        .SingleOrDefault();
+
+                    var directorEmail =
+                        db.LookUpEmployees.Where(i => i.EmpDivisionId == requesterDivId && i.EmpDesignation.Contains("Director"))
+                            .Select(i => i.EmpEmail)
+                            .SingleOrDefault();
+
+                    var projectCode =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .Select(i => i.LookupProject.ProjectCode).SingleOrDefault();
+
+                    ApprovalMethod(tblRequisitionDetail.RequisitionId, 2, "Recommended By PL", directorEmail, requesterName,projectCode);
                 }
                 else
                 {
+                    var requesterName = db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                        .Select(i => i.LookUpEmployee.EmpFullName)
+                        .SingleOrDefault();
+
+                    var projectCode = db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                        .Select(i => i.LookupProject.ProjectCode)
+                        .SingleOrDefault();
+
                     tblRequisitionDetail.StateId = 1;
 
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
-                    try
-                    {
-                        WebMail.SmtpServer = "130.180.3.10"; //smtp.gmail.com
-                        WebMail.SmtpPort = 25;
-                        WebMail.SmtpUseDefaultCredentials = true;
-                        WebMail.EnableSsl = false; //true
-                        WebMail.UserName = "vehicleadmin";
-                        WebMail.Password = "cegis@2017";
-                        WebMail.From = "vehicleadmin@cegisbd.com";
-                        WebMail.Send(to: plEmails, subject: "New Vehicle Requisition",
-                            body: "<h3>Request By: " + Session["FullName"] + "</h3>" +
-                                  "<p>Place: " + tblRequisitionDetail.Place + "</p>" +
-                                  "<p>Reson: " + tblRequisitionDetail.Reason + "</p>" +
-                                  "<p>Required DateTime: " + tblRequisitionDetail.RequiredFromDate + "</p>",
-                            cc: "", bcc: "", isBodyHtml: true);
-                    }
 
-                    catch (Exception e)
-                    {
-                        string a = e.Message;
-
-                        // Provide for exceptions.
-                    }
+                    EmailTemplate(plEmails, requesterName, projectCode);
+                    
 
                     //DirectorApprovalMethod(tblRequisitionDetail.RequisitionId, 1, "Recommended By PL");
 
@@ -483,31 +464,21 @@ namespace VehicleRequisitionApp.Controllers
                             .Select(i => i.LookUpEmployee.EmpEmail)
                             .SingleOrDefault();
 
+                    var projectCode =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .Select(i => i.LookupProject.ProjectCode)
+                            .SingleOrDefault();
+
                     foreach (var item in findRequisition)
                     {
                         item.StateId = 6;
                         item.AssignId = 1;
                     }
-                    try
-                    {
-                        db.SaveChanges();
-                        WebMail.SmtpServer = "130.180.3.10"; //gmail.com
-                        WebMail.SmtpPort = 25; //587
-                        WebMail.SmtpUseDefaultCredentials = true;
-                        WebMail.EnableSsl = false;
-                        WebMail.UserName = "vehicleadmin";
-                        WebMail.Password = "cegis@2017";
-                        WebMail.From = "vehicleadmin@cegisbd.com";
-                        WebMail.Send(to: requesterEmail, subject: "Vehicle Requisition Approval Status",
-                            body: "<h3> Requester Name : " + requesterName + "</h3>" +
-                                  "<p> Your Vehicles is Assigned By : " + Session["FullName"] + "</p>",
-                            cc: "", bcc: "", isBodyHtml: true);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        // Provide for exceptions.
-                    }
+
+                    EmailTemplateApproval(requesterEmail, requesterName, projectCode);
+                    
+                    db.SaveChanges();
+                        
                     return RedirectToAction("Index");
                 }
 
@@ -580,8 +551,10 @@ namespace VehicleRequisitionApp.Controllers
                 db.LookUpEmployees.Where(i => i.EmpDivisionId == requesterDivId && i.EmpDesignation == "Director")
                     .Select(i => i.EmpEmail)
                     .SingleOrDefault();
-
-            ApprovalMethod(requisitionId, 2, "Recommended By PL", directorEmail, requesterName);
+            var projectCode = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId)
+                .Select(i => i.LookupProject.ProjectCode)
+                .SingleOrDefault();
+            ApprovalMethod(requisitionId, 2, "Recommended By PL", directorEmail, requesterName, projectCode);
             return RedirectToAction("Index");
 
         }
@@ -592,8 +565,10 @@ namespace VehicleRequisitionApp.Controllers
                 .Select(i => i.LookUpEmployee.EmpFullName)
                 .SingleOrDefault();
             var adminTransportEmail = "moshiur.mgmh@gmail.com";
-
-            ApprovalMethod(requisitionId, 5, "Approved By Director", adminTransportEmail, requesterName);
+            var projectCode = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId)
+                .Select(i => i.LookupProject.ProjectCode)
+                .SingleOrDefault();
+            ApprovalMethod(requisitionId, 5, "Approved By Director", adminTransportEmail, requesterName,projectCode);
             return RedirectToAction("Index");
         }
 
@@ -606,12 +581,14 @@ namespace VehicleRequisitionApp.Controllers
                 .Select(i => i.LookUpEmployee.EmpEmail)
                 .SingleOrDefault();
 
-            ApprovalMethod(requisitionId, 6, "Vehicle Assigned By Admin Transport", requesterEmail, requesterName);
+            var projectCode = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId)
+                .Select(i => i.LookupProject.ProjectCode)
+                .SingleOrDefault();
+
+            ApprovalMethodAdminTransport(requisitionId, 6, "Vehicle Assigned By Admin Transport", requesterEmail, requesterName, projectCode);
             return RedirectToAction("Index");
         }
-
-
-        public bool ApprovalMethod(int requisitionId, int stateId, string comments, string email, string requesterName)
+        public bool ApprovalMethodAdminTransport(int requisitionId, int stateId, string comments, string email, string requesterName, string projectCode)
         {
             TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
             aApproval.RequisitionId = requisitionId;
@@ -621,7 +598,8 @@ namespace VehicleRequisitionApp.Controllers
             db.TblRequestApprovalDetails.Add(aApproval);
             db.SaveChanges();
             var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
-            foreach (var item in findRequisition)
+
+            foreach (TblRequisitionDetail item in findRequisition)
             {
                 item.StateId = stateId;
                 if (stateId == 5)
@@ -629,27 +607,42 @@ namespace VehicleRequisitionApp.Controllers
                     item.AssignId = 1;
                 }
             }
-            try
-            {
-                db.SaveChanges();
 
-                WebMail.SmtpServer = "130.180.3.10"; //gmail.com
-                WebMail.SmtpPort = 25; //587
-                WebMail.SmtpUseDefaultCredentials = true;
-                WebMail.EnableSsl = false;
-                WebMail.UserName = "vehicleadmin";
-                WebMail.Password = "cegis@2017";
-                WebMail.From = "vehicleadmin@cegisbd.com";
-                WebMail.Send(to: email, subject: "New Vehicle Requisition",
-                    body: "<h3> Requester Name : " + requesterName + "</h3>" +
-                          "<p>" + comments + " : " + Session["FullName"] + "</p>",
-                    cc: "", bcc: "", isBodyHtml: true);
-            }
-            catch (Exception e)
+
+
+            EmailTemplateApproval(email, requesterName, projectCode);
+            db.SaveChanges();
+
+
+            return true;
+        }
+
+        public bool ApprovalMethod(int requisitionId, int stateId, string comments, string email, string requesterName, string projectCode)
+        {
+            TblRequestApprovalDetail aApproval = new TblRequestApprovalDetail();
+            aApproval.RequisitionId = requisitionId;
+            aApproval.ApprovalAuthorityId = Convert.ToInt32(Session["EmpId"]);
+            aApproval.ApprovalStatus = true;
+            aApproval.Comments = comments; //;
+            db.TblRequestApprovalDetails.Add(aApproval);
+            db.SaveChanges();
+            var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
+           
+            foreach (TblRequisitionDetail item in findRequisition)
             {
-                Console.WriteLine(e);
-                // Provide for exceptions.
+                item.StateId = stateId;
+                if (stateId == 5)
+                {
+                    item.AssignId = 1;
+                }
             }
+
+            
+
+            EmailTemplate(email, requesterName, projectCode);
+            db.SaveChanges();
+
+               
             return true;
         }
 
@@ -693,32 +686,30 @@ namespace VehicleRequisitionApp.Controllers
 
 
             string employee = "";
+            string project = "";
+            string place = "";
+            string reson = "";
+            string designation = "";
+
             foreach (TblRequisitionDetail aEmpoyeeList in ViewBag.Conbined)
             {
                 employee += employee == "" ? aEmpoyeeList.LookUpEmployee.EmpFullName : ", " + aEmpoyeeList.LookUpEmployee.EmpFullName;
-            }
-            string project = "";
-            foreach (TblRequisitionDetail aProjectList in ViewBag.Conbined)
-            {
-                project += project == "" ? aProjectList.LookupProject.ProjectCode : ", " + aProjectList.LookupProject.ProjectCode;
-            }
-            string place = "";
-            foreach (TblRequisitionDetail aPlaceList in ViewBag.Conbined)
-            {
-                place += place == "" ? aPlaceList.Place : ", " + aPlaceList.Place;
+            
+                project += project == "" ? aEmpoyeeList.LookupProject.ProjectCode : ", " + aEmpoyeeList.LookupProject.ProjectCode;
+            
+                place += place == "" ? aEmpoyeeList.Place : ", " + aEmpoyeeList.Place;
+            
+                reson += reson == "" ? aEmpoyeeList.Reason : ", " + aEmpoyeeList.Reason;
+                designation+= designation==""?aEmpoyeeList.LookUpEmployee.EmpDesignation:", "+ aEmpoyeeList.LookUpEmployee.EmpDesignation;
             }
 
-            string reson = "";
-            foreach (TblRequisitionDetail aResonList in ViewBag.Conbined)
-            {
-                reson += reson == "" ? aResonList.Reason : ", " + aResonList.Reason;
-            }
+
             ViewBag.EmpoyeeList = employee;
             ViewBag.ProjectList = project;
             ViewBag.PlaceList = place;
             ViewBag.ResonList = reson;
+            ViewBag.Designation = designation;
             TblRequisitionDetail tblRequisitionDetail = db.TblRequisitionDetails.Find(rId);
-
 
             if (tblRequisitionDetail == null)
             {
@@ -757,8 +748,6 @@ namespace VehicleRequisitionApp.Controllers
 
             int assignId = Convert.ToInt32(db.TblRequisitionDetails.Max(i => i.AssignId).Value) + 1;
 
-
-
             for (int j = 0; j < rIdList.Count; j++)
             {
                 TblRequisitionDetail aTblRequisitionDetail = db.TblRequisitionDetails.Find(rIdList[j]);
@@ -767,62 +756,12 @@ namespace VehicleRequisitionApp.Controllers
                 aTblRequisitionDetail.AssignedDriverEmpId = AssignedDriverEmpId;
                 aTblRequisitionDetail.AssignedVehicleId = AssignedVehicleId;
                 aTblRequisitionDetail.AssignId = assignId;
-
-                //db.Entry(tblRequisitionDetail).State = EntityState.Modified;
-                //db.SaveChanges();                
-                //if (Convert.ToInt32(Session["UserGroupId"]) != 1)
-                //{
-                //var findRequisition =
-                //    db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
-                //        .ToList();
-
-                //var requesterName =
-                //    db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
-                //        .Select(i => i.LookUpEmployee.EmpFullName)
-                //        .SingleOrDefault();
-                //var requesterEmail =
-                //    db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
-                //        .Select(i => i.LookUpEmployee.EmpEmail)
-                //        .SingleOrDefault();
-
-                //foreach (var item in findRequisition)
-                //{
-                //    item.StateId = 6;
-                //}
-                try
-                {
-                    db.SaveChanges();
-                    WebMail.SmtpServer = "130.180.3.10"; //gmail.com
-                    WebMail.SmtpPort = 25; //587
-                    WebMail.SmtpUseDefaultCredentials = true;
-                    WebMail.EnableSsl = false;
-                    WebMail.UserName = "vehicleadmin";
-                    WebMail.Password = "cegis@2017";
-                    WebMail.From = "vehicleadmin@cegisbd.com";
-                    WebMail.Send(to: aTblRequisitionDetail.LookUpEmployee.EmpEmail, subject: "Vehicle Requisition Approval Status",
-                        body: "<h3> Requester Name : " + aTblRequisitionDetail.LookUpEmployee.EmpFullName + "</h3>" +
-                              "<p> Your Vehicles is Assigned By : " + Session["FullName"] + "</p>",
-                        cc: "", bcc: "", isBodyHtml: true);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    //TempData["UserMessage"] = new MessageVM() { CssClassName = "alert-error", Title = "Error!", Message = "Operation Failed." };
-                    // Provide for exceptions.
-                }
-
-                //}
-
+                EmailTemplateApproval(aTblRequisitionDetail.LookUpEmployee.EmpEmail,aTblRequisitionDetail.LookUpEmployee.EmpFullName, aTblRequisitionDetail.LookupProject.ProjectCode);
+                db.SaveChanges();
+               
             }
             return RedirectToAction("Index");
-            //return RedirectToAction("Index");
-
-            //ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
-            //ViewBag.ProjectId = new SelectList(db.LookupProjects, "ProjectId", "ProjectCode",
-            //    tblRequisitionDetail.ProjectId);
-            //ViewBag.RequisitionCategoryId = new SelectList(db.LookupRequisitionCategorys, "RequisitionCategoryId",
-            //    "RequisitionCategory", tblRequisitionDetail.RequisitionCategoryId);
-            //return View();
+            
         }
 
         public ActionResult EditCombinedRequisition(int? assignId) //IEnumerable<int?> productCategoryIds = null
@@ -832,42 +771,27 @@ namespace VehicleRequisitionApp.Controllers
                         .Include(t => t.LookupProject)
                         .Include(t => t.LookupRequisitionCategorys)
                         .Where(i => i.AssignId == assignId).ToList();
-
-
             string employee = "";
             string project = "";
             string place = "";
             string reson = "";
+            List<int> rId = new List<int>();
             foreach (TblRequisitionDetail aEmpoyeeList in ViewBag.Conbined)
             {
                 employee += employee == "" ? aEmpoyeeList.LookUpEmployee.EmpFullName : ", " + aEmpoyeeList.LookUpEmployee.EmpFullName;
-            }
-
-            foreach (TblRequisitionDetail aProjectList in ViewBag.Conbined)
-            {
-                project += project == "" ? aProjectList.LookupProject.ProjectCode : ", " + aProjectList.LookupProject.ProjectCode;
-            }
-
-            foreach (TblRequisitionDetail aPlaceList in ViewBag.Conbined)
-            {
-                place += place == "" ? aPlaceList.Place : ", " + aPlaceList.Place;
-            }
-
-            List<int> rId = new List<int>();
-            foreach (TblRequisitionDetail aResonList in ViewBag.Conbined)
-            {
-                reson += reson == "" ? aResonList.Reason : ", " + aResonList.Reason;
-                rId.Add(aResonList.RequisitionId);
+            
+                project += project == "" ? aEmpoyeeList.LookupProject.ProjectCode : ", " + aEmpoyeeList.LookupProject.ProjectCode;
+            
+                place += place == "" ? aEmpoyeeList.Place : ", " + aEmpoyeeList.Place;
+                reson += reson == "" ? aEmpoyeeList.Reason : ", " + aEmpoyeeList.Reason;
+                rId.Add(aEmpoyeeList.RequisitionId);
             }
             ViewBag.EmpoyeeList = employee;
             ViewBag.ProjectList = project;
             ViewBag.PlaceList = place;
             ViewBag.ResonList = reson;
 
-
-
             TblRequisitionDetail tblRequisitionDetail = db.TblRequisitionDetails.Find(rId[0]);
-
 
             if (tblRequisitionDetail == null)
             {
@@ -1045,6 +969,65 @@ namespace VehicleRequisitionApp.Controllers
 
         }
 
+        public bool EmailTemplate(string email, string requesterName, string projectCode)
+        {
+            try
+            {
+                WebMail.SmtpServer = "130.180.3.10"; //gmail.com
+                WebMail.SmtpPort = 25; //587
+                WebMail.SmtpUseDefaultCredentials = true;
+                WebMail.EnableSsl = false;
+                WebMail.UserName = "vehicleadmin";
+                WebMail.Password = "cegis@2017";
+                WebMail.From = "vehicleadmin@cegisbd.com";
+                WebMail.Send(to: email, subject: "Approval for Vehicle Requisition ",
+                    body: "<h3>Dear, Sir</h3>" +
+                          "<p>I would like to inform that a vehicle requisition form has been submitted by <b>" + requesterName + "</b> under the project <b>" + projectCode + "</b> through the Vehicle Requisition System of CEGIS.Please visit http://www.cegisbd.com/vr  to approve the requisition. </ p > " +
+                          "<p></p>" +
+                          "<p>With kind regards.</p>" +
 
+                          "<p></p>" +
+                          "<p>Administrator</p>" +
+                          "<p>Vehicle Requisition System of CEGIS</p>",
+                    cc: "", bcc: "", isBodyHtml: true);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+                // Provide for exceptions.
+            }
+            return true;
+        }
+        public bool EmailTemplateApproval(string email, string requesterName, string projectCode)
+        {
+            try
+            {
+                WebMail.SmtpServer = "130.180.3.10"; //gmail.com
+                WebMail.SmtpPort = 25; //587
+                WebMail.SmtpUseDefaultCredentials = true;
+                WebMail.EnableSsl = false;
+                WebMail.UserName = "vehicleadmin";
+                WebMail.Password = "cegis@2017";
+                WebMail.From = "vehicleadmin@cegisbd.com";
+                WebMail.Send(to: email, subject: "Approval status for Vehicle Requisition ",
+                    body: "<h3>Dear, Sir</h3>" +
+                          "<p>I would like to inform that a vehicle requisition form has been approved by <b>"+ Session["FullName"] + "</b> under the project<b> " + projectCode + "</b> through the Vehicle Requisition System of CEGIS.Please visit http://www.cegisbd.com/vr  to check approval status. </ p > " +
+                          "<p></p>" +
+                          "<p>With kind regards.</p>" +
+
+                          "<p></p>" +
+                          "<p>Administrator</p>" +
+                          "<p>Vehicle Requisition System of CEGIS</p>",
+                    cc: "", bcc: "", isBodyHtml: true);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+                // Provide for exceptions.
+            }
+            return true;
+        }
     }
 }

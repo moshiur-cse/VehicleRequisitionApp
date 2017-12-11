@@ -53,7 +53,6 @@
                 vertical-align: middle !important;
                 text-align: center !important;
             }
-          
     </style>
 }
 
@@ -80,7 +79,7 @@
                         @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
                         {
                             <th>
-                                Is Combined ?
+                                Select
                             </th>
                         }
                         <th>
@@ -135,7 +134,7 @@
                             <tr class="table-success" style="background-color: #e5f5f7">
                                 @if (Convert.ToInt32(Session["UserGroupId"]) == 6)
                                 {
-                                    <td><input type="radio"></td>
+                                    <td>@*<input type="radio">*@</td>
                                 }
                                 <td style="width: 170px">
                                     @Html.DisplayFor(modelItem => item.LookUpEmployee.EmpFullName)
@@ -234,7 +233,7 @@
                             foreach (CombinedRequisition item in ViewBag.Combined)
                             {
                                 <tr style="background-color: #afeeee">
-                                    <td><input type="radio" Checked></td>
+                                    <td>@*<input type="radio" Checked>*@</td>
                                     <td> @item.EmpFullName</td>
 
 
@@ -325,7 +324,7 @@
                                     else
                                     {
                                         <td>
-                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;;" })                                         
+                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;;" })
                                         </td>
 
                                     }
@@ -344,8 +343,14 @@
                                     else if (Convert.ToInt32(Session["UserGroupId"]) == 2)
                                     {
                                         <td>
+                                            
+                                            @*@if(@ViewBag.IsProjectLeader==0){
 
-                                            @Html.ActionLink("Recommend", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                            @Html.ActionLink("Detail", "Details", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                            }
+                                            else{*@
+                                            @Html.ActionLink("Recommend", "PlApprove", new {requisitionId = item.RequisitionId}, new {@class = "btn btn-success"})
+                                            @*}*@
                                         </td>
                                     }
                                     else if (Convert.ToInt32(Session["UserGroupId"]) == 6)
@@ -379,12 +384,12 @@
                 @try
                 {
 
-                    if (ViewBag.NotApproveRequisition.Count == 0 && ViewBag.ApproveRequisition.Count == 0)
+                    if (ViewBag.NotApproveRequisition.Count == 0 && ViewBag.ApproveRequisition.Count == 0 && ViewBag.Combined.Count == 0)
                     {
                         <tbody>
                             <tr>
                                 <td colspan="8">
-                                    <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Requisition</label>
+                                    <label style= "color: bisque; margin-top: 10px; text-align: center">No New Requisition</label>
                                 </td>
                             </tr>
                         </tbody>
@@ -395,7 +400,7 @@
                     <tbody>
                         <tr>
                             <td colspan="8">
-                                <label style="width: 120px; color: bisque; margin-top: 10px; text-align: center">No Requisition</label>
+                                <label style="color: bisque; margin-top: 10px; text-align: center">No New Requisition</label>
                             </td>
                         </tr>
                     </tbody>

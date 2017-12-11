@@ -1574,6 +1574,7 @@
     <Content Include="Views\TblRequisitionDetails\CombinedRequisition.cshtml" />
     <Content Include="Views\TblRequisitionDetails\EditCombinedRequisition.cshtml" />
     <Content Include="Views\TblRequisitionDetails\CombinedPrint.cshtml" />
+    <Content Include="Views\TblUsers\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,6 +6,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using VehicleRequisitionApp.Models;
@@ -317,6 +318,54 @@ namespace VehicleRequisitionApp.Controllers
                         }).ToList();
 
             return Json(empInfo, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ForgotPassword(string PinNo, string Email)
+        {
+            int empId = db.LookUpEmployees.Where(i => i.EmpPinNo == PinNo).Select(i => i.EmpId).SingleOrDefault();
+            string email = db.LookUpEmployees.Where(i => i.EmpEmail == Email).Select(i=>i.EmpEmail).SingleOrDefault();
+
+            if (empId != 0)
+            {
+                TblUser aUsr = db.TblUsers.Where(i=>i.EmpId==empId).SingleOrDefault();
+                aUsr.Password = PassWordHash("CegiS"+ PinNo);
+               
+
+                try
+                {
+                    WebMail.SmtpServer = "130.180.3.10"; //gmail.com
+                    WebMail.SmtpPort = 25; //587
+                    WebMail.SmtpUseDefaultCredentials = true;
+                    WebMail.EnableSsl = false;
+                    WebMail.UserName = "vehicleadmin";
+                    WebMail.Password = "cegis@2017";
+                    WebMail.From = "vehicleadmin@cegisbd.com";
+                    WebMail.Send(to: email, subject: "New User Password for Vehicle Requisition Sytem",
+                        body: "<h3> User Initial : " + aUsr.LookUpEmployee.EmpInitial + "</h3>" +
+                              "<p> New Password : " + "CegiS" + PinNo + "</p>",
+                        cc: "", bcc: "", isBodyHtml: true);
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    //TempData["UserMessage"] = new MessageVM() { CssClassName = "alert-error", Title = "Error!", Message = "Operation Failed." };
+                    // Provide for exceptions.
+                }
+                TempData["Error"] = "*New Password Send to your email Adrees";
+                return View();
+            }
+            else                        
+            TempData["Error"] = "*Invalid Email or Pin No";
+            return View();
+            
         }
         //public JsonResult EmployeeDetails(string empId)
         //{
