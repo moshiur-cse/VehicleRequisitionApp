@@ -29,7 +29,7 @@ namespace VehicleRequisitionApp.Controllers
         public ActionResult LogIn(TblUser user,string initials)
         {
             string initial = "", name = "", degination = "";
-            int userId = 0, userGroupId = 0, divId = 0;
+            int userId = 0, userGroupId = 0, divId = 0, empId=0;
             var controller = "";
             var action = "";
 
@@ -81,6 +81,7 @@ namespace VehicleRequisitionApp.Controllers
                 Session["EmpId"] = findEmpId;
                 Session["UserGroupId"] = userGroupId;
                 Session["DivisionId"] = divId;
+
             }
             else
             {

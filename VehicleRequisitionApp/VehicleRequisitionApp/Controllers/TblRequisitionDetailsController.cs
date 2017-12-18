@@ -131,6 +131,50 @@ namespace VehicleRequisitionApp.Controllers
                 return View();
             }
 
+            if (Convert.ToInt32(Session["UserGroupId"]) == 4)
+            {
+
+                var divId = divisionId == null ? Convert.ToInt32(Session["DivisionId"]) : divisionId;
+
+                ViewBag.ApproveRequisition =
+                    db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                        .Include(t => t.LookupProject)
+                        .Include(t => t.LookupRequisitionCategorys)
+                        .Where(i => i.StateId > 3 && i.RequiredToDate > DateTime.Now) //DateTime.Now.AddDays(1) && 
+                        .ToList();
+                ViewBag.NotApproveRequisition =
+                    db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                        .Include(t => t.LookupProject)
+                        .Include(t => t.LookupRequisitionCategorys)
+                        .Where(i => i.StateId == 3 && i.RequiredToDate > DateTime.Now)
+                        //DateTime.Now.AddDays(1) && 
+                        .ToList();
+                ViewBag.DivisionList = db.LookUpDivisions.ToList();
+                return View();
+            }
+
+            if (Convert.ToInt32(Session["UserGroupId"]) == 5)
+            {
+
+                var divId = divisionId == null ? Convert.ToInt32(Session["DivisionId"]) : divisionId;
+
+                ViewBag.ApproveRequisition =
+                    db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                        .Include(t => t.LookupProject)
+                        .Include(t => t.LookupRequisitionCategorys)
+                        .Where(i => i.StateId > 4  && i.RequiredToDate > DateTime.Now) //DateTime.Now.AddDays(1) && 
+                        .ToList();
+                ViewBag.NotApproveRequisition =
+                    db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
+                        .Include(t => t.LookupProject)
+                        .Include(t => t.LookupRequisitionCategorys)
+                        .Where(i => i.StateId >=3 && i.StateId <= 4 && i.RequiredToDate > DateTime.Now)
+                        //DateTime.Now.AddDays(1) && 
+                        .ToList();
+                ViewBag.DivisionList = db.LookUpDivisions.ToList();
+                return View();
+            }
+
             if (Convert.ToInt32(Session["UserGroupId"]) == 6)
             {
                 ViewBag.ApproveRequisition =
@@ -298,22 +342,30 @@ namespace VehicleRequisitionApp.Controllers
                     "RequisitionCategory");
                 return View();
             }
-
-            if (ModelState.IsValid)
-            {
-                
-                var plInitial =
+            var plInitial =
                     db.LookupProjects.Where(i => i.ProjectId == tblRequisitionDetail.ProjectId)
                         .Select(i => i.ProjectPl)
                         .SingleOrDefault();
 
+            if (ModelState.IsValid)
+            {                
                 var plEmails = db.LookUpEmployees.Where(i => i.EmpInitial == plInitial).Select(i => i.EmpEmail).SingleOrDefault();
-
-
-
                 if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                 {
-                    tblRequisitionDetail.StateId = 5;
+
+                    if (tblRequisitionDetail.RequisitionCategoryId == 3)
+                    {
+                        tblRequisitionDetail.StateId = 3;
+                    }
+                    else if (tblRequisitionDetail.RequisitionCategoryId == 2)
+                    {
+                        tblRequisitionDetail.StateId = 3;
+                    }
+                    else
+                    {
+                        tblRequisitionDetail.StateId = 5;
+                    }
+
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
                     var requesterName =
@@ -332,7 +384,40 @@ namespace VehicleRequisitionApp.Controllers
                 }
                 else if (Convert.ToInt32(Session["UserGroupId"]) == 2)
                 {
-                    tblRequisitionDetail.StateId = 2;
+                   
+
+                    if (tblRequisitionDetail.RequisitionCategoryId == 3)
+                    {
+                        tblRequisitionDetail.StateId = 3;
+                    }
+                    else if (tblRequisitionDetail.RequisitionCategoryId == 2)
+                    {
+                        tblRequisitionDetail.StateId = 2;
+                    }
+                    else
+                    {
+                        if (Session["UserName"].ToString() == plInitial)
+                        {
+                            tblRequisitionDetail.StateId = 2;
+                        }
+                        else
+                        {
+                            tblRequisitionDetail.StateId = 1;
+                        }
+                       
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
 
@@ -353,34 +438,49 @@ namespace VehicleRequisitionApp.Controllers
                     var projectCode =
                         db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
                             .Select(i => i.LookupProject.ProjectCode).SingleOrDefault();
-
-                    ApprovalMethod(tblRequisitionDetail.RequisitionId, 2, "Recommended By PL", directorEmail, requesterName,projectCode);
+                    if (Session["UserName"].ToString() == plInitial)
+                    {
+                        ApprovalMethod(tblRequisitionDetail.RequisitionId, 2, "Recommended By PL", directorEmail,
+                            requesterName, projectCode);
+                    }
+                    else { 
+                    EmailTemplate(plEmails, requesterName, projectCode);
+                    }
                 }
                 else
                 {
                     var requesterName = db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
-                        .Select(i => i.LookUpEmployee.EmpFullName)
-                        .SingleOrDefault();
+                                        .Select(i => i.LookUpEmployee.EmpFullName)
+                                        .SingleOrDefault();
 
                     var projectCode = db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
                         .Select(i => i.LookupProject.ProjectCode)
                         .SingleOrDefault();
 
-                    tblRequisitionDetail.StateId = 1;
+                    if (tblRequisitionDetail.RequisitionCategoryId == 3)
+                    {
+                        tblRequisitionDetail.StateId = 3;
+                    }
+                    else if (tblRequisitionDetail.RequisitionCategoryId == 2)
+                    {
+                        tblRequisitionDetail.StateId = 2;
+                    }
+                    else
+                    {
+                        tblRequisitionDetail.StateId = 1;
+                    }
 
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
 
-                    EmailTemplate(plEmails, requesterName, projectCode);
+                    EmailTemplate(plEmails, requesterName, projectCode);    
                     
-
+                                   
                     //DirectorApprovalMethod(tblRequisitionDetail.RequisitionId, 1, "Recommended By PL");
-
                 }
-
-
                 return RedirectToAction("Index", "TblRequisitionDetails", new { id = Session["EmpId"] });
             }
+
 
             ViewBag.EmpId = new SelectList(db.LookUpEmployees, "EmpId", "EmpFullName", tblRequisitionDetail.EmpId);
             ViewBag.EmpDesignation = new SelectList(db.LookUpEmployees, "EmpId", "EmpDesignation",
@@ -555,7 +655,8 @@ namespace VehicleRequisitionApp.Controllers
                 .Select(i => i.LookupProject.ProjectCode)
                 .SingleOrDefault();
             ApprovalMethod(requisitionId, 2, "Recommended By PL", directorEmail, requesterName, projectCode);
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Index", "TblRequisitionDetails", new { id=Convert.ToInt32(Session["EmpId"]) });
 
         }
 
@@ -569,6 +670,32 @@ namespace VehicleRequisitionApp.Controllers
                 .Select(i => i.LookupProject.ProjectCode)
                 .SingleOrDefault();
             ApprovalMethod(requisitionId, 5, "Approved By Director", adminTransportEmail, requesterName,projectCode);
+            return RedirectToAction("Index");
+        }
+        public ActionResult DEDApprove(int requisitionId)
+        {
+            var requesterName = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId)
+                .Select(i => i.LookUpEmployee.EmpFullName)
+                .SingleOrDefault();
+            var edMailAddress = "moshiur.mgmh@gmail.com";
+            var projectCode = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId)
+                .Select(i => i.LookupProject.ProjectCode)
+                .SingleOrDefault();
+            ApprovalMethod(requisitionId, 4, "Approved By DED", edMailAddress, requesterName, projectCode);
+            return RedirectToAction("Index");
+        }
+        public ActionResult EDApprove(int requisitionId)
+        {
+            var requesterName = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId)
+                .Select(i => i.LookUpEmployee.EmpFullName)
+                .SingleOrDefault();
+
+            var adminTransportEmail = "moshiur.mgmh@gmail.com";
+
+            var projectCode = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId)
+                .Select(i => i.LookupProject.ProjectCode)
+                .SingleOrDefault();
+            ApprovalMethod(requisitionId, 5, "Approved By ED", adminTransportEmail, requesterName, projectCode);
             return RedirectToAction("Index");
         }
 

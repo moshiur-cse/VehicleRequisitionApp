@@ -333,7 +333,23 @@
                                 else
                                 //@if (Convert.ToInt32(Session["UserGroupId"]) != 1)
                                 {
-                                    if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+                                    if (Convert.ToInt32(Session["UserGroupId"]) == 5)
+                                    {
+                                        <td style="width: 200px;">
+                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;" })
+                                            @Html.ActionLink("Approve", "EDApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                        </td>
+
+                                    }
+                                    else if (Convert.ToInt32(Session["UserGroupId"]) == 4)
+                                    {
+                                        <td style="width: 200px;">
+                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;" })
+                                            @Html.ActionLink("Approve", "DEDApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                        </td>
+
+                                    }
+                                    else if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                                     {
                                         <td style="width: 200px;">
                                             @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;" })
@@ -343,14 +359,17 @@
                                     else if (Convert.ToInt32(Session["UserGroupId"]) == 2)
                                     {
                                         <td>
-                                            
-                                            @*@if(@ViewBag.IsProjectLeader==0){
 
-                                            @Html.ActionLink("Detail", "Details", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+                                            @if (Session["UserName"].ToString()!= item.LookupProject.ProjectPl)
+                                            {
+                                            @Html.ActionLink("Details", "Details", new { id = item.RequisitionId }, new { @class = "btn btn-success", style = "margin-bottom: 2px;;" })
+
                                             }
-                                            else{*@
-                                            @Html.ActionLink("Recommend", "PlApprove", new {requisitionId = item.RequisitionId}, new {@class = "btn btn-success"})
-                                            @*}*@
+                                            else
+                                            {
+                                            @Html.ActionLink("Recommend", "PlApprove", new { requisitionId = item.RequisitionId }, new { @class = "btn btn-success" })
+
+                                            }
                                         </td>
                                     }
                                     else if (Convert.ToInt32(Session["UserGroupId"]) == 6)
@@ -389,7 +408,7 @@
                         <tbody>
                             <tr>
                                 <td colspan="8">
-                                    <label style= "color: bisque; margin-top: 10px; text-align: center">No New Requisition</label>
+                                    <label style="color: bisque; margin-top: 10px; text-align: center">No New Requisition</label>
                                 </td>
                             </tr>
                         </tbody>
@@ -436,6 +455,9 @@
         <script src="~/Scripts/DataTables/buttons.colVis.js"></script>*@
 
     <script>
+
+        
+
         //var count = 0;
         $(".Check").on('click', function() {
 
@@ -485,11 +507,11 @@
 
             if (getUrl == "http://rmo") {
                 urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            }else if (getUrl == "http://202.53.173.179") {
+            } else if (getUrl == "http://202.53.173.179") {
                 urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            }else if (getUrl == "http://cegisbd.com") {
+            } else if (getUrl == "http://cegisbd.com") {
                 urL = getUrl + "/digitalcegis/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
-            }else {
+            } else {
                 urL = getUrl + "/TblRequisitionDetails/Index?id=" + empId + "&divisionId=" + divId;
             }
             window.location.href = urL;

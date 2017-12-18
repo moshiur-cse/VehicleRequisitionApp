@@ -177,6 +177,14 @@
 <script src="~/Scripts/bootstrap-select.js"></script>
 
     <script type="text/javascript">
+        
+        $("#RequisitionCategoryId").on('change', function () {
+            $("#ProjectId").find("option[value='']").prop("selected", 'selected').trigger('change');
+            if ($("#RequisitionCategoryId").val() == 3) {               
+                $("#ProjectId").find("option[value='613']").prop("selected", 'selected').trigger('change');                
+            }
+        });
+
         $('#DateTime1').datetimepicker({
 
             todayHighlight: true
