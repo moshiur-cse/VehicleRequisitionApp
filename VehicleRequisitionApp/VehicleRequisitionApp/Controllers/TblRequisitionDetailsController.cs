@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -9,6 +10,8 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Rotativa;
 using Rotativa.Options;
 using VehicleRequisitionApp.Models;
@@ -77,7 +80,7 @@ namespace VehicleRequisitionApp.Controllers
                     projectIdList.Add(item.ProjectId);
                 }
 
-            
+
                 if (findProjectId.Count > 0)
                 {
                     ViewBag.ApproveRequisition =
@@ -102,16 +105,16 @@ namespace VehicleRequisitionApp.Controllers
                             .ToList();
                     //ViewBag.IsProjectLeader = 1;
                 }
-                
-                   
-                
+
+
+
                 return View();
             }
 
 
             if (Convert.ToInt32(Session["UserGroupId"]) == 3)
             {
-               
+
                 var divId = divisionId == null ? Convert.ToInt32(Session["DivisionId"]) : divisionId;
 
                 ViewBag.ApproveRequisition =
@@ -162,13 +165,13 @@ namespace VehicleRequisitionApp.Controllers
                     db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                         .Include(t => t.LookupProject)
                         .Include(t => t.LookupRequisitionCategorys)
-                        .Where(i => i.StateId > 4  && i.RequiredToDate > DateTime.Now) //DateTime.Now.AddDays(1) && 
+                        .Where(i => i.StateId > 4 && i.RequiredToDate > DateTime.Now) //DateTime.Now.AddDays(1) && 
                         .ToList();
                 ViewBag.NotApproveRequisition =
                     db.TblRequisitionDetails.Include(t => t.LookUpEmployee)
                         .Include(t => t.LookupProject)
                         .Include(t => t.LookupRequisitionCategorys)
-                        .Where(i => i.StateId >=3 && i.StateId <= 4 && i.RequiredToDate > DateTime.Now)
+                        .Where(i => i.StateId >= 3 && i.StateId <= 4 && i.RequiredToDate > DateTime.Now)
                         //DateTime.Now.AddDays(1) && 
                         .ToList();
                 ViewBag.DivisionList = db.LookUpDivisions.ToList();
@@ -191,7 +194,7 @@ namespace VehicleRequisitionApp.Controllers
                         .ToList();
 
 
-                ViewBag.ConbinedRequisition = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate > DateTime.Now && i.AssignId!= 1 && i.AssignId != 0)
+                ViewBag.ConbinedRequisition = db.TblRequisitionDetails.Where(i => i.AssignedDriverEmpId != null && i.RequiredToDate > DateTime.Now && i.AssignId != 1 && i.AssignId != 0)
               .GroupBy(k => new { k.AssignId, k.LookUpDriverEmployee.EmpFullName, k.LookUpDriverEmployee.EmpMobile, k.LookupVehicles.VehicleNo })
               .Select(k => new
               {
@@ -348,26 +351,69 @@ namespace VehicleRequisitionApp.Controllers
                         .SingleOrDefault();
 
             if (ModelState.IsValid)
-            {                
-                var plEmails = db.LookUpEmployees.Where(i => i.EmpInitial == plInitial).Select(i => i.EmpEmail).SingleOrDefault();
-                if (Convert.ToInt32(Session["UserGroupId"]) == 3)
+            {
+                var plEmails = db.LookUpEmployees.Where(i => i.EmpInitial == plInitial).Select(i => i.EmpEmail).SingleOrDefault();               
+                var dEdMailAddress = "ded@gmail.com";
+                var edMailAddress = "ed@gmail.com";
+                var adminTransportMailAdress = "ad@gmail.com";
+
+                if (Convert.ToInt32(Session["UserGroupId"]) == 5)
+                {
+                    tblRequisitionDetail.StateId = 5;
+                    db.TblRequisitionDetails.Add(tblRequisitionDetail);
+                    db.SaveChanges();
+                    var requesterName =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .Select(i => i.LookUpEmployee.EmpFullName).SingleOrDefault();
+
+                    var projectCode =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .Select(i => i.LookupProject.ProjectCode).SingleOrDefault();
+
+                    EmailTemplate(adminTransportMailAdress, requesterName, projectCode);
+
+                }
+
+               else if (Convert.ToInt32(Session["UserGroupId"]) == 4)
+                {
+                    tblRequisitionDetail.StateId = 4;
+                    db.TblRequisitionDetails.Add(tblRequisitionDetail);
+                    db.SaveChanges();
+
+                    var requesterName =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .Select(i => i.LookUpEmployee.EmpFullName).SingleOrDefault();
+
+                    var projectCode =
+                        db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
+                            .Select(i => i.LookupProject.ProjectCode).SingleOrDefault();
+
+                    EmailTemplate(edMailAddress, requesterName, projectCode);
+
+                }
+
+                else if (Convert.ToInt32(Session["UserGroupId"]) == 3)
                 {
 
                     if (tblRequisitionDetail.RequisitionCategoryId == 3)
                     {
                         tblRequisitionDetail.StateId = 3;
+                       
                     }
-                    else if (tblRequisitionDetail.RequisitionCategoryId == 2)
+                    else if(tblRequisitionDetail.RequisitionCategoryId == 2)
                     {
                         tblRequisitionDetail.StateId = 3;
+                        
                     }
                     else
                     {
                         tblRequisitionDetail.StateId = 5;
+                     
                     }
 
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
+
                     var requesterName =
                         db.TblRequisitionDetails.Where(i => i.RequisitionId == tblRequisitionDetail.RequisitionId)
                             .Select(i => i.LookUpEmployee.EmpFullName).SingleOrDefault();
@@ -379,13 +425,22 @@ namespace VehicleRequisitionApp.Controllers
 
                     var adminTransportEmail = "moshiur.mgmh@gmail.com";
 
+                    if (tblRequisitionDetail.RequisitionCategoryId == 1)
+                    {
+                        ApprovalMethod(tblRequisitionDetail.RequisitionId, tblRequisitionDetail.StateId,
+                            "Approved By Director", adminTransportEmail, requesterName, projectCode);
+                    }
+                    else
+                    {
+                        EmailTemplate(dEdMailAddress, requesterName, projectCode);
+                    }
 
-                    ApprovalMethod(tblRequisitionDetail.RequisitionId, 5, "Approved By Director", adminTransportEmail,requesterName,projectCode);
+
+
                 }
+
                 else if (Convert.ToInt32(Session["UserGroupId"]) == 2)
                 {
-                   
-
                     if (tblRequisitionDetail.RequisitionCategoryId == 3)
                     {
                         tblRequisitionDetail.StateId = 3;
@@ -404,19 +459,8 @@ namespace VehicleRequisitionApp.Controllers
                         {
                             tblRequisitionDetail.StateId = 1;
                         }
-                       
+
                     }
-
-
-
-
-
-
-
-
-
-
-
 
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
@@ -443,8 +487,9 @@ namespace VehicleRequisitionApp.Controllers
                         ApprovalMethod(tblRequisitionDetail.RequisitionId, 2, "Recommended By PL", directorEmail,
                             requesterName, projectCode);
                     }
-                    else { 
-                    EmailTemplate(plEmails, requesterName, projectCode);
+                    else
+                    {
+                        EmailTemplate(plEmails, requesterName, projectCode);
                     }
                 }
                 else
@@ -473,9 +518,9 @@ namespace VehicleRequisitionApp.Controllers
                     db.TblRequisitionDetails.Add(tblRequisitionDetail);
                     db.SaveChanges();
 
-                    EmailTemplate(plEmails, requesterName, projectCode);    
-                    
-                                   
+                    EmailTemplate(plEmails, requesterName, projectCode);
+
+
                     //DirectorApprovalMethod(tblRequisitionDetail.RequisitionId, 1, "Recommended By PL");
                 }
                 return RedirectToAction("Index", "TblRequisitionDetails", new { id = Session["EmpId"] });
@@ -576,9 +621,9 @@ namespace VehicleRequisitionApp.Controllers
                     }
 
                     EmailTemplateApproval(requesterEmail, requesterName, projectCode);
-                    
+
                     db.SaveChanges();
-                        
+
                     return RedirectToAction("Index");
                 }
 
@@ -656,7 +701,7 @@ namespace VehicleRequisitionApp.Controllers
                 .SingleOrDefault();
             ApprovalMethod(requisitionId, 2, "Recommended By PL", directorEmail, requesterName, projectCode);
 
-            return RedirectToAction("Index", "TblRequisitionDetails", new { id=Convert.ToInt32(Session["EmpId"]) });
+            return RedirectToAction("Index", "TblRequisitionDetails", new { id = Convert.ToInt32(Session["EmpId"]) });
 
         }
 
@@ -669,7 +714,21 @@ namespace VehicleRequisitionApp.Controllers
             var projectCode = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId)
                 .Select(i => i.LookupProject.ProjectCode)
                 .SingleOrDefault();
-            ApprovalMethod(requisitionId, 5, "Approved By Director", adminTransportEmail, requesterName,projectCode);
+            var categoryId = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId)
+                .Select(i => i.LookupRequisitionCategorys.RequisitionCategoryId)
+                .SingleOrDefault();
+
+            var dEdMailAddress = "ded@gmail.com";
+
+            if (categoryId == 2)
+            {
+                ApprovalMethod(requisitionId, 3, "Approved By Director", dEdMailAddress, requesterName, projectCode);
+            }
+            else
+            {
+                ApprovalMethod(requisitionId, 5, "Approved By Director", adminTransportEmail, requesterName, projectCode);
+            }
+
             return RedirectToAction("Index");
         }
         public ActionResult DEDApprove(int requisitionId)
@@ -754,7 +813,7 @@ namespace VehicleRequisitionApp.Controllers
             db.TblRequestApprovalDetails.Add(aApproval);
             db.SaveChanges();
             var findRequisition = db.TblRequisitionDetails.Where(i => i.RequisitionId == requisitionId).ToList();
-           
+
             foreach (TblRequisitionDetail item in findRequisition)
             {
                 item.StateId = stateId;
@@ -764,12 +823,12 @@ namespace VehicleRequisitionApp.Controllers
                 }
             }
 
-            
+
 
             EmailTemplate(email, requesterName, projectCode);
             db.SaveChanges();
 
-               
+
             return true;
         }
 
@@ -821,13 +880,13 @@ namespace VehicleRequisitionApp.Controllers
             foreach (TblRequisitionDetail aEmpoyeeList in ViewBag.Conbined)
             {
                 employee += employee == "" ? aEmpoyeeList.LookUpEmployee.EmpFullName : ", " + aEmpoyeeList.LookUpEmployee.EmpFullName;
-            
+
                 project += project == "" ? aEmpoyeeList.LookupProject.ProjectCode : ", " + aEmpoyeeList.LookupProject.ProjectCode;
-            
+
                 place += place == "" ? aEmpoyeeList.Place : ", " + aEmpoyeeList.Place;
-            
+
                 reson += reson == "" ? aEmpoyeeList.Reason : ", " + aEmpoyeeList.Reason;
-                designation+= designation==""?aEmpoyeeList.LookUpEmployee.EmpDesignation:", "+ aEmpoyeeList.LookUpEmployee.EmpDesignation;
+                designation += designation == "" ? aEmpoyeeList.LookUpEmployee.EmpDesignation : ", " + aEmpoyeeList.LookUpEmployee.EmpDesignation;
             }
 
 
@@ -883,12 +942,12 @@ namespace VehicleRequisitionApp.Controllers
                 aTblRequisitionDetail.AssignedDriverEmpId = AssignedDriverEmpId;
                 aTblRequisitionDetail.AssignedVehicleId = AssignedVehicleId;
                 aTblRequisitionDetail.AssignId = assignId;
-                EmailTemplateApproval(aTblRequisitionDetail.LookUpEmployee.EmpEmail,aTblRequisitionDetail.LookUpEmployee.EmpFullName, aTblRequisitionDetail.LookupProject.ProjectCode);
+                EmailTemplateApproval(aTblRequisitionDetail.LookUpEmployee.EmpEmail, aTblRequisitionDetail.LookUpEmployee.EmpFullName, aTblRequisitionDetail.LookupProject.ProjectCode);
                 db.SaveChanges();
-               
+
             }
             return RedirectToAction("Index");
-            
+
         }
 
         public ActionResult EditCombinedRequisition(int? assignId) //IEnumerable<int?> productCategoryIds = null
@@ -906,9 +965,9 @@ namespace VehicleRequisitionApp.Controllers
             foreach (TblRequisitionDetail aEmpoyeeList in ViewBag.Conbined)
             {
                 employee += employee == "" ? aEmpoyeeList.LookUpEmployee.EmpFullName : ", " + aEmpoyeeList.LookUpEmployee.EmpFullName;
-            
+
                 project += project == "" ? aEmpoyeeList.LookupProject.ProjectCode : ", " + aEmpoyeeList.LookupProject.ProjectCode;
-            
+
                 place += place == "" ? aEmpoyeeList.Place : ", " + aEmpoyeeList.Place;
                 reson += reson == "" ? aEmpoyeeList.Reason : ", " + aEmpoyeeList.Reason;
                 rId.Add(aEmpoyeeList.RequisitionId);
@@ -1042,14 +1101,14 @@ namespace VehicleRequisitionApp.Controllers
         {
             List<int> ids = new List<int>();
 
-            string names="", designatinon="", project="", place="", reason="";
-            foreach (TblRequisitionDetail item in db.TblRequisitionDetails.Where(i=>i.AssignId==id).ToList())
+            string names = "", designatinon = "", project = "", place = "", reason = "";
+            foreach (TblRequisitionDetail item in db.TblRequisitionDetails.Where(i => i.AssignId == id).ToList())
             {
-                names+=(names==""?item.LookUpEmployee.EmpFullName: ", "+item.LookUpEmployee.EmpFullName);
-                designatinon += (designatinon==""?item.LookUpEmployee.EmpDesignation:", "+ item.LookUpEmployee.EmpDesignation);
-                project+= (project==""?item.LookupProject.ProjectCode:", "+ item.LookupProject.ProjectCode);
-                place+= (place==""?item.Place: ", "+item.Place);
-                reason+= (reason==""?item.Reason:", "+ item.Reason);
+                names += (names == "" ? item.LookUpEmployee.EmpFullName : ", " + item.LookUpEmployee.EmpFullName);
+                designatinon += (designatinon == "" ? item.LookUpEmployee.EmpDesignation : ", " + item.LookUpEmployee.EmpDesignation);
+                project += (project == "" ? item.LookupProject.ProjectCode : ", " + item.LookupProject.ProjectCode);
+                place += (place == "" ? item.Place : ", " + item.Place);
+                reason += (reason == "" ? item.Reason : ", " + item.Reason);
                 ids.Add(item.RequisitionId);
             }
             ViewBag.empName = names;
@@ -1066,7 +1125,7 @@ namespace VehicleRequisitionApp.Controllers
                 return HttpNotFound();
             }
 
-            
+
             ViewBag.AdminTransport = name;
 
             ViewBag.PL =
@@ -1108,7 +1167,7 @@ namespace VehicleRequisitionApp.Controllers
                 WebMail.Password = "cegis@2017";
                 WebMail.From = "vehicleadmin@cegisbd.com";
                 WebMail.Send(to: email, subject: "Approval for Vehicle Requisition ",
-                    body: "<h3>Dear, Sir</h3>" +
+                    body: "<h3>Dear Sir, </h3>" +
                           "<p>I would like to inform that a vehicle requisition form has been submitted by <b>" + requesterName + "</b> under the project <b>" + projectCode + "</b> through the Vehicle Requisition System of CEGIS.Please visit http://www.cegisbd.com/vr  to approve the requisition. </ p > " +
                           "<p></p>" +
                           "<p>With kind regards.</p>" +
@@ -1138,8 +1197,8 @@ namespace VehicleRequisitionApp.Controllers
                 WebMail.Password = "cegis@2017";
                 WebMail.From = "vehicleadmin@cegisbd.com";
                 WebMail.Send(to: email, subject: "Approval status for Vehicle Requisition ",
-                    body: "<h3>Dear, Sir</h3>" +
-                          "<p>I would like to inform that a vehicle requisition form has been approved by <b>"+ Session["FullName"] + "</b> under the project<b> " + projectCode + "</b> through the Vehicle Requisition System of CEGIS.Please visit http://www.cegisbd.com/vr  to check approval status. </ p > " +
+                    body: "<h3>Dear Sir,</h3>" +
+                          "<p>I would like to inform that a vehicle requisition form has been approved by <b>" + Session["FullName"] + "</b> under the project<b> " + projectCode + "</b> through the Vehicle Requisition System of CEGIS.Please visit http://www.cegisbd.com/vr  to check approval status. </ p > " +
                           "<p></p>" +
                           "<p>With kind regards.</p>" +
 
@@ -1155,6 +1214,31 @@ namespace VehicleRequisitionApp.Controllers
                 // Provide for exceptions.
             }
             return true;
+        }
+        //[HttpGet, ActionName("GetEventVenuesList")]
+        [HttpPost]
+        public JsonResult GetEventVenuesList(string searchText)
+        {
+            //string placeApiUrl = ConfigurationManager.AppSettings["GooglePlaceAPIUrl"];
+            string placeApiUrl =
+                "https://maps.googleapis.com/maps/api/place/autocomplete/json?input={0}&region=BD&components=country:BD&types=geocode&language=en&key={1}";
+
+            try
+            {
+                placeApiUrl = placeApiUrl.Replace("{0}", searchText);
+                placeApiUrl = placeApiUrl.Replace("{1}", ConfigurationManager.AppSettings["GooglePlaceAPIKey"]);
+
+                var result = new System.Net.WebClient().DownloadString(placeApiUrl);
+                var jsonobject = JsonConvert.DeserializeObject<RootObject>(result);
+
+                List<Prediction> list = jsonobject.predictions;
+
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

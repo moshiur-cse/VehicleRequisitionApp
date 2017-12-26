@@ -54,7 +54,7 @@
                 <table class="table table-hover table-bordered">
                     <thead style="background-color: #C3E6CB">
                         <tr>
-                            <th><label>Request Time</label></th>
+                            <th><label>Request Date Time</label></th>
                             <th><label>Location</label></th>
                             <th><label>Requester's Name</label></th>
                             <th><label>Requester's Phone No</label></th>
@@ -69,7 +69,7 @@
                         {
 
                             <tr style="background-color: #e5f5f7">
-                                <td>@item.RequiredFromDate.ToString("hh:mm tt")</td>
+                                <td>@item.RequiredFromDate.ToString("dd-MM-yyyy hh:mm tt")</td> @*//ToString("hh:mm tt")*@
                                 <td>@item.Place</td>
                                 <td>@item.LookUpEmployee.EmpFullName</td>
                                 <td>@item.LookUpEmployee.EmpMobile</td>

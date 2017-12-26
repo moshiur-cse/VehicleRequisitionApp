@@ -5,15 +5,15 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @section Styles {
     @*<link href="~/BootstrapDatePicker/bootstrap.minDate.css" rel="stylesheet" />*@
     @*<link href="~/BootstrapDatePicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />*@
     <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link href="~/Content/jquery.datetimepicker.min.css" rel="stylesheet"/>
-    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
-
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet"/>
+<link href="~/Content/DataTables/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-select.css" rel="stylesheet" />
 
     @*<script src="~/Scripts/jquery.datetimepicker.full.js"></script>*@
     <style type="text/css">
@@ -31,7 +31,11 @@
     </style>
 
 }
+
+
 @*<h3 style="text-align: center;text-decoration:underline">VEHICLES REQUISITION (OFFICIAL)</h3>*@
+
+
 
 <div class="row">
     <div class="col-md-offset-1 col-md-10 col-md-offset-1">
@@ -111,7 +115,9 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
+                            @*@Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control",id= "Place" } })*@
+                            @Html.TextBoxFor(model => model.Place, new { @class = "form-control", id = "Place" })
+                            @*<input type="text" id="Place" name="Place" class="form-control"/>*@
                             @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -174,19 +180,23 @@
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
     <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script src="~/Scripts/bootstrap-select.js"></script>
+
+  
+   
 <script src="~/Scripts/bootstrap-select.js"></script>
 
     <script type="text/javascript">
-        
-        $("#RequisitionCategoryId").on('change', function () {
+
+        $("#RequisitionCategoryId").on('change', function() {
             $("#ProjectId").find("option[value='']").prop("selected", 'selected').trigger('change');
-            if ($("#RequisitionCategoryId").val() == 3) {               
-                $("#ProjectId").find("option[value='613']").prop("selected", 'selected').trigger('change');                
+            if ($("#RequisitionCategoryId").val() == 3) {
+                $("#ProjectId").find("option[value='613']").prop("selected", 'selected').trigger('change');
             }
         });
 
         $('#DateTime1').datetimepicker({
-
             todayHighlight: true
         });
 
@@ -198,7 +208,6 @@
 
         });
         $('#DateTime4').datetimepicker({
-
             todayHighlight: true
 
         });
@@ -207,5 +216,78 @@
             todayHighlight: true,
             format: 'dd/mm/yyyy'
         });
-    </script>
+    
+
+    $("#Place").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                //url: "/TblRequisitionDetails/AutoComplete",
+                url: '@Url.Action("GetEventVenuesList", "TblRequisitionDetails")',
+                type: "POST",
+                dataType: "json",
+                data: { searchText: request.term },
+                success: function(data) {
+                    response($.map(data, function (item) {
+
+                        var place = item.description.split(",");
+
+                        $("#Place").attr('label', place[0]);
+                        //$("#Place").attr('data', item.Initial);
+                        $("#Place").attr('value', place[0]);
+                        //return;
+                        return { label: place[0], value: place[0] };
+                    }));
+
+                }
+            });
+        },
+        messages: {
+            noResults: "",
+            results: ""
+        }
+    });
+  
+
+        @*$("#Place").autocomplete({
+            
+            source: function (request, response) {
+                $.ajax({
+                    url: "@Url.Action("GetEventVenuesList", "TblRequisitionDetails")",
+                    data: { SearchText: $("#Place").val() },
+                    dataType: "json",
+                    type: "GET",
+                    success: function (data) {
+                        alert("Success");
+                        if (data.length == 0) {
+                            $('#EventVenueId').val("");
+                            $('#VenueLocationMesssage').show();
+                            return false;
+                        }
+                        else {
+                            response($.map(data, function (item) {
+                                alert("Fail");
+                                return {
+                                    label: item.description,
+                                    value: item.place_id
+                                }
+                            }));
+                            
+                        }
+                    },
+                    error: function (x, y, z) {
+                        alert('error');
+                    }
+                });
+            },
+            messages: {
+                noResults: "", results: ""
+            },
+            select: function (event, ui) {
+                $('#TextBoxVenueLocation').val(ui.item.label);
+                $('#EventVenueId').val(ui.item.value);
+                return false;
+            }
+        }).autocomplete("widget").addClass("CitiesAutocomplete");*@
+   
+</script>
 }

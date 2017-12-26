@@ -89,4 +89,26 @@ namespace VehicleRequisitionApp.Models
         public string VehicleNo { get; set; }
         public string ProjectCode { get; set; }      
     }
+    public class Prediction
+    {
+        public string description { get; set; }
+        public string id { get; set; }
+        public string place_id { get; set; }
+        public string reference { get; set; }
+        public List<string> types { get; set; }
+        //public Dictionary<string, string> structured_formatting { get; set; }
+        //public List<List<LocationName>> structured_formatting { get; set; }
+        //http://michaelcummings.net/mathoms/using-a-custom-jsonconverter-to-fix-bad-json-results/
+    }
+    
+    //public class Location
+    //{
+    //    public string main_text { get; set; }
+    //}
+
+    public class RootObject
+    {
+        public List<Prediction> predictions { get; set; }
+        public string status { get; set; }
+    }
 }
