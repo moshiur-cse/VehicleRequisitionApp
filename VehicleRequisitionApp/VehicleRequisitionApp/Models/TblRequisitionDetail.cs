@@ -70,8 +70,7 @@ namespace VehicleRequisitionApp.Models
 
         public virtual List<TblRequestApprovalDetail> TblRequestApprovalDetail { get; set; }
         public virtual List<LookUpCombinedRequisition> LookUpCombinedRequisition { get; set; }
-        
-
+     
     }
 
     public class CombinedRequisition

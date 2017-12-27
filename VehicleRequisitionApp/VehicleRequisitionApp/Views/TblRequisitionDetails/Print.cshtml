@@ -12,21 +12,20 @@
             color: #333;
         }
 
-         p {
+        p {
             font-size: 14px;
             font-family: Verdana, Helvetica, Arial;
-             /*font-family: "Times New Roman";*/
-
-            color: #222;
-         }
-
-        p label {
-            font-size: 14px;
-            font-family: Verdana, Helvetica, Arial;
-            color: #222;
             /*font-family: "Times New Roman";*/
-            /*color: black;*/
+            color: #222;
         }
+
+            p label {
+                font-size: 14px;
+                font-family: Verdana, Helvetica, Arial;
+                color: #222;
+                /*font-family: "Times New Roman";*/
+                /*color: black;*/
+            }
 
         label {
             font-family: italic;
@@ -37,25 +36,41 @@
             border-collapse: collapse;
         }
 
-        table th, table td {
-            border: 1px solid #333 !important;
-            vertical-align: middle;
-        }
+            table th, table td {
+                border: 1px solid #333 !important;
+                vertical-align: middle;
+            }
     </style>
 }
 <div class="navbar-fixed-top" style="margin-left: 50px">
 
-@*<img src="~/Images/logo.png" height="80" />  <img class="pull-right" src="~/Images/CEGIS_logo.png" height="60" />*@
+    @*<img src="~/Images/logo.png" height="80" />  <img class="pull-right" src="~/Images/CEGIS_logo.png" height="60" />*@
 
-<img class="pull-left" src="~/Images/CEGIS_Print_Logo.png" height="60"/>
+    <img class="pull-left" src="~/Images/CEGIS_Print_Logo.png" height="60" />
 
     <h3 style="margin-left: 330px">CEGIS, DHAKA</h3>
     <h4 style="margin-left: 310px; text-decoration: underline">VEHICLES REQUISITION</h4>
 
-@*<h3 style="text-align: center">CEGIS, DHAKA</h3>
-    <h4 style="text-align: center; text-decoration: underline">VEHICLES REQUISITION</h4>*@
-    <h4 style="text-align: center">(OFFICIAL)</h4>
+    @*<h3 style="text-align: center">CEGIS, DHAKA</h3>
+        <h4 style="text-align: center; text-decoration: underline">VEHICLES REQUISITION</h4>*@
+
+    @if (@Model.LookupRequisitionCategorys.RequisitionCategoryId != 3)
+    {
+        <h4 style="text-align: center">(OFFICIAL)</h4>
+    }
+    else
+    {
+        <h4 style="text-align: center">(Personal Usages)</h4>
+    }
     @*<hr />*@
+    <div class="row">
+        <div class="col-md-10 col-md-offset-2">
+            <p style="margin-right: 20px" class="pull-right">
+                <b>Requisition Category :</b>
+                <label>@Model.LookupRequisitionCategorys.RequisitionCategory</label>
+            </p>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
             <p style="margin-right: 20px" class="pull-right">
@@ -64,6 +79,7 @@
             </p>
         </div>
     </div>
+
     <table class="table table-bordered" style="border: 1px solid black">
         <tr>
             @*<td colspan="5">
@@ -95,442 +111,358 @@
 
                 </p>
             </td>
-            <td colspan="4">
-                <p>
+            @if (@Model.LookupRequisitionCategorys.RequisitionCategoryId != 3)
+            {
+                <td colspan="4">
+                    <p>
 
-                    @Model.LookUpEmployee.EmpDesignation
-                </p>
-            </td>
-            <td colspan="1">
-                <p>
-                    <b>Project</b>
+                        @Model.LookUpEmployee.EmpDesignation
+                    </p>
+                </td>
+            }
+            else
+            {
+                <td colspan="9">
+                    <p>
 
-                </p>
-
-            </td>
-            <td colspan="3">
-                <p>
-
-                    @Model.LookupProject.ProjectCode
-                </p>
-
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="1">
-                <p>
-                    <b>Date Required </b>
-
-                </p>
-            </td>
-            <td colspan="8">
-                <p>
-
-                    @Model.RequiredFromDate.ToString("dd-MM-yyyy")
-                </p>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="1">
-                <p>
-                    <b>Time Required </b>
-
-                </p>
-            </td>
-            <td colspan="4">
-                <p>
-
-                    @Model.RequiredFromDate.ToString("t")
-                </p>
-            </td>
-            <td colspan="1">
-                <p>
-                    <b>hour to</b>
-
-                </p>
-
-            </td>
-            <td colspan="3">
-                <p>
-                    @Model.RequiredToDate.ToString("t")
-                </p>
-
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="1">
-                <p>
-                    <b>Place</b>
-
-                </p>
-            </td>
-            <td colspan="8">
-                <p>
-
-                    @Model.Place
-                </p>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="1">
-                <p>
-                    <b>Reason</b>
-
-                </p>
-            </td>
-            <td colspan="8">
-                <p>
-
-                    @Model.Reason
-                </p>
-            </td>
-        </tr>
-        <tr>
-            <td style="width: 200px">
-                <p>
-                    <b>Actual Time used from</b>
-
-                </p>
-            </td>
-
-            <td style="width: 90px">
-                <p>
-
-                    @Model.UsedFromKM
-                </p>
-            </td>
-            <td width="30px">
-                <p>
-                    <b>To</b>
-
-                </p>
-
-            </td>
-            <td width="100px">
-                <p>
-
-                    @Model.UsedToKM
-                </p>
-
-            </td>
-            <td style="width: 30px">
-                <p>
-                    km.
-                </p>
-
-            </td>
-            <td width="60px">
-                <p>
-                    <b>From</b>
-                </p>
-
-            </td>
-            <td width="70px">
-                <p>
-
-                    @(Model.ActuallyUsedFromDate != null ? Convert.ToDateTime(Model.ActuallyUsedFromDate).ToString("t") : null)
-                </p>
-
-            </td>
-            <td width="30px">
-                <p>
-                    <b>To</b>
-
-                </p>
-
-            </td>
-            <td width="70px">
-                <p>
-
-                    @(Model.ActuallyUsedFromDate != null ? Convert.ToDateTime(Model.ActuallyUsedToDate).ToString("t") : null)
-                </p>
-
-            </td>
-
-        </tr>
-    </table>
-    <div class="row">
-        <div class="col-md-12">
-            <h4>
-                Reviewed & Approved
-            </h4>
-        </div>
-    </div>
-    <div>
-        <div style="float: left">
-            <table class="table table-bordered">
-                <tr>
-                    <td colspan="5">
+                        @Model.LookUpEmployee.EmpDesignation
+                    </p>
+                </td>
+            }
+                    
+                @if (@Model.LookupRequisitionCategorys.RequisitionCategoryId != 3)
+                {
+                    <td colspan="1">
                         <p>
-                            <b>By: Admin. officer/Admin. Asstt : </b>
-                            @ViewBag.AdminTransport
+                            <b>Project</b>
 
                         </p>
 
                     </td>
-                </tr>
-                <tr>
-                    <td colspan="5">
+
+                    <td colspan="3">
                         <p>
-                            <b>Driver Assigned : </b>
-                            @try
-                            {
-                                @Model.LookUpDriverEmployee.EmpFullName
-                            }
-                            catch
-                            {
-                            }
+
+                            @Model.LookupProject.ProjectCode
                         </p>
+
                     </td>
-                </tr>
+                }
 
-                <tr>
-                    <td colspan="4">
-                        <p>
-                            <b>Vehicle No : </b>
-                            @try
-                            {
-                                @Model.LookupVehicles.VehicleNo
-                            }
-                            catch
-                            {
-                            }
-                        </p>
-                    </td>
+            </tr>
 
-                </tr>
+            <tr>
+                <td colspan="1">
+                    <p>
+                        <b>Date Required </b>
 
+                    </p>
+                </td>
+                <td colspan="4">
+                    <p>
 
-            </table>
+                        @Model.RequiredFromDate.ToString("dd-MM-yyyy")
+                    </p>
+                </td>
+                <td colspan="1" width="60px">
+                    <p>
+                        <b>Date To </b>
+
+                    </p>
+                </td>
+                <td colspan="3">
+                    <p>
+
+                        @Model.RequiredToDate.ToString("dd-MM-yyyy")
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="1">
+                    <p>
+                        <b>Time Required </b>
+
+                    </p>
+                </td>
+                <td colspan="4">
+                    <p>
+
+                        @Model.RequiredFromDate.ToString("t")
+                    </p>
+                </td>
+                <td colspan="1" width="65px">
+                    <p>
+                        <b>Hour to</b>
+
+                    </p>
+
+                </td>
+                <td colspan="3">
+                    <p>
+                        @Model.RequiredToDate.ToString("t")
+                    </p>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="1">
+                    <p>
+                        <b>Place</b>
+
+                    </p>
+                </td>
+                <td colspan="8">
+                    <p>
+
+                        @Model.Place
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="1">
+                    <p>
+                        <b>Reason</b>
+
+                    </p>
+                </td>
+                <td colspan="8">
+                    <p>
+
+                        @Model.Reason
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 160px">
+                    <p>
+                        <b>Actual Time used from</b>
+
+                    </p>
+                </td>
+
+                <td style="width: 90px">
+                    <p>
+
+                        @Model.UsedFromKM
+                    </p>
+                </td>
+                <td width="30px">
+                    <p>
+                        <b>To</b>
+
+                    </p>
+
+                </td>
+                <td width="100px">
+                    <p>
+
+                        @Model.UsedToKM
+                    </p>
+
+                </td>
+                <td style="width: 30px">
+                    <p>
+                        km.
+                    </p>
+
+                </td>
+                <td width="60px">
+                    <p>
+                        <b>From</b>
+                    </p>
+
+                </td>
+                <td width="70px">
+                    <p>
+
+                        @(Model.ActuallyUsedFromDate != null ? Convert.ToDateTime(Model.ActuallyUsedFromDate).ToString("t") : null)
+                    </p>
+
+                </td>
+                <td width="30px">
+                    <p>
+                        <b>To</b>
+
+                    </p>
+
+                </td>
+                <td width="70px">
+                    <p>
+
+                        @(Model.ActuallyUsedFromDate != null ? Convert.ToDateTime(Model.ActuallyUsedToDate).ToString("t") : null)
+                    </p>
+
+                </td>
+
+            </tr>
+        </table>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>
+                    Reviewed & Approved
+                </h4>
+            </div>
         </div>
-        <div style="float: right; margin-top: 1px;">
-            <table class="table table-bordered">
-                <tr>
-                    <td style="padding: 20px;text-align: center">
-                        
-                        <p style="font-size: 16px;">@Model.LookUpEmployee.EmpFullName</p>
-                        <b style="text-decoration: overline;">Requester</b>
-                        
-                    </td>
-                </tr>
-            </table>
+        <div>
+            <div style="float: left">
+                <table class="table table-bordered">
+                    <tr>
+                        <td colspan="5">
+                            <p>
+                                <b>By: Admin. officer/Admin. Asstt : </b>
+                                @ViewBag.AdminTransport
+
+                            </p>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <p>
+                                <b>Driver Assigned : </b>
+                                @try
+                                {
+                                    @Model.LookUpDriverEmployee.EmpFullName
+                                }
+                                catch
+                                {
+                                }
+                            </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4">
+                            <p>
+                                <b>Vehicle No : </b>
+                                @try
+                                {
+                                    @Model.LookupVehicles.VehicleNo
+                                }
+                                catch
+                                {
+                                }
+                            </p>
+                        </td>
+
+                    </tr>
+
+
+                </table>
+            </div>
+            <div style="float: right; margin-top: 1px;">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="padding: 20px;text-align: center">
+
+                            <p style="font-size: 16px;">@Model.LookUpEmployee.EmpFullName</p>
+                            <b style="text-decoration: overline;">Requester</b>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    </div>
-    <table class="table table-bordered">
-        <tr>
-           
+        <table class="table table-bordered">
+            <tr>
+
+                @if (@Model.LookupRequisitionCategorys.RequisitionCategoryId != 3)
+                {
                     <td style="text-align: center">
-                      
                         @if (@ViewBag.PL == null)
-                        {
+                    {
                             <p style="font-size: 16px;">&nbsp;</p>
                         }
                         else
                         {
+
                             <p style="font-size: 16px;">@ViewBag.PL</p>
-                            
+
                         }
                         <b style="text-decoration: overline">Project Leader</b>
                     </td>
-                                        
+
+
+
                     <td style="text-align: center">
-                      
                         @if (@ViewBag.Director == null)
-                        {
+                    {
                             <p style="font-size: 16px;">&nbsp;</p>
                         }
                         else
                         {
-
                             <p style="font-size: 16px;">@ViewBag.Director</p>
                         }
-                        
-
                         <b style="text-decoration: overline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Director&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
                     </td>
-                 
-                      
-                    <td style="text-align: center">
-
-                      
-                        @if (@ViewBag.DED== null)
-                        {
-                            <p style="font-size: 16px;">&nbsp;</p>
-                        }
-                        else
-                        {
-                            <p style="font-size: 16px;">@ViewBag.DED</p>
-                        }
-
-                        <b style="text-decoration: overline">Deputy Executive Director </b>
-                    </td>
-
-
-            <td style="text-align: center">
-                
-                @if(ViewBag.ED==null)
-                {
-                   
-                    <p style="font-size: 16px;">&nbsp;</p>
-                }
-                else
-                {
-                    <p style="font-size: 16px;">@ViewBag.ED</p>
                 }
 
-                <b style="text-decoration:overline">Executive Director </b>
-            </td>
-                 
-                      
-        </tr>
+                <td style="text-align: center">
 
-    </table>
-    @*<table class="table table-bordered">
-        <tr>
-            @{
-                var countPl = 0;
-                var countD =0;
-                var countDed = 0;
-                var countEd = 0;
-            }
-            @foreach (TblRequestApprovalDetail item in ViewBag.ApprovalStatusDetails)
-            {
-                if (item.Comments == "Recommended By PL")
+
+                    @if (@ViewBag.DED == null)
                 {
-
-                    <td style="padding-right: 20px; text-align: center">
-
-                        <p>@item.LookUpEmployeeAuthority.EmpFullName</p>
-                        <b style="font-size: 16px; text-decoration: overline">Project Leader</b>
-                    </td>
-                    countPl = 1;
-
-                }
-                else
-                {
-                    if (countPl==0) { 
-                    <td style="padding-right: 20px; text-align: center">
-
-                        <p>&nbsp;</p>
-                        <b style="font-size: 16px; text-decoration: overline">Project Leader</b>
-                    </td>
-                }
-
-            }
-
-
-                if (item.Comments == "Approved By Director")
-                {
-
-                    <td style="padding-right: 20px; text-align: center">
-
-                        <p>@item.LookUpEmployeeAuthority.EmpFullName</p>
-
-                        <b style="font-size: 16px; text-decoration: overline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Director&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                    </td>
-                    countD = 1;
-
-                }
-                else
-                {
-                    if (countD==0)
+                        <p style="font-size: 16px;">&nbsp;</p>
+                    }
+                    else
                     {
-                        <td style="padding-right: 20px; text-align: center">
-
-                            <p>&nbsp;</p>
-                            <b style="font-size: 16px; text-decoration: overline">Project Leader</b>
-                        </td>
+                        <p style="font-size: 16px;">@ViewBag.DED</p>
                     }
 
-                }
-                if (item.Comments == "Approved By DED")
+                    <b style="text-decoration: overline">Deputy Executive Director </b>
+                </td>
+
+
+                <td style="text-align: center">
+
+                    @if (ViewBag.ED == null)
                 {
 
-                    <td style="padding-right: 20px; text-align: center">
-
-                        <p>@item.LookUpEmployeeAuthority.EmpFullName</p>
-
-                        <b style="font-size: 16px; text-decoration: overline">Deputy Executive Director </b>
-                    </td>
-                    countDed = 1;
-
-                }
-                else
-                {
-                    if (countDed == 0)
+                        <p style="font-size: 16px;">&nbsp;</p>
+                    }
+                    else
                     {
-                        <td style="padding-right: 20px; text-align: center">
-
-                            <p>&nbsp;</p>
-                            <b style="font-size: 16px; text-decoration: overline">Deputy Executive Director </b>
-                        </td>
+                        <p style="font-size: 16px;">@ViewBag.ED</p>
                     }
 
-                }
+                    <b style="text-decoration:overline">Executive Director </b>
+                </td>
+            </tr>
+
+        </table>
 
 
-                if (item.Comments == "Approved By ED")
-                {
-
-                    <td style="padding-right: 20px; text-align: center">
-
-                        <p>@item.LookUpEmployeeAuthority.EmpFullName</p>
-
-                        <b style="font-size: 16px; text-decoration: overline">Executive Director </b>
-                    </td>
-                    countEd = 1;
-
-                }
-                else
-                {
-                    if (countEd == 0)
-                    {
-                        <td style="padding-right: 20px; text-align: center">
-
-                            <p>&nbsp;</p>
-                            <b style="font-size: 16px; text-decoration: overline">Executive Director </b>
-                        </td>
-                    }
-                }
-            }
-
-
-        </tr>
-
-    </table>*@
-
-    <div class="row" style="margin-top: 1px">
-        @*<div>
-                <p style="font-size: 20px" class="pull-right"><b>Requisition Catergory : </b>@Model.LookupRequisitionCategorys.RequisitionCategory</p> @Html.EditorFor(model => model.LookupRequisitionCategorys.RequisitionCategory, new {htmlAttributes = new {@class = "form-control"}})
-            </div>*@
-        <div class="row" style="margin-right: 35px;margin-top:50px">
-            <div class="row pull-right">
-                <p>Printed By : Officer Transport</p>
+        <div class="row" style="margin-top: 1px">
+            @*<div>
+                    <p style="font-size: 20px" class="pull-right"><b>Requisition Catergory : </b>@Model.LookupRequisitionCategorys.RequisitionCategory</p> @Html.EditorFor(model => model.LookupRequisitionCategorys.RequisitionCategory, new {htmlAttributes = new {@class = "form-control"}})
+                </div>*@
+            <div class="row" style="margin-right: 35px;margin-top:50px">
+                <div class="row pull-right">
+                    <p>Printed By : Officer Transport</p>
+                </div>
             </div>
-        </div>
-        <div class="col-md-12" style="margin-right: 20px">
-            <div class="row pull-right">
-                <p> This is electronically generated vehicle requisition form which is valid without signature.</p>
+            <div class="col-md-12" style="margin-right: 20px">
+                <div class="row pull-right">
+                    <p> This is electronically generated vehicle requisition form which is valid without signature.</p>
+                </div>
             </div>
+
+            @*<div class="col-md-12" style="margin-right: 20px">
+                    <div class="row"><hr/></div>
+                </div>*@
+
         </div>
-
-        @*<div class="col-md-12" style="margin-right: 20px">
-                <div class="row"><hr/></div>
-            </div>*@
-
     </div>
-</div>
-@section Scripts {
-    <script>
-        $("#navContent").hide();
+    @section Scripts {
+        <script>
+            $("#navContent").hide();
 
-        //$(".navbar-header").hide();
+            //$(".navbar-header").hide();
 
-        $("#footerId").hide();
-    </script>
-}
+            $("#footerId").hide();
+        </script>
+    }
 
