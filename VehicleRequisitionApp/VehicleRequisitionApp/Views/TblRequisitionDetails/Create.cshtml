@@ -180,6 +180,7 @@
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
     <script src="~/Scripts/jquery.datetimepicker.full.js"></script>
+<script src="~/Scripts/moment-with-locales.js"></script>
 <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
 <script src="~/Scripts/bootstrap-select.js"></script>
 
@@ -197,24 +198,35 @@
         });
 
         $('#DateTime1').datetimepicker({
-            todayHighlight: true
+            todayHighlight: true,
+            minDate: moment().add(1, 'h'),
+            enabledHours: [10, 11, 12, 13, 14, 15, 16, 17]
+            //format: 'DD/MM/YYYY HH:mm',
+            //minDate: moment()
         });
 
         $('#DateTime2').datetimepicker({
-
+            todayHighlight: true,
+            minDate: moment().add(1, 'h'),
+            enabledHours: [10, 11, 12, 13, 14, 15, 16, 17]
         });
 
         $('#DateTime3').datetimepicker({
-
+            todayHighlight: true,
+            minDate: moment().add(1, 'h'),
+            enabledHours: [10, 11, 12, 13, 14, 15, 16, 17]
         });
         $('#DateTime4').datetimepicker({
-            todayHighlight: true
+            ttodayHighlight: true,
+            minDate: moment().add(1, 'h'),
+            enabledHours: [10, 11, 12, 13, 14, 15, 16, 17]
 
         });
         $('#Date1').datepicker({
             autoclose: true,
             todayHighlight: true,
             format: 'dd/mm/yyyy'
+
         });
     
 
