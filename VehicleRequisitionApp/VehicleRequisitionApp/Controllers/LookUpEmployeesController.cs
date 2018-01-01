@@ -39,6 +39,7 @@ namespace VehicleRequisitionApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             LookUpEmployee lookUpEmployee = db.LookUpEmployees.Find(id);
+            ViewBag.Image = db.LookUpFileUploads.Where(i => i.EmpId == id).Select(i => i.FileName).SingleOrDefault();
             if (lookUpEmployee == null)
             {
                 return HttpNotFound();

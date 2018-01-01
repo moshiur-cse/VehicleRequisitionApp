@@ -19,7 +19,25 @@ namespace VehicleRequisitionApp
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "TblUsers", action = "LogIn", id = "" } //UrlParameter.Optional
             );
+            //routes.MapRoute(
+            //    name: "ItemLinked",
+            //    //url: "RequisitionDetails/{RequisitionId}/{controller}/{action}/{id}",
+            //    url: "{controller}/{action}",
+            //    defaults: new { controller = "TblRequisitionDetails", action = "Index", id = UrlParameter.Optional },
+            //    constraints: new { RequisitionId = "^[0-9]*$", id = "^[0-9]*$" }
+            //    );
 
         }
     }
 }
+//@Html.RouteLink("Go Back", "ItemLinked", new {
+//        controller = "SubItems",
+//        action = "Index", 
+//        itemId = ViewBag.itemid,
+//    })
+
+//     {
+//                       controller = "TblRequisitionDetails",
+//                       action = "Index",
+//                       id = Session["EmpId"]
+//                   })

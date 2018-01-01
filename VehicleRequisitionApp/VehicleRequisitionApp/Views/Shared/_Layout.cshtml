@@ -8,12 +8,12 @@
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("styles", required: false)
     <style type="text/css">
-        .h3 {
+        .h3{
             margin-top: 1px !important;
             margin-bottom: 1px !important;
         }
-    </style>
 
+    </style>
 </head>
 <body>
 
@@ -99,6 +99,13 @@
                             </li>
                         }
                         <li>@Html.ActionLink("Add Request", "Create", "TblRequisitionDetails")</li>
+
+                        @*@Html.RouteLink("Go Back", "ItemLinked", new
+                   {
+                       controller = "TblRequisitionDetails",
+                       action = "Index",
+                       RequisitionId = Session["EmpId"]
+                   })*@
                         <li>@Html.ActionLink("Request Status", "Index", "TblRequisitionDetails", new { id = Session["EmpId"] }, null)</li>
                         @*}*@
 

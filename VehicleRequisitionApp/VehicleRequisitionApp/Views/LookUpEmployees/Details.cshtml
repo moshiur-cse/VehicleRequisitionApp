@@ -5,9 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
-<div>
+@*<div>
     <h4>LookUpEmployee</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -158,6 +156,128 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmpId }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.EmpId}) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
+
+
+<div class="row">
+        <div class="col-md-offset-2 col-lg-8 col-md-offset-2">
+            <fieldset>
+                <legend>Profile</legend>
+                
+                <div class="col-lg-8">
+                    <table class="table table-hover">
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.EmpFullName)</td>
+                            <td>@Html.DisplayFor(model => model.EmpFullName)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.LookUpDivision.DivFullName)</td>
+                            <td>@Html.DisplayFor(model => model.LookUpDivision.DivFullName)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.LookUpEmployeeType.EmpType)</td>
+                            <td>@Html.DisplayFor(model => model.LookUpEmployeeType.EmpType)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.EmpPinNo)</td>
+                            <td>@Html.DisplayFor(model => model.EmpPinNo)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.EmpInitial)</td>
+                            <td>@Html.DisplayFor(model => model.EmpInitial)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.EmpDesignation)</td>
+                            <td>@Html.DisplayFor(model => model.EmpDesignation)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.EmpLevel)</td>
+                            <td>@Html.DisplayFor(model => model.EmpLevel)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.EmpEmail)</td>
+                            <td>@Html.DisplayFor(model => model.EmpEmail)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.EmpMobile)</td>
+                            <td>@Html.DisplayFor(model => model.EmpMobile)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.EmpRoomNo)</td>
+                            <td>@Html.DisplayFor(model => model.EmpRoomNo)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.EmpPresentAddress)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.EmpPresentAddress)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.EmpNid)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.EmpNid)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.EmpPaasportNo)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.EmpPaasportNo)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.EmpBloodGroup)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.EmpBloodGroup)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.EmpHighestDegree)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.EmpHighestDegree)
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.EmpHighestDegreeMajorSubject)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.EmpHighestDegreeMajorSubject)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.EmpCareerSummary)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.EmpCareerSummary)
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            <div class="col-lg-4">
+                <img src="~/UploadedFiles/@ViewBag.Image" height="180" width="160"/>
+            </div>
+                </fieldset>
+</div>
+    </div>
